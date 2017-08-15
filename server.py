@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect, request, session
 import csv
+import datetime
 
 app = Flask(__name__)
 
@@ -18,18 +19,22 @@ def write_file(question):
 
 @app.route("/")
 def route_list():
-    return render_template("list.html", questions=read_file("question.csv"))
+    questions = read_file("question.csv")
+    for number, line in enumerate(questions):
+        questions[number][1] = datetime.datetime.utcfromtimestamp(float(line[1]))
+        print(questions[number][1])
+    return render_template("list.html", questions=questions)
 
 @app.route("/ask-question")
 def route_ask():
     return render_template("form.html")
 
 
-@app.route("/add-question")
+@app.route("/add-question", methods=["POST"])
 def route_add():
-    list_to_write = [3,12345678901,0,0,request.form["title"], request.form["question"]]
+    list_to_write = [3,int(datetime.datetime.utcnow().timestamp()),0,0,request.form["title"], request.form["question"]]
     write_file(list_to_write)
-    return
+    return redirect("/")
 
 
 
