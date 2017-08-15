@@ -1,20 +1,26 @@
 <!doctype html>
 <html>
     <head>
+    <style>
+table, th, td {
+    border: 0px solid black;
+}
+    </style>
         <meta charset="utf-8">
         <title>Questions</title>
     </head>
-    <body>
-        <h1>{%for line in questions%}
-            {%if line[0]==id_%}
-            {{line[4]}}
-            {%endif%}
-            {%endfor%}
-        </h1>
-        <p>{%for line in questions%}
+    <body><h4>  {%for line in questions%}
+                {%if line[0]==id_%}
+                {{line[4]}}
+                {%endif%}
+                {%endfor%}
+            </h4>
+            <h6>
+            {%for line in questions%}
             {%if line[0]==id_%}
             {{line[5]}}
             {%endif%}
-            {%endfor%}</p>
+            {%endfor%}
+            </h6>
     </body>
 </html>

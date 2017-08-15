@@ -1,8 +1,21 @@
 from flask import Flask, render_template, redirect, request, session
 import csv
 import datetime
+import base64
+
 
 app = Flask(__name__)
+
+
+def string_to_base64(origin):
+    origin_in_bytes = origin.encode('utf-8')
+    b64_encoded_bytes = base64.b64encode(origin_in_bytes)
+    return b64_encoded_bytes.decode('utf-8')
+
+
+def base64_to_string(encoded_string):
+    decoded_string = base64.b64decode(encoded_string)
+    return decoded_string.decode('utf-8')
 
 
 def read_file(csvfile):
@@ -25,7 +38,8 @@ def route_list():
     questions = read_file("question.csv")
     for number, line in enumerate(questions):
         questions[number][1] = datetime.datetime.utcfromtimestamp(float(line[1]))
-        print(questions[number][1])
+        questions[number][4] = base64_to_string(line[4])
+        questions[number][5] = base64_to_string(line[5])
     return render_template("list.html", questions=questions)
 
 
@@ -41,7 +55,7 @@ def route_ask():
 
 @app.route("/add-question", methods=["POST"])
 def route_add():
-    list_to_write = [3,int(datetime.datetime.utcnow().timestamp()),0,0,request.form["title"], request.form["question"]]
+    list_to_write = [3,int(datetime.datetime.utcnow().timestamp()),0,0,string_to_base64(request.form["title"]), string_to_base64(request.form["question"])]
     write_file(list_to_write)
     return redirect("/")
 
