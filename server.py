@@ -4,6 +4,7 @@ import datetime
 
 app = Flask(__name__)
 
+
 def read_file(csvfile):
     data = []
     with open(csvfile, "r") as datafile:
@@ -12,10 +13,12 @@ def read_file(csvfile):
             data.append(row)
     return data
 
+
 def write_file(question):
     with open("question.csv", "a") as datafile:
         file = csv.writer(datafile, delimiter=",")
         file.writerow(question)
+
 
 @app.route("/")
 def route_list():
@@ -24,6 +27,12 @@ def route_list():
         questions[number][1] = datetime.datetime.utcfromtimestamp(float(line[1]))
         print(questions[number][1])
     return render_template("list.html", questions=questions)
+
+
+@app.route("/question/<int:ID>", methods=['GET'])
+def route_question(ID):
+    return render_template("question.html", questions=read_file("question.csv"), id_=str(ID))
+
 
 @app.route("/ask-question")
 def route_ask():
@@ -46,6 +55,7 @@ def route_add():
     '''
 
     return redirect("/")
+
 
 if __name__ == "__main__":
     app.secret_key = "app_magic"  # Change the content of this string
