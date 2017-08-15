@@ -3,6 +3,7 @@ import csv
 
 server_object = Flask(__name__)
 
+
 def read_file(csvfile):
     data = []
     with open(csvfile, "r") as datafile:
@@ -16,6 +17,10 @@ def read_file(csvfile):
 def route_list():
     return render_template("list.html", questions=read_file("question.csv"))
 
+
+@server_object.route("/")
+def route_question():
+    return render_template("question.html", questions=read_file("question.csv"))
 
 if __name__ == "__main__":
     server_object.secret_key = "server_object_magic"  # Change the content of this string
