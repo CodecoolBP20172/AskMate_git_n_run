@@ -1,0 +1,16 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Questions</title>
+    </head>
+    <body>
+        <h1>{%for line in questions%}
+            {%if line[0]==id_%}
+            {{line[4]}}
+            {%endif%}
+            {%endfor%}
+        </h1>
+        <p>
+    </body>
+</html>
