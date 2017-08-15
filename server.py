@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, request, session
 import csv
 
-server_object = Flask(__name__)
+app = Flask(__name__)
 
 
 def read_file(csvfile):
@@ -12,29 +12,44 @@ def read_file(csvfile):
             data.append(row)
     return data
 
+def write_file(question):
+    with open("question.csv", "a") as datafile:
+        file = csv.writer(datafile, delimiter=",")
+        file.writerow(question)
 
-@server_object.route("/")
+@app.route("/")
 def route_list():
     return render_template("list.html", questions=read_file("question.csv"))
 
+@app.route("/ask-question")
+def route_ask():
+    return render_template("form.html")
+
+
+@app.route("/add-question")
+def route_add():
+    list_to_write = [3,12345678901,0,0,request.form["title"], request.form["question"]]
+    write_file(list_to_write)
+    return
+
+
+
+    '''
+    for x in range() < len(list_of_keys) - 1:
+                content_to_save += request.form[list_of_keys[i]] + ";"
+                i += 1
+            content_to_save += request.form[list_of_keys[i]]
+    '''
+
+    return redirect("/")
 
 @server_object.route("/")
 def route_question():
     return render_template("question.html", questions=read_file("question.csv"))
 
 if __name__ == "__main__":
-    server_object.secret_key = "server_object_magic"  # Change the content of this string
-    server_object.run(
+    app.secret_key = "app_magic"  # Change the content of this string
+    app.run(
         debug=True,
         port=5000
     )
-
-'''
-a = [1, 2, 3, 4, 5, "fuck this shit", 7]
-    
-
-def write_file(abrakadabra):
-    with open("question.csv", "a") as datafile:
-        file = csv.writer(datafile, delimiter=",")
-        file.writerow(abrakadabra)
-'''        
