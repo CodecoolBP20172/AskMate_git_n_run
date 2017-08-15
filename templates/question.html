@@ -11,6 +11,10 @@
             {%endif%}
             {%endfor%}
         </h1>
-        <p>
+        <p>{%for line in questions%}
+            {%if line[0]==id_%}
+            {{line[5]}}
+            {%endif%}
+            {%endfor%}</p>
     </body>
 </html>
