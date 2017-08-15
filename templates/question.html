@@ -1,26 +1,30 @@
 <!doctype html>
 <html>
     <head>
-    <style>
-table, th, td {
-    border: 0px solid black;
-}
-    </style>
-        <meta charset="utf-8">
-        <title>Questions</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css" media="screen, print">
+    <meta charset="utf-8">
+    <title>Questions</title>
     </head>
-    <body><h4>  {%for line in questions%}
+    <body align="center">
+        <table align="center">
+            <tr>
+                <th>
+                {%for line in questions%}
                 {%if line[0]==id_%}
                 {{line[4]}}
                 {%endif%}
                 {%endfor%}
-            </h4>
-            <h6>
+                </th>
+            </tr>
+            <br>
+            <tr>
+                <td>
             {%for line in questions%}
             {%if line[0]==id_%}
             {{line[5]}}
             {%endif%}
             {%endfor%}
-            </h6>
-    </body>
+                </td>
+            </tr>
+        </table>
 </html>

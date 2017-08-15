@@ -1,14 +1,15 @@
 <!doctype html>
 <html>
    <head>
+        <link rel="stylesheet" type="text/css" href="/static/css/style.css" media="screen, print">
         <meta charset="utf-8">
         <title>Askmate</title>
    </head>
-   <body>
+   <body align="center">
        <h1>Questions</h1>
        <br><br>
      <a href="/ask-question">ask a question</a>
-       <table border = 1>
+       <table border = 1 align="center">
             <tr>
                <th>Question title</th>
                <th>Time</th>
@@ -16,7 +17,7 @@
             </tr>
         {% for line in questions %}
             <tr>
-                <td>{{line[4]}}</td>
+                <td><a href="/question/1">{{line[4]}}</a></td> <!--What we can do with this? Probably make the magic in python?-->
                 <td>{{line[1]}}</td>
                 <td>{{line[2]}}</td>
             </tr>    

@@ -45,7 +45,11 @@ def route_list():
 
 @app.route("/question/<int:ID>", methods=['GET'])
 def route_question(ID):
-    return render_template("question.html", questions=read_file("question.csv"), id_=str(ID))
+    questions = read_file("question.csv")
+    for number, line in enumerate(questions):
+        questions[number][4] = base64_to_string(line[4])
+        questions[number][5] = base64_to_string(line[5])
+    return render_template("question.html", questions=questions, id_=str(ID))
 
 
 @app.route("/ask-question")
