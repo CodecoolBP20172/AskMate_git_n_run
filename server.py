@@ -32,6 +32,19 @@ def write_file(question):
         file = csv.writer(datafile, delimiter=",")
         file.writerow(question)
 
+def write_to_file(csvfile, data):
+    with open(csvfile, "w") as datafile:
+        file = csv.writer(datafile, delimiter=",")
+        for line in data:
+            file.writerow(line)
+
+def voting(csvfile, ID, vote_index, amount):
+    list_from_file = read_file(csvfile)
+    for line in list_from_file:
+        if ID == line[0]:
+            line[vote_index] += amount
+    write_to_file(csvfile, list_from_file)
+
 
 @app.route("/")
 def route_list():
@@ -59,16 +72,25 @@ def route_add():
     write_file(list_to_write)
     return redirect("/")
 
+@app.route("/question/<int:ID>/vote-up", methods=['GET'])
+def route_question_vote_up(ID):
+    voting("question.csv", ID, 3, 1)
+    return redirect("/question/"+str(ID))
 
+@app.route("/question/<int:ID>/vote-down", methods=['GET'])
+def route_question_vote_up(ID):
+    voting("question.csv", ID, 3, -1)
+    return redirect("/question/"+str(ID))
 
-    '''
-    for x in range() < len(list_of_keys) - 1:
-                content_to_save += request.form[list_of_keys[i]] + ";"
-                i += 1
-            content_to_save += request.form[list_of_keys[i]]
-    '''
+@app.route("/answer/<int:ID>/vote-up", methods=['GET'])
+def route_answer_vote_up(ID):
+    voting("answer.csv", ID, 2, 1)
+    return redirect("/answer/"+str(ID))
 
-    return redirect("/")
+@app.route("/answer/<int:ID>/vote-down", methods=['GET'])
+def route_answer_vote_down(ID):
+    voting("answer.csv", ID, 2, -1)
+    return redirect("/answer/"+str(ID))
 
 
 if __name__ == "__main__":
