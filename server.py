@@ -78,7 +78,7 @@ def route_question_vote_up(ID):
     return redirect("/question/"+str(ID))
 
 @app.route("/question/<int:ID>/vote-down", methods=['GET'])
-def route_question_vote_up(ID):
+def route_question_vote_down(ID):
     voting("question.csv", ID, 3, -1)
     return redirect("/question/"+str(ID))
 
