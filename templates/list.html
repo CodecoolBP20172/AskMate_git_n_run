@@ -13,6 +13,7 @@
             <tr>
                <th>Question title</th>
                <th>Time</th>
+               <th>View</th>
                <th>Votes</th>
             </tr>
         {% for line in questions %}
@@ -21,6 +22,7 @@
                 <td><a href="/question/{{  line[0]  }}">{{line[4]}}</a></td> <!--What we can do with this? Probably make the magic in python?-->
                 <td>{{line[1]}}</td>
                 <td>{{line[2]}}</td>
+                <td>{{line[3]}}</td>
             </tr>
         {% endfor %}
       </table>
