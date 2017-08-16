@@ -3,7 +3,7 @@ import csv
 import datetime
 import base64
 from common import *
-
+from operator import itemgetter
 
 app = Flask(__name__)
 
@@ -18,14 +18,37 @@ def route_list():
     return render_template("list.html", questions=questions)
 
 
+@app.route("/<aspect>=<ascdesc>")
+def route_list_aspect(aspect, ascdesc):
+    questions = read_file("question.csv")
+    for number, line in enumerate(questions):
+        questions[number][1] = datetime.datetime.utcfromtimestamp(float(line[1]))
+        questions[number][4] = base64_to_string(line[4])
+        questions[number][5] = base64_to_string(line[5])
+        questions[number][2] = int(questions[number][2])
+    if aspect == "name":
+        aspectnumber = 4
+    elif aspect == "date":
+        aspectnumber = 1
+    elif aspect == "view":
+        aspectnumber = 2
+    elif aspect == "vote":
+        aspectnumber = 3
+    else:
+        aspectnumber = 0
+    questions = sorted(questions, key=itemgetter(aspectnumber))
+    if ascdesc == "desc":
+        questions = reversed(questions)
+        print("asd")
+    return render_template("list.html", questions=questions)
+
+
+
 @app.route("/question/<int:ID>", methods=['GET'])
 def route_question(ID):
     questions = read_file("question.csv")
-<<<<<<< HEAD
-=======
     answers = read_file("answer.csv")
     modify_value_of_data("question.csv", ID, 2, 1)
->>>>>>> 99d970c946baa928c9e7b8ce985adc107b9ffa8f
     for number, line in enumerate(questions):
         questions[number][4] = base64_to_string(line[4])
         questions[number][5] = base64_to_string(line[5])
