@@ -18,14 +18,14 @@ def route_list():
     return render_template("list.html", questions=questions)
 
 
-@app.route("/<aspect>=<ascdesc>")
-def route_list_aspect(aspect, ascdesc):
+@app.route("/<aspect>=<desc>")
+def route_list_aspect(aspect, desc):
     questions = read_file("question.csv")
-    for number, line in enumerate(questions):
-        questions[number][1] = datetime.datetime.utcfromtimestamp(float(line[1]))
-        questions[number][4] = base64_to_string(line[4])
-        questions[number][5] = base64_to_string(line[5])
-        questions[number][2] = int(questions[number][2])
+    for line_number, line in enumerate(questions):
+        questions[line_number][1] = datetime.datetime.utcfromtimestamp(float(line[1]))
+        questions[line_number][4] = base64_to_string(line[4])
+        questions[line_number][5] = base64_to_string(line[5])
+        questions[line_number][2] = int(line[2])
     if aspect == "name":
         aspectnumber = 4
     elif aspect == "date":
@@ -37,7 +37,7 @@ def route_list_aspect(aspect, ascdesc):
     else:
         aspectnumber = 0
     questions = sorted(questions, key=itemgetter(aspectnumber))
-    if ascdesc == "desc":
+    if desc == "desc":
         questions = reversed(questions) 
     return render_template("list.html", questions=questions)
 
@@ -46,14 +46,14 @@ def route_list_aspect(aspect, ascdesc):
 def route_question(ID):
     questions = read_file("question.csv")
     answers = read_file("answer.csv")
-    for number, line in enumerate(questions):   
-        questions[number][1] = datetime.datetime.utcfromtimestamp(float(line[1]))
-        questions[number][4] = base64_to_string(line[4])
-        questions[number][5] = base64_to_string(line[5])
-    for number, line in enumerate(answers):
-        answers[number][1] = datetime.datetime.utcfromtimestamp(float(line[1]))
-        answers[number][4] = base64_to_string(line[4])
-        answers[number][5] = base64_to_string(line[5])
+    for line_number, line in enumerate(questions):   
+        questions[line_number][1] = datetime.datetime.utcfromtimestamp(float(line[1]))
+        questions[line_number][4] = base64_to_string(line[4])
+        questions[line_number][5] = base64_to_string(line[5])
+    for line_number, line in enumerate(answers):
+        answers[line_number][1] = datetime.datetime.utcfromtimestamp(float(line[1]))
+        answers[line_number][4] = base64_to_string(line[4])
+        answers[line_number][5] = base64_to_string(line[5])
     return render_template("question.html", questions=questions, answers=answers, id_=str(ID))
 
 
@@ -64,23 +64,24 @@ def route_ask():
 
 @app.route("/question+1view/<int:ID>", methods=["GET"])
 def route_question_view(ID):
-    modify_value_of_data_view("question.csv", ID, 2, 1)
+    modify_value_of_data("question.csv", ID, 2, 1)
     print("asd")
     return redirect("/question/"+str(ID))
 
 
 @app.route("/question/<int:ID>/delete", methods=["GET"])
 def route_question_delete(ID):
-    questions_table = read_file("question.csv")
     answer_table = read_file("answer.csv")
     answers_to_remove = []
-    for ID_, line in enumerate(answer_table):
+    for line in answer_table:
         if int(line[3]) == ID:
             answers_to_remove.append(line)
     for line in answers_to_remove:
         answer_table.remove(line)
+ 
     write_to_file("answer.csv", answer_table)
-    for ID_, line in enumerate(questions_table):
+    questions_table = read_file("question.csv")
+    for line in questions_table:
         if int(line[0]) == ID:
             questions_table.remove(line)
     write_to_file("question.csv", questions_table)
@@ -149,19 +150,6 @@ def route_answer_vote_up(ID):
 def route_answer_vote_down(ID):
     modify_value_of_data("answer.csv", ID, 2, -1)
     return redirect("/answer/"+str(ID))
-
-'''
-here should be an "edit" button when displaying a question. 
-Clicking this will allow the user to edit the question. (/question/<question_id>/edit)
-'''
-
-
-
-'''
-Sort questions:
-The list of questions should be sortable according to: date, votes, number of views 
-(both in ascending and descending order) (/list?time=asc;title=desc,...)
-'''
 
 
 if __name__ == "__main__":
