@@ -21,11 +21,8 @@ def route_list():
 @app.route("/question/<int:ID>", methods=['GET'])
 def route_question(ID):
     questions = read_file("question.csv")
-<<<<<<< HEAD
-=======
     answers = read_file("answer.csv")
-    modify_value_of_data("question.csv", ID, 2, 1)
->>>>>>> 99d970c946baa928c9e7b8ce985adc107b9ffa8f
+    modify_value_of_data_view("question.csv", ID, 2, 1)
     for number, line in enumerate(questions):
         questions[number][4] = base64_to_string(line[4])
         questions[number][5] = base64_to_string(line[5])
