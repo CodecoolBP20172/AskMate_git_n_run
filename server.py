@@ -59,7 +59,32 @@ def route_question(ID):
 
 @app.route("/ask-question")
 def route_ask():
-    return render_template("form.html")
+    return render_template("form.html", page_title="Ask a question", action_link="/add-question")
+
+@app.route("/question/<int:ID>/edit", methods=['GET'])
+def route_question_edit(ID):
+    list_from_csv = read_file("question.csv")
+    list_of_data_to_edit = ""
+    for line in list_from_csv:
+        if str(ID) == line[0]:
+            list_of_data_to_edit = line 
+    return render_template(
+        "form.html",
+        page_title="Edit a question",
+        action_link="/question/"+str(ID)+"/save",
+        title_of_question=base64_to_string(list_of_data_to_edit[4]),
+        question=base64_to_string(list_of_data_to_edit[5]))
+
+@app.route("/question/<int:ID>/save", methods=['POST'])
+def route_question_save(ID):
+    list_to_modify = read_file("question.csv")
+    for line in list_to_modify:
+        if str(ID) == line[0]:
+            line[4] = string_to_base64(request.form["title"])
+            line[5] = string_to_base64(request.form["question"])
+    write_to_file("question.csv", list_to_modify)
+    return redirect("/question/" + str(ID))
+
 
 
 @app.route("/give-answer", methods=["POST"])
@@ -98,6 +123,13 @@ def route_answer_vote_up(ID):
 def route_answer_vote_down(ID):
     modify_value_of_data("answer.csv", ID, 2, -1)
     return redirect("/answer/"+str(ID))
+
+'''
+here should be an "edit" button when displaying a question. 
+Clicking this will allow the user to edit the question. (/question/<question_id>/edit)
+'''
+
+
 
 '''
 Sort questions:
