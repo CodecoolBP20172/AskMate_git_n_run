@@ -27,10 +27,19 @@
                 </td>
             </tr>
         </table>
-        <form action="/question/{{ id_ }}/vote-up" method="get">
-        <button type="submit" id="submit_id" align="right">Vote-up</button>
-        <form action="/question/{{ id_ }}/vote-down" method="get"><br>
-        <button type="submit" id="submit_id" align="right">Vote-down</button>
-        </form>
-    </body>    
+        <table>
+            <tr>
+                <td>
+                    {%for row in answers%}
+                    {%for line in questions%}
+                    {%if line[0] == row[3]%}
+                    {%if line[0] == id_%}
+                    {{row[4]}}
+                    {%endif%}
+                    {%endif%}
+                    {%endfor%}
+                    {%endfor%}
+                </td>
+            </tr>
+        </table>
 </html>
