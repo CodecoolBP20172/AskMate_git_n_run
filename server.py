@@ -43,12 +43,11 @@ def route_list_aspect(aspect, ascdesc):
     return render_template("list.html", questions=questions)
 
 
-
 @app.route("/question/<int:ID>", methods=['GET'])
 def route_question(ID):
     questions = read_file("question.csv")
     answers = read_file("answer.csv")
-    modify_value_of_data("question.csv", ID, 2, 1)
+    modify_value_of_data_view("question.csv", ID, 2, 1)
     for number, line in enumerate(questions):
         questions[number][4] = base64_to_string(line[4])
         questions[number][5] = base64_to_string(line[5])
@@ -63,6 +62,11 @@ def route_ask():
     return render_template("form.html")
 
 
+@app.route("/give-answer", methods=["POST"])
+def route_add_answer():
+    list_to_write = [nextID("answer.csv"), int(datetime.datetime.utcnow().timestamp()),0,0,string_to_base64(request.form["answer_text"])]
+    write_file(list_to_write)
+    return redirect("/question/<int:ID>")    
 
 
 @app.route("/add-question", methods=["POST"])
@@ -71,20 +75,24 @@ def route_add():
     write_file(list_to_write)
     return redirect("/")
 
+
 @app.route("/question/<int:ID>/vote-up", methods=['GET'])
 def route_question_vote_up(ID):
     modify_value_of_data("question.csv", ID, 3, 1)
     return redirect("/question/"+str(ID))
+
 
 @app.route("/question/<int:ID>/vote-down", methods=['GET'])
 def route_question_vote_down(ID):
     modify_value_of_data("question.csv", ID, 3, -1)
     return redirect("/question/"+str(ID))
 
+
 @app.route("/answer/<int:ID>/vote-up", methods=['GET'])
 def route_answer_vote_up(ID):
     modify_value_of_data("answer.csv", ID, 2, 1)
     return redirect("/answer/"+str(ID))
+
 
 @app.route("/answer/<int:ID>/vote-down", methods=['GET'])
 def route_answer_vote_down(ID):

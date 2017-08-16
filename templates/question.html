@@ -43,12 +43,24 @@
                 </td>
             </tr>
         </table>
+        Answer Here:
+        <br>
+        <textarea name="answer_text" rows="8" cols="50"></textarea>
+        <br>
+
+
+        <button type="submit" id="submit_answer" method="POST">
+
+
+            
+
         <form action="/question/{{ id_ }}/vote-up" method="get">
         <button type="submit" id="submit_id" align="right">Vote-up</button>
         </form>
         <form action="/question/{{ id_ }}/vote-down" method="get"><br>
         <button type="submit" id="submit_id" align="right">Vote-down</button>
         </form>
+        <a href="/"><button type="main">Back To Main Menu</button></a>
     </body>
 
 </html>
