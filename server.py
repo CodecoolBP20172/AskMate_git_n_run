@@ -40,6 +40,7 @@ def route_add():
 
 @app.route("/question/<int:ID>/vote-up", methods=['GET'])
 def route_question_vote_up(ID):
+    print("asd")
     voting("question.csv", ID, 3, 1)
     return redirect("/question/"+str(ID))
 
