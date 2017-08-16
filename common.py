@@ -44,11 +44,21 @@ def write_to_file(csvfile, data):
 
 def modify_value_of_data(csvfile, ID, data_index, amount):
     list_from_file = read_file(csvfile)
+    print(amount)
     for ID_, line in enumerate(list_from_file):
         if int(ID) == int(line[0]):
             ujertek = int(amount) + int(line[data_index])
-            print(list_from_file[ID_][data_index])
             list_from_file[ID_][data_index] = ujertek
-            print(list_from_file[ID_][data_index])
-            print(csvfile)
+
+    write_to_file(csvfile, list_from_file)
+
+
+def modify_value_of_data_view(csvfile, ID, data_index, amount):
+    list_from_file = read_file(csvfile)
+    print(amount)
+    for ID_, line in enumerate(list_from_file):
+        if int(ID) == int(line[0]):
+            ujertek = int(amount) + int(line[data_index])
+            list_from_file[ID_][data_index] = ujertek
+
     write_to_file(csvfile, list_from_file)

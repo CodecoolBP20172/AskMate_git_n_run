@@ -22,7 +22,7 @@ def route_list():
 def route_question(ID):
     questions = read_file("question.csv")
     answers = read_file("answer.csv")
-    modify_value_of_data("question.csv", ID, 2, 1)
+    modify_value_of_data_view("question.csv", ID, 2, 1)
     for number, line in enumerate(questions):
         questions[number][4] = base64_to_string(line[4])
         questions[number][5] = base64_to_string(line[5])
@@ -51,7 +51,6 @@ def route_add():
 
 @app.route("/question/<int:ID>/vote-up", methods=['GET'])
 def route_question_vote_up(ID):
-    print("asd")
     modify_value_of_data("question.csv", ID, 3, 1)
     return redirect("/question/"+str(ID))
 
