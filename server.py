@@ -38,8 +38,7 @@ def route_list_aspect(aspect, ascdesc):
         aspectnumber = 0
     questions = sorted(questions, key=itemgetter(aspectnumber))
     if ascdesc == "desc":
-        questions = reversed(questions)
-        print("asd")
+        questions = reversed(questions) 
     return render_template("list.html", questions=questions)
 
 
@@ -63,6 +62,25 @@ def route_question(ID):
 def route_ask():
     return render_template("form.html", page_title="Ask a question", action_link="/add-question")
 
+
+@app.route("/question/<int:ID>/delete", methods=["GET"])
+def route_question_delete(ID):
+    questions_table = read_file("question.csv")
+    answer_table = read_file("answer.csv")
+    answers_to_remove = []
+    for ID_, line in enumerate(answer_table):
+        if int(line[3]) == ID:
+            answers_to_remove.append(line)
+    for line in answers_to_remove:
+        answer_table.remove(line)
+    write_to_file("answer.csv", answer_table)
+    for ID_, line in enumerate(questions_table):
+        if int(line[0]) == ID:
+            questions_table.remove(line)
+    write_to_file("question.csv", questions_table)
+    return redirect("/")
+    
+
 @app.route("/question/<int:ID>/edit", methods=['GET'])
 def route_question_edit(ID):
     list_from_csv = read_file("question.csv")
@@ -77,6 +95,7 @@ def route_question_edit(ID):
         title_of_question=base64_to_string(list_of_data_to_edit[4]),
         question=base64_to_string(list_of_data_to_edit[5]))
 
+
 @app.route("/question/<int:ID>/save", methods=['POST'])
 def route_question_save(ID):
     list_to_modify = read_file("question.csv")
@@ -86,7 +105,6 @@ def route_question_save(ID):
             line[5] = string_to_base64(request.form["question"])
     write_to_file("question.csv", list_to_modify)
     return redirect("/question/" + str(ID))
-
 
 
 @app.route("/give-answer/<int:ID>", methods=["POST"])
