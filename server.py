@@ -46,7 +46,6 @@ def route_list_aspect(aspect, ascdesc):
 def route_question(ID):
     questions = read_file("question.csv")
     answers = read_file("answer.csv")
-    modify_value_of_data_view("question.csv", ID, 2, 1)
     for number, line in enumerate(questions):   
         questions[number][1] = datetime.datetime.utcfromtimestamp(float(line[1]))
         questions[number][4] = base64_to_string(line[4])
@@ -61,6 +60,13 @@ def route_question(ID):
 @app.route("/ask-question")
 def route_ask():
     return render_template("form.html", page_title="Ask a question", action_link="/add-question")
+
+
+@app.route("/question+1view/<int:ID>", methods=["GET"])
+def route_question_view(ID):
+    modify_value_of_data_view("question.csv", ID, 2, 1)
+    print("asd")
+    return redirect("/question/"+str(ID))
 
 
 @app.route("/question/<int:ID>/delete", methods=["GET"])
