@@ -48,10 +48,12 @@ def route_question(ID):
     questions = read_file("question.csv")
     answers = read_file("answer.csv")
     modify_value_of_data_view("question.csv", ID, 2, 1)
-    for number, line in enumerate(questions):
+    for number, line in enumerate(questions):   
+        questions[number][1] = datetime.datetime.utcfromtimestamp(float(line[1]))
         questions[number][4] = base64_to_string(line[4])
         questions[number][5] = base64_to_string(line[5])
     for number, line in enumerate(answers):
+        answers[number][1] = datetime.datetime.utcfromtimestamp(float(line[1]))
         answers[number][4] = base64_to_string(line[4])
         answers[number][5] = base64_to_string(line[5])
     return render_template("question.html", questions=questions, answers=answers, id_=str(ID))
@@ -87,17 +89,17 @@ def route_question_save(ID):
 
 
 
-@app.route("/give-answer", methods=["POST"])
-def route_add_answer():
-    list_to_write = [nextID("answer.csv"), int(datetime.datetime.utcnow().timestamp()),0,0,string_to_base64(request.form["answer_text"])]
-    write_file(list_to_write)
-    return redirect("/question/<int:ID>")    
+@app.route("/give-answer/<int:ID>", methods=["POST"])
+def route_add_answer(ID):
+    list_to_write = [nextID("answer.csv"), int(datetime.datetime.utcnow().timestamp()),0,ID,string_to_base64(request.form["answer_text"]), ""]
+    write_file("answer.csv", list_to_write)
+    return redirect("/question/"+str(ID))
 
 
 @app.route("/add-question", methods=["POST"])
 def route_add():
     list_to_write = [nextID("question.csv"),int(datetime.datetime.utcnow().timestamp()),0,0,string_to_base64(request.form["title"]), string_to_base64(request.form["question"])]
-    write_file(list_to_write)
+    write_file("question.csv", list_to_write)
     return redirect("/")
 
 

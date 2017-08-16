@@ -1,59 +1,67 @@
 <!doctype html>
 <html>
     <head>
-    <link rel="stylesheet" type="text/css" href="/static/css/style.css" media="screen, print">
+    <link rel="stylesheet" type="text/css" href="/static/css/style_question.css" media="screen, print">
     <meta charset="utf-8">
     <title>Questions</title>
     </head>
     <body align="center">
-        <table align="center">
-            <tr>
-                <th>
-                {%for line in questions%}
-                {%if line[0]==id_%}
-                {{line[4]}}
-                {%endif%}
-                {%endfor%}
-                </th>
-            </tr>
-            <br>
-            <tr>
-                <td>
-            {%for line in questions%}
-            {%if line[0]==id_%}
-            {{line[5]}}
-            {%endif%}
-            {%endfor%}
-                </td>
-            </tr>
+        <table align="center" border="1px">
+                <th>Question</th>
+                <tr><td>{%for line in questions%}
+                        {%if line[0]==id_%}
+                        {{line[4]}}
+                        {%endif%}
+                        {%endfor%}</td></tr>
+                <tr><td>{%for line in questions%}
+                        {%if line[0]==id_%}
+                        {{line[5]}}
+                        {%endif%}
+                        {%endfor%}</td></tr>
+                        <table align="center"><tr><td>{%for line in questions%}
+                                {%if line[0]==id_%}
+                                {{line[1]}}
+                                {%endif%}
+                                {%endfor%}
+                        </td>
+                    
+                    <td>Delete/Edit \ Vote</td>
+                </tr></table>        
         </table>
-        <table>
-            <tr>
-                <td>
+
+        <table border="1px" align="center">
+            <th>Answers</th>
+            
                     {%for row in answers%}
                     {%for line in questions%}
                     {%if line[0] == row[3]%}
                     {%if line[0] == id_%}
+                    
+                    <tr><td>{%for line in answers%}
+                            {%if line[0]==id_%}
+                            {{line[1]}}
+                            {%endif%}
+                            {%endfor%}</td></tr>
+                    <td>
                     {{row[4]}}
                     <br>
+                    </td>
+                    <tr><td>Vote</td></tr><tr><td><br></td></tr>
                     {%endif%}
                     {%endif%}
                     {%endfor%}
                     {%endfor%}
-                </td>
-            </tr>
-        </table>
+                    
+                </table>
+                <br><br>
         Answer Here:
+        <br><br>
+        <form action="/give-answer/{{ id_  }}" method="post">
+        <textarea name="answer_text" rows="8" cols="80"></textarea>
         <br>
-        <textarea name="answer_text" rows="8" cols="50"></textarea>
+        <button type="submit" id="submit_answer" method="POST">Submit</button>
         <br>
-
-
-        <button type="submit" id="submit_answer" method="POST">
-
-
-            
-
+        <br>
         <form action="/question/{{ id_ }}/vote-up" method="get">
         <button type="submit" id="submit_id" align="right">Vote-up</button>
         </form>
@@ -61,6 +69,7 @@
         <button type="submit" id="submit_id" align="right">Vote-down</button>
         </form>
         <a href="/"><button type="main">Back To Main Menu</button></a>
+        
     </body>
 
 </html>

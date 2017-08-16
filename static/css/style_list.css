@@ -14,15 +14,23 @@ a {
 
 table {
 	border-collapse: collapse;
-	width: 50%;
+	width: 90%;
     }
 
-td, th {
+tr, td, th {
+	border-bottom: 1px solid grey;
 	vertical-align: center;
 	padding: 8px;
-	text-align: center	
+	text-align: left	
 }
 	
-th {
+tr, th {
 	height: 50px;
+}
+
+
+td.questions {
+	font-size: 120%;
+	font-family: times;
+	text-align: left;
 }

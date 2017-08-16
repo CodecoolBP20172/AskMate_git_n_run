@@ -31,10 +31,10 @@ def read_file(csvfile):
     return data
 
 
-def write_file(question):
-    with open("question.csv", "a") as datafile:
+def write_file(csv_file, data):
+    with open(csv_file, "a") as datafile:
         file = csv.writer(datafile, delimiter=",")
-        file.writerow(question)
+        file.writerow(data)
 
 def write_to_file(csvfile, data):
     with open(csvfile, "w") as datafile:
