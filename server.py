@@ -62,17 +62,17 @@ def route_ask():
     return render_template("form.html")
 
 
-@app.route("/give-answer", methods=["POST"])
-def route_add_answer():
-    list_to_write = [nextID("answer.csv"), int(datetime.datetime.utcnow().timestamp()),0,0,string_to_base64(request.form["answer_text"])]
-    write_file(list_to_write)
-    return redirect("/question/<int:ID>")    
+@app.route("/give-answer/<int:ID>", methods=["POST"])
+def route_add_answer(ID):
+    list_to_write = [nextID("answer.csv"), int(datetime.datetime.utcnow().timestamp()),0,ID,string_to_base64(request.form["answer_text"]), ""]
+    write_file("answer.csv", list_to_write)
+    return redirect("/question/"+str(ID))
 
 
 @app.route("/add-question", methods=["POST"])
 def route_add():
     list_to_write = [nextID("question.csv"),int(datetime.datetime.utcnow().timestamp()),0,0,string_to_base64(request.form["title"]), string_to_base64(request.form["question"])]
-    write_file(list_to_write)
+    write_file("question.csv", list_to_write)
     return redirect("/")
 
 

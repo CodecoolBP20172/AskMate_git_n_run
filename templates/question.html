@@ -45,15 +45,12 @@
         </table>
         Answer Here:
         <br>
+        <form action="/give-answer/{{ id_  }}" method="post">
         <textarea name="answer_text" rows="8" cols="50"></textarea>
         <br>
-
-
-        <button type="submit" id="submit_answer" method="POST">
-
-
-            
-
+        <button type="submit" id="submit_answer" method="POST">Submit</button>
+        <br>
+        <br>
         <form action="/question/{{ id_ }}/vote-up" method="get">
         <button type="submit" id="submit_id" align="right">Vote-up</button>
         </form>
