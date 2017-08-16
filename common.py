@@ -34,12 +34,13 @@ def write_to_file(csvfile, data):
         for line in data:
             file.writerow(line)
 
-def voting(csvfile, ID, vote_index, amount):
+def modify_value_of_data(csvfile, ID, data_index, amount):
     list_from_file = read_file(csvfile)
     for ID_, line in enumerate(list_from_file):
         if int(ID) == int(line[0]):
-            ujertek = int(amount) + int(line[vote_index])
-            list_from_file[ID_][vote_index] = ujertek
-            print(ID)
-            print(line[0])
+            ujertek = int(amount) + int(line[data_index])
+            print(list_from_file[ID_][data_index])
+            list_from_file[ID_][data_index] = ujertek
+            print(list_from_file[ID_][data_index])
+            print(csvfile)
     write_to_file(csvfile, list_from_file)
