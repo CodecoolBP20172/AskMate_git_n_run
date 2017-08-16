@@ -21,10 +21,18 @@ def route_list():
 @app.route("/question/<int:ID>", methods=['GET'])
 def route_question(ID):
     questions = read_file("question.csv")
+<<<<<<< HEAD
+=======
+    answers = read_file("answer.csv")
+    modify_value_of_data("question.csv", ID, 2, 1)
+>>>>>>> 99d970c946baa928c9e7b8ce985adc107b9ffa8f
     for number, line in enumerate(questions):
         questions[number][4] = base64_to_string(line[4])
         questions[number][5] = base64_to_string(line[5])
-    return render_template("question.html", questions=questions, id_=str(ID))
+    for number, line in enumerate(answers):
+        answers[number][4] = base64_to_string(line[4])
+        answers[number][5] = base64_to_string(line[5])
+    return render_template("question.html", questions=questions, answers=answers, id_=str(ID))
 
 
 @app.route("/ask-question")
@@ -32,9 +40,11 @@ def route_ask():
     return render_template("form.html")
 
 
+
+
 @app.route("/add-question", methods=["POST"])
 def route_add():
-    list_to_write = [3,int(datetime.datetime.utcnow().timestamp()),0,0,string_to_base64(request.form["title"]), string_to_base64(request.form["question"])]
+    list_to_write = [nextID("question.csv"),int(datetime.datetime.utcnow().timestamp()),0,0,string_to_base64(request.form["title"]), string_to_base64(request.form["question"])]
     write_file(list_to_write)
     return redirect("/")
 
