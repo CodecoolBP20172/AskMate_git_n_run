@@ -33,9 +33,11 @@ def route_ask():
     return render_template("form.html")
 
 
+
+
 @app.route("/add-question", methods=["POST"])
 def route_add():
-    list_to_write = [3,int(datetime.datetime.utcnow().timestamp()),0,0,string_to_base64(request.form["title"]), string_to_base64(request.form["question"])]
+    list_to_write = [nextID("question.csv"),int(datetime.datetime.utcnow().timestamp()),0,0,string_to_base64(request.form["title"]), string_to_base64(request.form["question"])]
     write_file(list_to_write)
     return redirect("/")
 

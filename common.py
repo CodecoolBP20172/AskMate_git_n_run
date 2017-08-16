@@ -3,6 +3,14 @@ import datetime
 import base64
 
 
+def nextID(file):
+    IDs = []
+    table = read_file(file)
+    for line in table:
+        IDs.append(line[0])
+    return int(max(IDs))+1
+
+
 def string_to_base64(origin):
     origin_in_bytes = origin.encode('utf-8')
     b64_encoded_bytes = base64.b64encode(origin_in_bytes)
