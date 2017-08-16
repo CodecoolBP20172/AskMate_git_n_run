@@ -1,0 +1,36 @@
+body {
+	padding: 0px;
+	margin: 0px;
+	background: #ffffff url(../images/bg.jpg) top center no-repeat fixed;
+	font-family: tahoma, arial, sans-serif;
+	font-size: 100%;
+	color: #4e4e4e;
+}
+
+a {
+	color: #ee2e24;
+	text-decoration: none;
+}
+
+table {
+	border-collapse: collapse;
+	width: 90%;
+    }
+
+tr, td, th {
+	border-bottom: 1px solid grey;
+	vertical-align: center;
+	padding: 8px;
+	text-align: left	
+}
+	
+tr, th {
+	height: 50px;
+}
+
+
+td.questions {
+	font-size: 120%;
+	font-family: times;
+	text-align: left;
+}
