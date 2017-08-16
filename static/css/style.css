@@ -14,15 +14,15 @@ a {
 
 table {
 	border-collapse: collapse;
-	width: 50%;
+	width: 60%;
     }
 
-td, th {
+tr, td, th {
 	vertical-align: center;
 	padding: 8px;
 	text-align: center	
 }
 	
-th {
+tr, th {
 	height: 50px;
 }
