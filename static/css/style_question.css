@@ -7,6 +7,10 @@ body {
 	color: #4e4e4e;
 }
 
+submit_id {
+	display : inline;
+}
+
 a {
 	color: #ee2e24;
 	text-decoration: none;

@@ -38,19 +38,12 @@
                                         {%endfor%}
                                 </td>
                                 <td>
-                                        <form action="/question/{{ id_ }}/delete" method="get">
-                                        <button type="submit" id="submit_id" align="right">Delete</button>
-                                        </form>
-                                        <form action="/question/{{ id_ }}/edit" method="get">
-                                        <button type="submit" id="submit_id" align="right">Edit</button>
-                                        </form>
-                                        <form action="/question/{{ id_ }}/vote-up" method="get">
-                                        <button type="submit" id="submit_id" align="right">Vote-up</button>
-                                        </form>
-                                        <form action="/question/{{ id_ }}/vote-down" method="get">
-                                        <button type="submit" id="submit_id" align="right">Vote-down</button>
-                                        </form></td>                                   
-                        </tr>
+                                        <a href="/question/{{ id_ }}/delete"><img src="/static/images/delete.png" width="25px"></a>
+                                        <a href="/question/{{ id_ }}/edit"><img src="/static/images/edit.png" width="25px"></a>
+                                        <a href="/question/{{ id_ }}/vote-up"><img src="/static/images/upvote.png" width="25px"></a>
+                                        <a href="/question/{{ id_ }}/vote-down"><img src="/static/images/downvote.png" width="25px"></a>
+                                </rd>
+                                                      </tr>
                 </table>        
         </table>
         <br><br><br>
@@ -63,7 +56,9 @@
                                 <tr>
                                         <td class="answer_1">
                                                 {{row[1]}} Votes: {{row[2]}}
-                                                
+                                                <a href="/answer/{{ row[0] }}/delete"><img src="/static/images/delete.png" width="25px"></a>
+                                                <a href="/answer/{{ row[0] }}/vote-up"><img src="/static/images/upvote.png" width="25px"></a>
+                                                <a href="/answer/{{ row[0] }}/vote-down"><img src="/static/images/downvote.png" width="25px"></a>
                                         </td>
                                 </tr>
                                 <td>
@@ -71,16 +66,7 @@
                                         <br>
                                 </td>
                                 <tr>
-                                        <td class="answer_2">
-                                                <form action="/answer/{{ row[0] }}/delete" method="get">
-                                                <button type="submit" id="submit_id" align="right">Delete</button>
-                                                </form>
-                                                <form action="/answer/{{ row[0] }}/vote-down" method="get">
-                                                <button type="submit" id="submit_id" align="right">Vote-down</button>
-                                                </form>
-                                                <form action="/answer/{{ row[0] }}/vote-up" method="get">
-                                                <button type="submit" id="submit_id" align="right">Vote-up</button>
-                                                </form>
+                                        <td>
                                         </td>
                                 </tr>
                                 <tr>
