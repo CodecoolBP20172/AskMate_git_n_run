@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, request, session
 import csv
 import datetime
+from datetime import timezone
 import base64
 from common import *
 from operator import itemgetter
@@ -12,7 +13,7 @@ app = Flask(__name__)
 def route_list():
     questions = read_file("question.csv")
     for number, line in enumerate(questions):
-        questions[number][1] = datetime.datetime.utcfromtimestamp(float(line[1]))
+        questions[number][1] = datetime.datetime.fromtimestamp(float(line[1]))
         questions[number][4] = base64_to_string(line[4])
         questions[number][5] = base64_to_string(line[5])
     return render_template("list.html", questions=questions)
@@ -22,7 +23,7 @@ def route_list():
 def route_list_aspect(aspect, desc):
     questions = read_file("question.csv")
     for line_number, line in enumerate(questions):
-        questions[line_number][1] = datetime.datetime.utcfromtimestamp(float(line[1]))
+        questions[line_number][1] = datetime.datetime.fromtimestamp(float(line[1]))
         questions[line_number][4] = base64_to_string(line[4])
         questions[line_number][5] = base64_to_string(line[5])
         questions[line_number][2] = int(line[2])
@@ -47,13 +48,14 @@ def route_question(ID):
     questions = read_file("question.csv")
     answers = read_file("answer.csv")
     for line_number, line in enumerate(questions):   
-        questions[line_number][1] = datetime.datetime.utcfromtimestamp(float(line[1]))
+        questions[line_number][1] = datetime.datetime.fromtimestamp(float(line[1]))
         questions[line_number][4] = base64_to_string(line[4])
         questions[line_number][5] = base64_to_string(line[5])
     for line_number, line in enumerate(answers):
-        answers[line_number][1] = datetime.datetime.utcfromtimestamp(float(line[1]))
+        answers[line_number][1] = datetime.datetime.fromtimestamp(float(line[1]))
         answers[line_number][4] = base64_to_string(line[4])
         answers[line_number][5] = base64_to_string(line[5])
+    answers = reversed(sorted(answers, key=itemgetter(2)))
     return render_template("question.html", questions=questions, answers=answers, id_=str(ID))
 
 
@@ -151,14 +153,14 @@ def route_answer_save(ID):
 
 @app.route("/give-answer/<int:ID>", methods=["POST"])
 def route_add_answer(ID):
-    list_to_write = [nextID("answer.csv"), int(datetime.datetime.utcnow().timestamp()),0,ID,string_to_base64(request.form["answer_text"]), ""]
+    list_to_write = [nextID("answer.csv"), int(datetime.datetime.now().timestamp()),0,ID,string_to_base64(request.form["answer_text"]), ""]
     write_file("answer.csv", list_to_write)
     return redirect("/question/"+str(ID))
 
 
 @app.route("/add-question", methods=["POST"])
 def route_add():
-    list_to_write = [nextID("question.csv"),int(datetime.datetime.utcnow().timestamp()),0,0,string_to_base64(request.form["title"]), string_to_base64(request.form["question"])]
+    list_to_write = [nextID("question.csv"),int(datetime.datetime.now().timestamp()),0,0,string_to_base64(request.form["title"]), string_to_base64(request.form["question"])]
     write_file("question.csv", list_to_write)
     return redirect("/")
 
@@ -178,13 +180,21 @@ def route_question_vote_down(ID):
 @app.route("/answer/<int:ID>/vote-up", methods=['GET'])
 def route_answer_vote_up(ID):
     modify_value_of_data("answer.csv", ID, 2, 1)
-    return redirect("/")
+    answers = read_file("answer.csv")
+    for line in answers:
+        if line[0] == str(ID):
+            kutya = line[3]
+    return redirect("/question/"+str(kutya))
 
 
 @app.route("/answer/<int:ID>/vote-down", methods=['GET'])
 def route_answer_vote_down(ID):
     modify_value_of_data("answer.csv", ID, 2, -1)
-    return redirect("/")
+    answers = read_file("answer.csv")
+    for line in answers:
+        if line[0] == str(ID):
+            kutya = line[3]
+    return redirect("/question/"+str(kutya))
 
 
 if __name__ == "__main__":
