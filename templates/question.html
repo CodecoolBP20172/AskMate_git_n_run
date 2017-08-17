@@ -30,14 +30,14 @@
                 </tr>
                 <table align="center">
                         <tr>
-                                <td>
+                                <td class="question_date">
                                         {%for line in questions%}
                                                 {%if line[0]==id_%}
-                                                        {{line[1]}}
+                                                        {{line[1]}} Vote: {{line[3]}}
                                                 {%endif%}
                                         {%endfor%}
                                 </td>
-                                <td>
+                                <td class="question_buttons">
                                         <a href="/question/{{ id_ }}/delete"><img src="/static/images/delete.png" width="25px"></a>
                                         <a href="/question/{{ id_ }}/edit"><img src="/static/images/edit.png" width="25px"></a>
                                         <a href="/question/{{ id_ }}/vote-up"><img src="/static/images/upvote.png" width="25px"></a>
@@ -46,25 +46,32 @@
                                                       </tr>
                 </table>        
         </table>
-        <br><br><br>
         <table align="center">
-        <th class="answer"><h3>Answers</h3></th>
+        <tr><h3 class="title">Answers</h3></tr>
         {%for row in answers%}
                 {%for line in questions%}
                         {%if line[0] == row[3]%}
                         {%if line[0] == id_%}                   
                                 <tr>
-                                        <td class="answer_1">
-                                                {{row[1]}} Votes: {{row[2]}}
+                                        <td style="padding: 0px">
+                                        <table style="width: 100%">
+                                        <tr> 
+                                        <td class="answer_date">
+                                                {{row[1]}} Votes: {{row[2]}}</td>
+                                        <td class="answer_buttons">
                                                 <a href="/answer/{{ row[0] }}/delete"><img src="/static/images/delete.png" width="25px"></a>
                                                 <a href="/answer/{{ row[0] }}/vote-up"><img src="/static/images/upvote.png" width="25px"></a>
                                                 <a href="/answer/{{ row[0] }}/vote-down"><img src="/static/images/downvote.png" width="25px"></a>
                                         </td>
+                                        </tr>
+                                        </table>
+                                        </td>
                                 </tr>
-                                <td>
+                                <td class="answer">
                                         {{row[4]}}
                                         <br>
                                 </td>
+
                                 <tr>
                                         <td>
                                         </td>
