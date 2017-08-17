@@ -27,17 +27,11 @@ def route_list_aspect(aspect, desc):
         questions[line_number][4] = base64_to_string(line[4])
         questions[line_number][5] = base64_to_string(line[5])
         questions[line_number][2] = int(line[2])
-    if aspect == "name":
-        aspectnumber = 4
-    elif aspect == "date":
-        aspectnumber = 1
-    elif aspect == "view":
-        aspectnumber = 2
-    elif aspect == "vote":
-        aspectnumber = 3
-    else:
-        aspectnumber = 0
-    questions = sorted(questions, key=itemgetter(aspectnumber))
+    dictionary_of_orders = {"name": 4, "date": 1, "view": 2, "vote": 3}
+    aspect_number = 0
+    if aspect in dictionary_of_orders:
+        aspect_number = dictionary_of_orders[aspect]
+    questions = sorted(questions, key=itemgetter(aspect_number))
     if desc == "desc":
         questions = reversed(questions) 
     return render_template("list.html", questions=questions)
