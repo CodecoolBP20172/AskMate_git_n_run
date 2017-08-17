@@ -18,9 +18,10 @@
                         {{line[5]}}
                         {%endif%}
                         {%endfor%}</td></tr>
-                        <table align="center"><tr><td>{%for line in questions%}
+                        <table align="center"><tr><td>
+                                {%for line in questions%}
                                 {%if line[0]==id_%}
-                                {{line[1]}}
+                                <p>{{line[1]}} Vote {{line[2]}}</p>
                         </td>
                         <td>
                         <form action="/question/{{ id_ }}/delete" method="get">
