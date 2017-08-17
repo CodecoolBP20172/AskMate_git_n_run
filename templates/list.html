@@ -3,28 +3,30 @@
    <head>
         <link rel="stylesheet" type="text/css" href="/static/css/style_list.css" media="screen, print">
         <meta charset="utf-8">
-        <title>Askmate</title>
+        <title>List of Questions</title>
    </head>
    <body align="center">
-       <h1>Questions</h1>
-       <br><br>
-     <a href="/ask-question">ask a question</a>
+       <img src="/static/images/header_list.png" width="1800px">
+       <br><br><br>
        <table align="center">
             <tr>
-               <th>Question title<a href="/name=asc">ascimagehere</a> <a href="/name=desc">descimagehere</a></th>
-               <th>Time<a href="/time=asc">ascimagehere</a> <a href="/time=desc">descimagehere</a></th>
-               <th>View<a href="/view=asc">ascimagehere</a> <a href="/view=desc">descimagehere</a></th>
-               <th>Votes<a href="/vote=asc">ascimagehere</a> <a href="/vote=desc">descimagehere</a></th>
+               <th>Question title <a href="/name=asc"><img src="/static/images/up.png" width="15px"></a>
+                <a href="/name=desc"><img src="/static/images/down.png" width="15px"></a></th>
+               <th>Time <a href="/time=asc"><img src="/static/images/up.png" width="15px"></a> <a href="/time=desc"><img src="/static/images/down.png" width="15px"></a></th>
+               <th>View <a href="/view=asc"><img src="/static/images/up.png" width="15px"></a> <a href="/view=desc"><img src="/static/images/down.png" width="15px"></a></th>
+               <th>Votes <a href="/vote=asc"><img src="/static/images/up.png" width="15px"></a> <a href="/vote=desc"><img src="/static/images/down.png" width="15px"></a></th>
             </tr>
         {% for line in questions %}
 
             <tr>
-                <td class="questions"><a href="/question+1view/{{  line[0]  }}">{{line[4]}}</a></td> <!--What we can do with this? Probably make the magic in python?-->
+                <td class="questions"><a href="/question+1view/{{  line[0]  }}">{{line[4]}}</a></td>
                 <td>{{line[1]}}</td>
                 <td>{{line[2]}}</td>
                 <td>{{line[3]}}</td>
             </tr>
         {% endfor %}
       </table>
+      <br><br>
+      <a href="/ask-question"><h3>Ask a question</h3></a>
    </body>
 </html>

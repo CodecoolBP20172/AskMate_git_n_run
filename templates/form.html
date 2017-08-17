@@ -2,20 +2,23 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="/static/css/style_form.css" media="screen, print">
         <title>Askmate</title>
     </head>
-    <body>
-        <h1>Ask Askmate</h1><br>
+    <body align="center">
+        <img src="/static/images/header_form.png" width="1800px">
+        <br>
         <h2>{{ page_title }}</h2>
-        <a href ="/">Back to main menu</a>
         <form action="{{ action_link }}" method="post">    
             <fieldset>
         <p>Title</p>
-        <p><textarea name="title" id="title id" rows="2" cols="70">{{ title_of_question }}</textarea></p>
+        <p><textarea name="title" id="title id" rows="2" cols="70" minlength="10" maxlength="60" required="required" style="font-size:15px;">{{ title_of_question }}</textarea></p>
         <p>Question</p>
-        <p><textarea name="question" id="question id" rows="20" cols="70">{{ question }}</textarea></p><br>
-        <button type="submit" id="submit_id" align="right">Submit</button>
+        <p><textarea name="question" id="question id" rows="20" cols="70" minlength="10" required="required" style="font-size:12px;">{{ question }}</textarea></p><br>
+        <button type="submit" id="submit_id">Submit</button>
             </fieldset>
-        </form>    
+        </form>
+        <br>
+        <a href ="/"><h3>Back to main menu<h3></a>
     </body>
 </html>

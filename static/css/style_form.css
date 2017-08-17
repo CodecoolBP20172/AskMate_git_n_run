@@ -1,0 +1,49 @@
+body {
+	padding: 0px;
+	margin: 0px;
+	background: #ffffff url(../images/bg.jpg) top center no-repeat fixed;
+	font-family: tahoma, arial, sans-serif;
+	font-size: 100%;
+	color: #4e4e4e;
+}
+
+a {
+	color: #ee2e24;
+	text-decoration: none;
+}
+
+fieldset {
+	margin: auto;
+	max-width : 50px;
+	padding: 1em 1em;
+}
+
+fieldset input {
+	text-align: center
+}
+
+p {
+	color: #2D2D2D;
+	text-decoration: none;
+	font: impact;
+	font-size: 115%;
+	font-weight: bold;
+}
+
+button {
+    background-color: #2D7B30;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+	font-size: 16px;
+	border-radius: 5px;
+}
+
+h2 {
+	color: #2D2D2D;
+	text-decoration: none;
+	font-family: Helvetica;
+}
