@@ -75,10 +75,13 @@ def route_question_view(ID):
 def route_answer_delete(ID):
     answer_table = read_file("answer.csv")
     for line in answer_table:
+        if line[0] == str(ID):
+            kutya = line[3]
+    for line in answer_table:
         if int(line[0]) == ID:
             answer_table.remove(line)
     write_to_file("answer.csv", answer_table)
-    return redirect("/")
+    return redirect("/question/"+str(kutya))
 
 
 @app.route("/question/<int:ID>/delete", methods=["GET"])
@@ -90,7 +93,6 @@ def route_question_delete(ID):
             answers_to_remove.append(line)
     for line in answers_to_remove:
         answer_table.remove(line)
- 
     write_to_file("answer.csv", answer_table)
     questions_table = read_file("question.csv")
     for line in questions_table:
@@ -106,7 +108,7 @@ def route_question_edit(ID):
     list_of_data_to_edit = ""
     for line in list_from_csv:
         if str(ID) == line[0]:
-            list_of_data_to_edit = line 
+            list_of_data_to_edit = line
     return render_template(
         "form.html",
         page_title="Edit a question",
