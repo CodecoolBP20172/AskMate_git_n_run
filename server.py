@@ -69,6 +69,16 @@ def route_question_view(ID):
     return redirect("/question/"+str(ID))
 
 
+@app.route("/answer/<int:ID>/delete", methods=["GET"])
+def route_answer_delete(ID):
+    answer_table = read_file("answer.csv")
+    for line in answer_table:
+        if int(line[0]) == ID:
+            answer_table.remove(line)
+    write_to_file("answer.csv", answer_table)
+    return redirect("/")
+
+
 @app.route("/question/<int:ID>/delete", methods=["GET"])
 def route_question_delete(ID):
     answer_table = read_file("answer.csv")
@@ -143,13 +153,13 @@ def route_question_vote_down(ID):
 @app.route("/answer/<int:ID>/vote-up", methods=['GET'])
 def route_answer_vote_up(ID):
     modify_value_of_data("answer.csv", ID, 2, 1)
-    return redirect("/answer/"+str(ID))
+    return redirect("/")
 
 
 @app.route("/answer/<int:ID>/vote-down", methods=['GET'])
 def route_answer_vote_down(ID):
     modify_value_of_data("answer.csv", ID, 2, -1)
-    return redirect("/answer/"+str(ID))
+    return redirect("/")
 
 
 if __name__ == "__main__":

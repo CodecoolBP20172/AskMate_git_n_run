@@ -21,11 +21,22 @@
                         <table align="center"><tr><td>{%for line in questions%}
                                 {%if line[0]==id_%}
                                 {{line[1]}}
+                        </td>
+                        <td>
+                        <form action="/question/{{ id_ }}/delete" method="get">
+                        <button type="submit" id="submit_id" align="right">Delete</button>
+                        </form>
+                        <form action="/question/{{ id_ }}/edit" method="get">
+                        <button type="submit" id="submit_id" align="right">Edit</button>
+                        </form>
+                        <form action="/question/{{ id_ }}/vote-up" method="get">
+                        <button type="submit" id="submit_id" align="right">Vote-up</button>
+                        </form>
+                        <form action="/question/{{ id_ }}/vote-down" method="get">
+                        <button type="submit" id="submit_id" align="right">Vote-down</button>
+                        </form></td>
                                 {%endif%}
                                 {%endfor%}
-                        </td>
-                    
-                    <td>Delete/Edit \ Vote</td>
                 </tr></table>        
         </table>
 
@@ -40,13 +51,24 @@
                     <tr><td>{%for line in answers%}
                             {%if line[0]==id_%}
                             {{line[1]}}
-                            {%endif%}
-                            {%endfor%}</td></tr>
+                            Votes : {{line[2]}}
+                    </td></tr>
                     <td>
                     {{row[4]}}
                     <br>
                     </td>
-                    <tr><td>Vote</td></tr><tr><td><br></td></tr>
+                    <tr><td>Vote/<form action="/answer/{{ row[0] }}/delete" method="get">
+                        <button type="submit" id="submit_id" align="right">Delete</button>
+                        </form>
+                        <form action="/answer/{{ row[0] }}/vote-down" method="get">
+                        <button type="submit" id="submit_id" align="right">Vote-down</button>
+                        </form>
+                        <form action="/answer/{{ row[0] }}/vote-up" method="get">
+                        <button type="submit" id="submit_id" align="right">Vote-up</button>
+                        </form>
+                        </td></tr><tr><td><br></td></tr>
+                            {%endif%}
+                            {%endfor%}
                     {%endif%}
                     {%endif%}
                     {%endfor%}
@@ -62,12 +84,6 @@
         <button type="submit" id="submit_answer" method="POST">Submit</button>
         <br>
         <br>
-        </form>
-        <form action="/question/{{ id_ }}/vote-up" method="get">
-        <button type="submit" id="submit_id" align="right">Vote-up</button>
-        </form>
-        <form action="/question/{{ id_ }}/vote-down" method="get"><br>
-        <button type="submit" id="submit_id" align="right">Vote-down</button>
         </form>
         <a href="/"><button type="main">Back To Main Menu</button></a>
         
