@@ -7,6 +7,18 @@ body {
 	color: #4e4e4e;
 }
 
+button {
+    background-color: #2D7B30;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+	font-size: 16px;
+	border-radius: 5px;
+}
+
 submit_id {
 	display : inline;
 }
