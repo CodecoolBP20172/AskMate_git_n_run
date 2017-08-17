@@ -1,89 +1,112 @@
 <!doctype html>
 <html>
     <head>
-    <link rel="stylesheet" type="text/css" href="/static/css/style_question.css" media="screen, print">
-    <meta charset="utf-8">
-    <title>Questions</title>
+        <link rel="stylesheet" type="text/css" href="/static/css/style_question.css" media="screen, print">
+        <meta charset="utf-8">
+        <title>Questions</title>
     </head>
+    
     <body align="center">
         <table align="center" border="1px">
                 <th>Question</th>
-                <tr><td>{%for line in questions%}
-                        {%if line[0]==id_%}
-                        {{line[4]}}
-                        {%endif%}
-                        {%endfor%}</td></tr>
-                <tr><td>{%for line in questions%}
-                        {%if line[0]==id_%}
-                        {{line[5]}}
-                        {%endif%}
-                        {%endfor%}</td></tr>
-                        <table align="center"><tr><td>
-                                {%for line in questions%}
-                                {%if line[0]==id_%}
-                                <p>{{line[1]}} Vote {{line[2]}}</p>
-                        </td>
+                <tr>
                         <td>
-                        <form action="/question/{{ id_ }}/delete" method="get">
-                        <button type="submit" id="submit_id" align="right">Delete</button>
-                        </form>
-                        <form action="/question/{{ id_ }}/edit" method="get">
-                        <button type="submit" id="submit_id" align="right">Edit</button>
-                        </form>
-                        <form action="/question/{{ id_ }}/vote-up" method="get">
-                        <button type="submit" id="submit_id" align="right">Vote-up</button>
-                        </form>
-                        <form action="/question/{{ id_ }}/vote-down" method="get">
-                        <button type="submit" id="submit_id" align="right">Vote-down</button>
-                        </form></td>
-                                {%endif%}
+                                {%for line in questions%}
+                                        {%if line[0]==id_%}
+                                                {{line[4]}}
+                                        {%endif%}
                                 {%endfor%}
-                </tr></table>        
+                        </td>
+                </tr>
+                <tr>
+                        <td>
+                                {%for line in questions%}
+                                        {%if line[0]==id_%}
+                                                {{line[5]}}
+                                        {%endif%}
+                                {%endfor%}
+                        </td>
+                </tr>
+                <table align="center">
+                        <tr>
+                                <td>
+                                        {%for line in questions%}
+                                                {%if line[0]==id_%}
+                                                        {{line[1]}}
+                                                {%endif%}
+                                        {%endfor%}
+                                </td>
+                                <td>
+                                        <form action="/question/{{ id_ }}/delete" method="get">
+                                        <button type="submit" id="submit_id" align="right">Delete</button>
+                                        </form>
+                                        <form action="/question/{{ id_ }}/edit" method="get">
+                                        <button type="submit" id="submit_id" align="right">Edit</button>
+                                        </form>
+                                        <form action="/question/{{ id_ }}/vote-up" method="get">
+                                        <button type="submit" id="submit_id" align="right">Vote-up</button>
+                                        </form>
+                                        <form action="/question/{{ id_ }}/vote-down" method="get">
+                                        <button type="submit" id="submit_id" align="right">Vote-down</button>
+                                        </form></td>                                   
+                        </tr>
+                </table>        
         </table>
-
+        
         <table border="1px" align="center">
-            <th>Answers</th>
-            
-                    {%for row in answers%}
-                    {%for line in questions%}
-                    {%if line[0] == row[3]%}
-                    {%if line[0] == id_%}
-                    
-                    <tr><td>
-                            {{row[1]}}
-                            Votes : {{row[2]}}
-                    </td></tr>
-                    <td>
-                    {{row[4]}}
-                    <br>
-                    </td>
-                    <tr><td>Vote/<form action="/answer/{{ row[0] }}/delete" method="get">
-                        <button type="submit" id="submit_id" align="right">Delete</button>
-                        </form>
-                        <form action="/answer/{{ row[0] }}/vote-down" method="get">
-                        <button type="submit" id="submit_id" align="right">Vote-down</button>
-                        </form>
-                        <form action="/answer/{{ row[0] }}/vote-up" method="get">
-                        <button type="submit" id="submit_id" align="right">Vote-up</button>
-                        </form>
-                        </td></tr><tr><td><br></td></tr>
-                    {%endif%}
-                    {%endif%}
-                    {%endfor%}
-                    {%endfor%}
-                    
-                </table>
-                <br><br>
+        <th>Answers</th>
+        {%for row in answers%}
+                {%for line in questions%}
+                        {%if line[0] == row[3]%}
+                        {%if line[0] == id_%}                   
+                                <tr>
+                                        <td>
+                                                {{row[1]}}
+                                                Votes: {{row[2]}}
+                                        </td>
+                                </tr>
+                                <td>
+                                        {{row[4]}}
+                                        <br>
+                                </td>
+                                <tr>
+                                        <td>
+                                                Vote/<form action="/answer/{{ row[0] }}/delete" method="get">
+                                                <button type="submit" id="submit_id" align="right">Delete</button>
+                                                </form>
+                                                <form action="/answer/{{ row[0] }}/vote-down" method="get">
+                                                <button type="submit" id="submit_id" align="right">Vote-down</button>
+                                                </form>
+                                                <form action="/answer/{{ row[0] }}/vote-up" method="get">
+                                                <button type="submit" id="submit_id" align="right">Vote-up</button>
+                                                </form>
+                                        </td>
+                                </tr>
+                                <tr>
+                                        <td>
+                                                <br>
+                                        </td>
+                                </tr>
+                        {%endif%}
+                        {%endif%}
+                {%endfor%}
+        {%endfor%}
+        </table>
+        <br>
+        <br>
         Answer Here:
-        <br><br>
+        <br>
+        <br>
         <form action="/give-answer/{{ id_  }}" method="post">  
-        <textarea name="answer_text" rows="8" cols="80">{{ answer_text }}</textarea>
-        <br>
-        <button type="submit" id="submit_answer" method="POST">Submit</button>
-        <br>
-        <br>
+                <textarea name="answer_text" rows="8" cols="80">{{ answer_text }}</textarea>
+                <br>
+                <button type="submit" id="submit_answer" method="POST">Submit</button>
+                <br>
+                <br>
         </form>
-        <a href="/"><button type="main">Back To Main Menu</button></a>
+        <a href="/">
+        <button type="main">Back To Main Menu
+        </button>
+        </a>
     </body>
-
 </html>
