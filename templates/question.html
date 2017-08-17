@@ -48,10 +48,9 @@
                     {%if line[0] == row[3]%}
                     {%if line[0] == id_%}
                     
-                    <tr><td>{%for line in answers%}
-                            {%if line[0]==id_%}
-                            {{line[1]}}
-                            Votes : {{line[2]}}
+                    <tr><td>
+                            {{row[1]}}
+                            Votes : {{row[2]}}
                     </td></tr>
                     <td>
                     {{row[4]}}
@@ -61,14 +60,12 @@
                         <button type="submit" id="submit_id" align="right">Delete</button>
                         </form>
                         <form action="/answer/{{ row[0] }}/vote-down" method="get">
-                        <button type="submit" id="submit_id" align="right">Vote-down</button>
+                        <button type="submit" id="submit_id" align="right">{{  row[0]  }}</button>
                         </form>
                         <form action="/answer/{{ row[0] }}/vote-up" method="get">
                         <button type="submit" id="submit_id" align="right">Vote-up</button>
                         </form>
                         </td></tr><tr><td><br></td></tr>
-                            {%endif%}
-                            {%endfor%}
                     {%endif%}
                     {%endif%}
                     {%endfor%}

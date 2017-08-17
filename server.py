@@ -46,6 +46,7 @@ def route_list_aspect(aspect, desc):
 def route_question(ID):
     questions = read_file("question.csv")
     answers = read_file("answer.csv")
+    answers = sorted(answers, key=itemgetter(2))
     for line_number, line in enumerate(questions):   
         questions[line_number][1] = datetime.datetime.utcfromtimestamp(float(line[1]))
         questions[line_number][4] = base64_to_string(line[4])
