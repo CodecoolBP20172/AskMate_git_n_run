@@ -14,15 +14,37 @@ a {
 
 table {
 	border-collapse: collapse;
-	width: 60%;
+	width: 60%; 
     }
 
 tr, td, th {
 	vertical-align: center;
 	padding: 8px;
-	text-align: center	
+	text-align: center;
 }
 	
 tr, th {
 	height: 50px;
 }
+
+.question_title {
+	border-collapse: collapse;
+	width: 60%; 
+	background: #ACACAC;
+	}
+	
+.question {
+	border-collapse: collapse;
+	width: 60%; 
+	background: #FFFFFF;
+	}
+
+.answer_1 {
+	text-align: right;
+	border-bottom: 1px solid grey;
+	}
+.answer {
+	font-size: 20px;
+	border-bottom: 2px solid grey;
+	padding: 0	px;
+	}

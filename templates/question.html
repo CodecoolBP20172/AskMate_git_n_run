@@ -7,10 +7,11 @@
     </head>
     
     <body align="center">
-        <table align="center" border="1px">
-                <th>Question</th>
+        <img src="/static/images/header_list.png" width="1800px"><br><br>
+        
+        <table align="center">
                 <tr>
-                        <td>
+                        <td class="question_title">
                                 {%for line in questions%}
                                         {%if line[0]==id_%}
                                                 {{line[4]}}
@@ -19,7 +20,7 @@
                         </td>
                 </tr>
                 <tr>
-                        <td>
+                        <td class="question">
                                 {%for line in questions%}
                                         {%if line[0]==id_%}
                                                 {{line[5]}}
@@ -52,17 +53,17 @@
                         </tr>
                 </table>        
         </table>
-        
-        <table border="1px" align="center">
-        <th>Answers</th>
+        <br><br><br>
+        <table align="center">
+        <th class="answer"><h3>Answers</h3></th>
         {%for row in answers%}
                 {%for line in questions%}
                         {%if line[0] == row[3]%}
                         {%if line[0] == id_%}                   
                                 <tr>
-                                        <td>
-                                                {{row[1]}}
-                                                Votes: {{row[2]}}
+                                        <td class="answer_1">
+                                                {{row[1]}} Votes: {{row[2]}}
+                                                
                                         </td>
                                 </tr>
                                 <td>
@@ -70,8 +71,8 @@
                                         <br>
                                 </td>
                                 <tr>
-                                        <td>
-                                                Vote/<form action="/answer/{{ row[0] }}/delete" method="get">
+                                        <td class="answer_2">
+                                                <form action="/answer/{{ row[0] }}/delete" method="get">
                                                 <button type="submit" id="submit_id" align="right">Delete</button>
                                                 </form>
                                                 <form action="/answer/{{ row[0] }}/vote-down" method="get">
