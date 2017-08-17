@@ -123,6 +123,31 @@ def route_question_save(ID):
     write_to_file("question.csv", list_to_modify)
     return redirect("/question/" + str(ID))
 
+@app.route("/answer/<int:ID>/edit", methods=['GET'])
+def route_answer_edit(ID):
+    list_from_csv = read_file("answer.csv")
+    list_of_data_to_edit = ""
+    for line in list_from_csv:
+        if str(ID) == line[0]:
+            list_of_data_to_edit = line[4] 
+    return render_template(
+        "question.html",
+        cube = 0
+        action_link="/answer/"+str(ID)+"/save",
+        answer_text=base64_to_string(list_of_data_to_edit))
+
+
+@app.route("/answer/<int:ID>/save", methods=['POST'])
+def route_answer_save(ID):
+    list_to_modify = read_file("answer.csv")
+    for line in list_to_modify:
+        if str(ID) == line[0]:
+            line[4] = string_to_base64(request.form["answer_text"])
+    write_to_file("answer.csv", list_to_modify)
+    return redirect("/question/" + str(ID))
+
+
+
 
 @app.route("/give-answer/<int:ID>", methods=["POST"])
 def route_add_answer(ID):

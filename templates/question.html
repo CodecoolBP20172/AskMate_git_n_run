@@ -78,13 +78,24 @@
                 <br><br>
         Answer Here:
         <br><br>
-        <form action="/give-answer/{{ id_  }}" method="post">
-        <textarea name="answer_text" rows="8" cols="80"></textarea>
+        {% if cube == 0 %}
+        <form action= "/answer/{{ id_  }}/edit" method="post">  
+        <textarea name="answer_text" rows="8" cols="80">{{ answer_text }}</textarea>
         <br>
         <button type="submit" id="submit_answer" method="POST">Submit</button>
         <br>
         <br>
         </form>
+
+        {% else %}
+        <form action="/give-answer/{{ id_  }}" method="post">  
+        <textarea name="answer_text" rows="8" cols="80">{{ answer_text }}</textarea>
+        <br>
+        <button type="submit" id="submit_answer" method="POST">Submit</button>
+        <br>
+        <br>
+        </form>
+
         <a href="/"><button type="main">Back To Main Menu</button></a>
         
     </body>
