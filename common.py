@@ -44,13 +44,3 @@ def write_to_file(csvfile, data):
         file = csv.writer(datafile, delimiter=",")
         for line in data:
             file.writerow(line)
-
-def modify_value_of_data(csvfile, ID, data_index, amount):
-    list_from_file = read_file(csvfile)
-    print(amount)
-    for ID_, line in enumerate(list_from_file):
-        if int(ID) == int(line[0]):
-            new_value = int(amount) + int(line[data_index])
-            list_from_file[ID_][data_index] = new_value
-
-    write_to_file(csvfile, list_from_file)
