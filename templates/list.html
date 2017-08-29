@@ -38,10 +38,10 @@
         {% for line in questions %}
 
             <tr>
-                <td class="questions"><a href="/question+1view/{{  line[0]  }}">{{line[4]}}</a></td>
-                <td>{{line[1]}}</td>
-                <td>{{line[2]}}</td>
-                <td>{{line[3]}}</td>
+                <td class="questions"><a href="/question+1view/{{  line['id']  }}">{{line["title"]}}</a></td>
+                <td>{{line["submission_time"]}}</td>
+                <td>{{line["view_number"]}}</td>
+                <td>{{line["vote_number"]}}</td>
             </tr>
         {% endfor %}
       </table>

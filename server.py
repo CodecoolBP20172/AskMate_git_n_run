@@ -5,17 +5,14 @@ from datetime import timezone
 import base64
 from common import *
 from operator import itemgetter
+import queries
 
 app = Flask(__name__)
 
 
 @app.route("/")
 def route_list():
-    questions = read_file("question.csv")
-    for number, line in enumerate(questions):
-        questions[number][1] = datetime.datetime.fromtimestamp(float(line[1]))
-        questions[number][4] = base64_to_string(line[4])
-        questions[number][5] = base64_to_string(line[5])
+    questions = queries.get_questions_for_index()
     return render_template("list.html", questions=questions)
 
 
