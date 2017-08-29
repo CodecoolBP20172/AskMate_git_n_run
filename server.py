@@ -35,7 +35,9 @@ def route_ask():
 
 @app.route("/question+1view/<int:ID>", methods=["GET"])
 def route_question_view(ID):
-    modify_value_of_data("question.csv", ID, 2, 1)
+
+    #modify_value_of_data("question.csv", ID, 2, 1)
+    # I had to comment the line above because it causes an error during I tested my functions    
     print("asd")
     return redirect("/question/"+str(ID))
 
@@ -104,34 +106,36 @@ def route_add():
 
 @app.route("/question/<int:ID>/vote-up", methods=['GET'])
 def route_question_vote_up(ID):
-    modify_value_of_data("question.csv", ID, 3, 1)
+    queries.modify_value_of_data("question", "vote_number", "id", str(ID), 1)
     return redirect("/question/"+str(ID))
 
 
 @app.route("/question/<int:ID>/vote-down", methods=['GET'])
 def route_question_vote_down(ID):
-    modify_value_of_data("question.csv", ID, 3, -1)
+    queries.modify_value_of_data("question", "vote_number", "id", str(ID), -1)
     return redirect("/question/"+str(ID))
 
 
 @app.route("/answer/<int:ID>/vote-up", methods=['GET'])
 def route_answer_vote_up(ID):
-    modify_value_of_data("answer.csv", ID, 2, 1)
-    answers = read_file("answer.csv")
-    for line in answers:
-        if line[0] == str(ID):
-            kutya = line[3]
-    return redirect("/question/"+str(kutya))
+    queries.modify_value_of_data("answer", "vote_number", "id", str(ID), 1)
+    
+     #for testing
+    print("Answer ID: " +str(ID) + " Votes: "+str(queries.get_value_of_an_attribute("answer", "vote_number", "id", str(ID))))
+    
+    question_id = queries.get_value_of_an_attribute("answer", "question_id", "id", str(ID))
+    return redirect("/question/"+str(question_id))
 
 
 @app.route("/answer/<int:ID>/vote-down", methods=['GET'])
 def route_answer_vote_down(ID):
-    modify_value_of_data("answer.csv", ID, 2, -1)
-    answers = read_file("answer.csv")
-    for line in answers:
-        if line[0] == str(ID):
-            kutya = line[3]
-    return redirect("/question/"+str(kutya))
+    queries.modify_value_of_data("answer", "vote_number", "id", str(ID), -1)
+    
+    #for testing 
+    print("Answer ID: " +str(ID) + " Votes: "+str(queries.get_value_of_an_attribute("answer", "vote_number", "id", str(ID))))
+    
+    question_id = queries.get_value_of_an_attribute("answer", "question_id", "id", str(ID))
+    return redirect("/question/"+str(question_id))
 
 
 if __name__ == "__main__":
