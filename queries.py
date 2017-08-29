@@ -2,7 +2,11 @@ import database_common
 
 
 @database_common.connection_handler
-def get_mentor_names(cursor):
-    cursor.execute("SELECT CONCAT(first_name, ' ', last_name) as full_name FROM mentors ORDER BY first_name")
-    names = cursor.fetchall()
-    return names
+def get_questions_for_index(cursor):
+    cursor.execute("SELECT * FROM question")
+    questions = cursor.fetchall()
+    print(questions)
+    return questions
+
+
+
