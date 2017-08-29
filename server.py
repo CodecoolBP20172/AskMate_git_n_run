@@ -18,19 +18,7 @@ def route_list():
 
 @app.route("/<aspect>=<desc>")
 def route_list_aspect(aspect, desc):
-    questions = read_file("question.csv")
-    for line_number, line in enumerate(questions):
-        questions[line_number][1] = datetime.datetime.fromtimestamp(float(line[1]))
-        questions[line_number][4] = base64_to_string(line[4])
-        questions[line_number][5] = base64_to_string(line[5])
-        questions[line_number][2] = int(line[2])
-    dictionary_of_orders = {"name": 4, "date": 1, "view": 2, "vote": 3}
-    aspect_number = 0
-    if aspect in dictionary_of_orders:
-        aspect_number = dictionary_of_orders[aspect]
-    questions = sorted(questions, key=itemgetter(aspect_number))
-    if desc == "desc":
-        questions = reversed(questions) 
+    questions = queries.get_questions_for_index_ordered(aspect, desc)
     return render_template("list.html", questions=questions)
 
 
