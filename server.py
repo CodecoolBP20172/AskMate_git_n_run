@@ -6,7 +6,6 @@ import base64
 from common import *
 from operator import itemgetter
 import queries
-
 app = Flask(__name__)
 
 
@@ -22,20 +21,11 @@ def route_list_aspect(aspect, desc):
     return render_template("list.html", questions=questions)
 
 
-@app.route("/question/<int:ID>", methods=['GET'])
-def route_question(ID):
-    questions = read_file("question.csv")
-    answers = read_file("answer.csv")
-    for line_number, line in enumerate(questions):   
-        questions[line_number][1] = datetime.datetime.fromtimestamp(float(line[1]))
-        questions[line_number][4] = base64_to_string(line[4])
-        questions[line_number][5] = base64_to_string(line[5])
-    for line_number, line in enumerate(answers):
-        answers[line_number][1] = datetime.datetime.fromtimestamp(float(line[1]))
-        answers[line_number][4] = base64_to_string(line[4])
-        answers[line_number][5] = base64_to_string(line[5])
-    answers = reversed(sorted(answers, key=itemgetter(2)))
-    return render_template("question.html", questions=questions, answers=answers, id_=str(ID))
+@app.route("/question/<int:id_>", methods=['GET'])
+def route_question(id_):
+    question = queries.get_question_by_id(id_)
+    answers = queries.get_answers_by_question_id(id_)
+    return render_template("question.html", question=question, answers=answers, id_=str(id_))
 
 
 @app.route("/ask-question")
@@ -79,32 +69,23 @@ def route_question_delete(ID):
             questions_table.remove(line)
     write_to_file("question.csv", questions_table)
     return redirect("/")
-    
 
-@app.route("/question/<int:ID>/edit", methods=['GET'])
-def route_question_edit(ID):
-    list_from_csv = read_file("question.csv")
-    list_of_data_to_edit = ""
-    for line in list_from_csv:
-        if str(ID) == line[0]:
-            list_of_data_to_edit = line
+
+@app.route("/question/<int:id_>/edit", methods=['GET'])
+def route_question_edit(id_):
+    question = queries.get_question_by_id(id_)
     return render_template(
         "form.html",
         page_title="Edit a question",
-        action_link="/question/"+str(ID)+"/save",
-        title_of_question=base64_to_string(list_of_data_to_edit[4]),
-        question=base64_to_string(list_of_data_to_edit[5]))
+        action_link="/question/"+str(id_)+"/save",
+        title_of_question=question[0]["title"],
+        question=question[0]["message"])
+    
 
-
-@app.route("/question/<int:ID>/save", methods=['POST'])
-def route_question_save(ID):
-    list_to_modify = read_file("question.csv")
-    for line in list_to_modify:
-        if str(ID) == line[0]:
-            line[4] = string_to_base64(request.form["title"])
-            line[5] = string_to_base64(request.form["question"])
-    write_to_file("question.csv", list_to_modify)
-    return redirect("/question/" + str(ID))
+@app.route("/question/<int:id_>/save", methods=['POST'])
+def route_question_save(id_):
+    queries.update_question_by_id(request.form["title"], request.form["question"], id_)
+    return redirect("/question/" + str(id_))
 
 
 @app.route("/give-answer/<int:ID>", methods=["POST"])
