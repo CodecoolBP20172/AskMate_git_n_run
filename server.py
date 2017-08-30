@@ -98,7 +98,7 @@ def route_add_answer(ID):
 
 @app.route("/add-question", methods=["POST"])
 def route_add():
-    list_to_write = [int(datetime.datetime.now().timestamp()),0,0,request.form["title"], request.form["question"]]
+    list_to_write = [0,0,request.form["title"], request.form["question"]]
     queries.add_question(list_to_write)
     return redirect("/")
 
