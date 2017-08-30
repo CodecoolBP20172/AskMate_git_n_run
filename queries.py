@@ -70,14 +70,24 @@ def add_answer(cursor, list):
 
 @database_common.connection_handler
 def delete_answer_by_id(cursor, ID):
+    cursor.execute("SELECT question_id FROM answer WHERE id = {}".format(ID))
+    question_id = cursor.fetchall()
     cursor.execute("DELETE FROM answer WHERE id = {}".format(ID))
+    return question_id[0]["question_id"]
 
+@database_common.connection_handler
+def delete_question_and_answer_by_id(cursor, ID):
+    cursor.execute("DELETE FROM question WHERE id = {}".format(ID))
+    cursor.execute("DELETE FROM answer WHERE question_id = {}".format(ID))
+    
 
+'''
 @database_common.connection_handler
 def get_search_results(cursor, searchkey):
     cursor.execute("SELECT * FROM question WHERE LOWER(title) LIKE '%{}%' or LOWER(message) LIKE '%{}%'".format(searchkey,searchkey))
     questions = cursor.fetchall()
     return questions
+'''
 
 
 @database_common.connection_handler
