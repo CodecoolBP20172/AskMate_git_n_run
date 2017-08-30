@@ -12,6 +12,20 @@ a {
 	text-decoration: none;
 }
 
+p {
+	display: inline;
+}
+
+
+.showall {
+	text-align: right;
+}
+
+.askquestion {
+	text-align: left;
+}
+
+
 table {
 	border-collapse: collapse;
 	width: 90%;
