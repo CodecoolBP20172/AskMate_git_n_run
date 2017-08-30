@@ -66,6 +66,11 @@ def add_question(cursor, list):
 
 
 @database_common.connection_handler
+def delete_answer_by_id(cursor, ID):
+    cursor.execute("DELETE FROM answer WHERE id = {}".format(ID))
+
+'''
+@database_common.connection_handler
 def get_search_results(cursor, searchkey):
     cursor.execute("SELECT * FROM question WHERE LOWER(title) LIKE '%{}%' or LOWER(message) LIKE '%{}%'".format(searchkey,searchkey))
     questions = cursor.fetchall()
