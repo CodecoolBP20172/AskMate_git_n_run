@@ -6,10 +6,17 @@ import queries
 app = Flask(__name__)
 
 
-@app.route("/")
-def route_list():
+@app.route("/all")
+def route_list_all():
     questions = queries.get_questions_for_index()
     return render_template("list.html", questions=questions)
+
+@app.route("/")
+def route_list():
+    questions = queries.get_latest_five_questions()
+    print(questions)
+    return render_template("list.html", questions=questions)
+
 
 
 @app.route("/<aspect>=<desc>")

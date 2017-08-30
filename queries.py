@@ -15,6 +15,7 @@ def get_questions_for_index_ordered(cursor, aspect, desc):
     return questions
 
 
+
 @database_common.connection_handler
 def modify_value_of_data(cursor, table, attribute, PK, ID, amount):
     ''' 
@@ -63,3 +64,8 @@ def get_search_results(cursor, searchkey):
     questions = cursor.fetchall()
     return questions'''
     
+@database_common.connection_handler
+def get_latest_five_questions(cursor):
+    cursor.execute("SELECT id, submission_time, view_number, vote_number, title FROM question ORDER BY submission_time LIMIT 5")
+    result = cursor.fetchall()
+    return result
