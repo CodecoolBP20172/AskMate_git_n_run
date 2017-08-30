@@ -66,6 +66,10 @@ def add_question(cursor, list):
     cursor.execute("INSERT INTO question (submission_time, view_number, vote_number, title, message) VALUES ('{}', {}, {}, '{}', '{}')".format(dt, list[1], list[2], list[3], list[4]))
 
 
+@database_common.connection_handler
+def add_question(cursor, ID):
+    cursor.execute("DELETE FROM answer WHERE id = {}".format(ID))
+
 '''
 @database_common.connection_handler
 def get_search_results(cursor, searchkey):
