@@ -1,5 +1,8 @@
 import database_common
+from datetime import datetime
+from time import gmtime, strftime
 
+dt = datetime.now()
 
 @database_common.connection_handler
 def get_questions_for_index(cursor):
@@ -55,6 +58,12 @@ def get_value_of_an_attribute(cursor, table, attribute, PK, ID):
     result = cursor.fetchall()
     value = result[0][attribute]
     return value
+
+
+@database_common.connection_handler
+def add_question(cursor, list):
+    cursor.execute("INSERT INTO question (submission_time, view_number, vote_number, title, message) VALUES ('{}', {}, {}, '{}', '{}')".format(dt, list[1], list[2], list[3], list[4]))
+
 
 '''
 @database_common.connection_handler
