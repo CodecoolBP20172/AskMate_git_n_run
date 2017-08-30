@@ -6,9 +6,21 @@ import queries
 app = Flask(__name__)
 
 
+@app.route("/all")
+def route_list_all():
+    questions = queries.get_questions_for_index()
+    return render_template("list.html", questions=questions)
+
 @app.route("/")
 def route_list():
-    questions = queries.get_questions_for_index()
+    questions = queries.get_latest_five_questions()
+    print(questions)
+    return render_template("list.html", questions=questions)
+
+
+@app.route("/getsearch", methods=['POST'])
+def route_get_search():
+    questions = queries.get_search_results(request.form["searchbox"])
     return render_template("list.html", questions=questions)
 
 
@@ -122,12 +134,6 @@ def route_answer_vote_down(ID):
     queries.modify_value_of_data("answer", "vote_number", "id", str(ID), -1)
     question_id = queries.get_value_of_an_attribute("answer", "question_id", "id", str(ID))
     return redirect("/question/"+str(question_id))
-
-
-@app.route("/search/<searchkey>", methods=['GET'])
-def route_answer_search(searchkey):
-    questions = queries.get_search_results(searchkey)
-    return render_template("list.html", questions=questions)
     
 
 if __name__ == "__main__":
