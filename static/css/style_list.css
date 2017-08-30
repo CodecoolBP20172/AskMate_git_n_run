@@ -12,17 +12,16 @@ a {
 	text-decoration: none;
 }
 
-p {
+
+
+.showall p {
+	text-align: right;
 	display: inline;
 }
 
-
-.showall {
-	text-align: right;
-}
-
-.askquestion {
+.askquestion p {
 	text-align: left;
+	display: inline;
 }
 
 
