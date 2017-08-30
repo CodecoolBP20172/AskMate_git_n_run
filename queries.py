@@ -39,7 +39,7 @@ def get_question_by_id(cursor, id_):
 
 @database_common.connection_handler
 def get_answers_by_question_id(cursor, id_):
-    cursor.execute("SELECT * FROM answer WHERE question_id = {}".format(id_))
+    cursor.execute("SELECT * FROM answer WHERE question_id = {} ORDER BY vote_number DESC".format(id_))
     answers = cursor.fetchall()
     return answers
 
@@ -49,8 +49,17 @@ def update_question_by_id(cursor, title, msg, id_):
     cursor.execute("UPDATE question SET title=%s, message=%s WHERE id = {}".format(id_),(title, msg))
 
 
+@database_common.connection_handler
 def get_value_of_an_attribute(cursor, table, attribute, PK, ID):
     cursor.execute("SELECT " + attribute + " FROM " + table + " WHERE " + PK + " = " + ID + ";")    
     result = cursor.fetchall()
     value = result[0][attribute]
     return value
+
+'''
+@database_common.connection_handler
+def get_search_results(cursor, searchkey):
+    cursor.execute("SELECT * FROM question WHERE title LIKE _{}_".format(searchkey))
+    questions = cursor.fetchall()
+    return questions'''
+    

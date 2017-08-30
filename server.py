@@ -1,9 +1,6 @@
 from flask import Flask, render_template, redirect, request, session
-import csv
 import datetime
 from datetime import timezone
-import base64
-from common import *
 from operator import itemgetter
 import queries
 app = Flask(__name__)
@@ -35,10 +32,7 @@ def route_ask():
 
 @app.route("/question+1view/<int:ID>", methods=["GET"])
 def route_question_view(ID):
-
-    #modify_value_of_data("question.csv", ID, 2, 1)
-    # I had to comment the line above because it causes an error during I tested my functions    
-    print("asd")
+    queries.modify_value_of_data("question", "view_number", "id", str(ID), 1)
     return redirect("/question/"+str(ID))
 
 
@@ -119,10 +113,6 @@ def route_question_vote_down(ID):
 @app.route("/answer/<int:ID>/vote-up", methods=['GET'])
 def route_answer_vote_up(ID):
     queries.modify_value_of_data("answer", "vote_number", "id", str(ID), 1)
-    
-     #for testing
-    print("Answer ID: " +str(ID) + " Votes: "+str(queries.get_value_of_an_attribute("answer", "vote_number", "id", str(ID))))
-    
     question_id = queries.get_value_of_an_attribute("answer", "question_id", "id", str(ID))
     return redirect("/question/"+str(question_id))
 
@@ -130,13 +120,15 @@ def route_answer_vote_up(ID):
 @app.route("/answer/<int:ID>/vote-down", methods=['GET'])
 def route_answer_vote_down(ID):
     queries.modify_value_of_data("answer", "vote_number", "id", str(ID), -1)
-    
-    #for testing 
-    print("Answer ID: " +str(ID) + " Votes: "+str(queries.get_value_of_an_attribute("answer", "vote_number", "id", str(ID))))
-    
     question_id = queries.get_value_of_an_attribute("answer", "question_id", "id", str(ID))
     return redirect("/question/"+str(question_id))
 
+
+@app.route("/search/<searchkey>", methods=['GET'])
+def route_answer_search(searchkey):
+    questions = queries.get_search_results(searchkey)
+    return render_template("list.html", questions=questions)
+    
 
 if __name__ == "__main__":
     app.secret_key = "app_magic"  # Change the content of this string
