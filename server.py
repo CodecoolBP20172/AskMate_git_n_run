@@ -91,8 +91,8 @@ def route_question_save(id_):
 
 @app.route("/give-answer/<int:ID>", methods=["POST"])
 def route_add_answer(ID):
-    list_to_write = [nextID("answer.csv"), int(datetime.datetime.now().timestamp()),0,ID,string_to_base64(request.form["answer_text"]), ""]
-    write_file("answer.csv", list_to_write)
+    list_to_write = [0,ID,request.form["answer_text"]]
+    queries.add_answer(list_to_write)
     return redirect("/question/"+str(ID))
 
 

@@ -64,6 +64,9 @@ def get_value_of_an_attribute(cursor, table, attribute, PK, ID):
 def add_question(cursor, list):
     cursor.execute("INSERT INTO question (submission_time, view_number, vote_number, title, message) VALUES ('{}', {}, {}, '{}', '{}')".format(str(dt)[:-7], list[0], list[1], list[2], list[3]))
 
+@database_common.connection_handler
+def add_answer(cursor, list):
+    cursor.execute("INSERT INTO answer (submission_time, vote_number, question_id, message) VALUES ('{}', {}, {}, '{}')".format(str(dt)[:-7], list[0], list[1], list[2]))
 
 @database_common.connection_handler
 def delete_answer_by_id(cursor, ID):
