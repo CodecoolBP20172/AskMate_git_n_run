@@ -12,6 +12,13 @@ a {
 	text-decoration: none;
 }
 
+.clock { 
+	position: absolute; 
+	top: 40px; 
+	left: 300px; 
+	width: 100%; 
+ }
+
 fieldset {
 	margin: auto;
 	max-width : 50px;

@@ -20,13 +20,23 @@ a {
 	text-decoration: none;
 }
 
+a:hover {
+	color: black; 
+}
+
+.clock { 
+   position: absolute; 
+   top: 40px; 
+   left: 300px; 
+   width: 100%; 
+}
 
 .showall {
-	text-align: right;
+	text-align: center;
 }
 
 .askquestion {
-	text-align: left;
+	text-align: center;
 }
 
 

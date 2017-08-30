@@ -79,6 +79,13 @@ tr, th {
 	padding: 0	px;
 	}
 
+.clock { 
+	position: absolute; 
+	top: 40px; 
+	left: 300px; 
+	width: 100%; 
+	}
+
 .question_date {
 	text-align: left;
 	border-bottom: 2px solid grey;
