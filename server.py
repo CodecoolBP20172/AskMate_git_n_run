@@ -38,15 +38,8 @@ def route_question_view(ID):
 
 @app.route("/answer/<int:ID>/delete", methods=["GET"])
 def route_answer_delete(ID):
-    answer_table = read_file("answer.csv")
-    for line in answer_table:
-        if line[0] == str(ID):
-            kutya = line[3]
-    for line in answer_table:
-        if int(line[0]) == ID:
-            answer_table.remove(line)
-    write_to_file("answer.csv", answer_table)
-    return redirect("/question/"+str(kutya))
+    queries.delete_answer_by_id(str(ID))
+    return redirect("/question/"+str(ID))
 
 
 @app.route("/question/<int:ID>/delete", methods=["GET"])

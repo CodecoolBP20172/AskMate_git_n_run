@@ -56,6 +56,12 @@ def get_value_of_an_attribute(cursor, table, attribute, PK, ID):
     value = result[0][attribute]
     return value
 
+
+@database_common.connection_handler
+def delete_answer_by_id(cursor, ID):
+    cursor.execute("DELETE FROM answer WHERE id = {}".format(ID))
+
+
 '''
 @database_common.connection_handler
 def get_search_results(cursor, searchkey):
