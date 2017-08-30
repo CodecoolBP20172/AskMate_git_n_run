@@ -50,25 +50,13 @@ def route_question_view(ID):
 
 @app.route("/answer/<int:ID>/delete", methods=["GET"])
 def route_answer_delete(ID):
-    queries.delete_answer_by_id(str(ID))
-    return redirect("/question/"+str(ID))
+    QID = queries.delete_answer_by_id(str(ID))
+    return redirect("/question/"+str(QID))
 
 
 @app.route("/question/<int:ID>/delete", methods=["GET"])
 def route_question_delete(ID):
-    answer_table = read_file("answer.csv")
-    answers_to_remove = []
-    for line in answer_table:
-        if int(line[3]) == ID:
-            answers_to_remove.append(line)
-    for line in answers_to_remove:
-        answer_table.remove(line)
-    write_to_file("answer.csv", answer_table)
-    questions_table = read_file("question.csv")
-    for line in questions_table:
-        if int(line[0]) == ID:
-            questions_table.remove(line)
-    write_to_file("question.csv", questions_table)
+    queries.delete_question_and_answer_by_id(ID)
     return redirect("/")
 
 
