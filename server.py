@@ -57,6 +57,24 @@ def route_answer_delete(ID):
     return redirect("/question/"+str(QID))
 
 
+@app.route("/answer/<int:ID>/edit", methods=["GET"])
+def route_answer_edit(ID):
+    message_to_edit = queries.get_value_of_an_attribute("answer", "message", "id", str(ID))
+    question_id=queries.get_value_of_an_attribute("answer", "question_id", "id", str(ID))
+    question = queries.get_question_by_id(question_id)
+    answers = queries.get_answers_by_question_id(question_id)
+    question_comments = queries.get_question_comments_by_question_id(question_id,"question_id")
+    answer_comments = queries.get_question_comments_by_question_id(question_id,"answer_id")
+    return render_template("question.html", id_to_edit=ID, question=question, answers=answers, questioncomments = question_comments, answercomments = answer_comments, id_=str(question_id))
+
+@app.route("/answer/<int:ID>/edit/save", methods=["POST"])
+def route_answer_edit_save(ID):
+     edited_text=request.form["answer_edit_text"]
+     queries.update_column("answer", "message", "id", str(ID), edited_text)
+     question_id=queries.get_value_of_an_attribute("answer", "question_id", "id", str(ID))
+     return redirect("/question/"+str(question_id))
+
+
 @app.route("/question/<int:ID>/delete", methods=["GET"])
 def route_question_delete(ID):
     queries.delete_question_and_answer_by_id(ID)

@@ -137,3 +137,7 @@ def get_latest_five_questions(cursor):
     cursor.execute("SELECT id, submission_time, view_number, vote_number, title FROM question ORDER BY submission_time LIMIT 5")
     result = cursor.fetchall()
     return result
+
+@database_common.connection_handler
+def update_column(cursor, table, attribute, PK, ID, new_value):
+    cursor.execute("UPDATE {} SET {} = '{}' WHERE {} = {} ;".format(table,attribute,str(new_value),PK,ID))
