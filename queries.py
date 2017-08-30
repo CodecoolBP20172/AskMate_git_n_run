@@ -55,6 +55,13 @@ def get_question_comments_by_question_id(cursor, id_, q_or_a):
 
 
 @database_common.connection_handler
+def get_all_answer_comments(cursor):
+    cursor.execute("SELECT * FROM comment WHERE question_id IS NULL")
+    result = cursor.fetchall()
+    return result 
+
+
+@database_common.connection_handler
 def update_question_by_id(cursor, title, msg, id_):
     cursor.execute("UPDATE question SET title=%s, message=%s WHERE id = {}".format(id_),(title, msg))
 
@@ -75,6 +82,11 @@ def add_question(cursor, list):
 @database_common.connection_handler
 def add_answer(cursor, list):
     cursor.execute("INSERT INTO answer (submission_time, vote_number, question_id, message) VALUES ('{}', {}, {}, '{}')".format(str(dt)[:-7], list[0], list[1], list[2]))
+
+
+@database_common.connection_handler
+def add_comment(cursor, table, id_, comment):
+    cursor.execute("INSERT INTO comment ({}, message) VALUES ({} ,'{}')".format(table,id_,comment))
 
 
 @database_common.connection_handler

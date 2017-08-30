@@ -35,7 +35,8 @@ def route_question(id_):
     question = queries.get_question_by_id(id_)
     answers = queries.get_answers_by_question_id(id_)
     question_comments = queries.get_question_comments_by_question_id(id_,"question_id")
-    answer_comments = queries.get_question_comments_by_question_id(id_,"answer_id")
+    answer_comments = queries.get_all_answer_comments()
+    print(question)
     return render_template("question.html", question=question, answers=answers, questioncomments = question_comments, answercomments = answer_comments, id_=str(id_))
 
 
@@ -90,6 +91,13 @@ def route_add_answer(ID):
 def route_add():
     list_to_write = [0,0,request.form["title"], request.form["question"]]
     queries.add_question(list_to_write)
+    return redirect("/")
+
+
+@app.route("/give_comment/<table>/<int:id_>", methods=['POST'])
+def route_give_comment(table,id_):
+    comment_to_write = request.form["comment"]
+    queries.add_comment(table, id_, comment_to_write)
     return redirect("/")
 
 
