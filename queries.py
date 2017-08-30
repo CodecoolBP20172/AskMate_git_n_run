@@ -56,10 +56,9 @@ def get_value_of_an_attribute(cursor, table, attribute, PK, ID):
     value = result[0][attribute]
     return value
 
-'''
+
 @database_common.connection_handler
 def get_search_results(cursor, searchkey):
-    cursor.execute("SELECT * FROM question WHERE title LIKE _{}_".format(searchkey))
+    cursor.execute("SELECT * FROM question WHERE LOWER(title) LIKE '%{}%' or LOWER(message) LIKE '%{}%'".format(searchkey,searchkey))
     questions = cursor.fetchall()
-    return questions'''
-    
+    return questions
