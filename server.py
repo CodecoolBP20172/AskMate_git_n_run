@@ -34,7 +34,9 @@ def route_list_aspect(aspect, desc):
 def route_question(id_):
     question = queries.get_question_by_id(id_)
     answers = queries.get_answers_by_question_id(id_)
-    return render_template("question.html", question=question, answers=answers, id_=str(id_))
+    question_comments = queries.get_question_comments_by_question_id(id_,"question_id")
+    answer_comments = queries.get_question_comments_by_question_id(id_,"answer_id")
+    return render_template("question.html", question=question, answers=answers, questioncomments = question_comments, answercomments = answer_comments, id_=str(id_))
 
 
 @app.route("/ask-question")
