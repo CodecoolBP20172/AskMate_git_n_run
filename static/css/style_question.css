@@ -88,18 +88,22 @@ tr, th {
 
 .question_date {
 	text-align: left;
-	border-bottom: 2px solid grey;
-	border-top: 2px solid grey;
 	padding: 8px;
 	background: #ACACAC;
 	}
 
 .question_buttons {
 	text-align: right;
-	border-bottom: 2px solid grey;
-	border-top: 2px solid grey;
 	padding: 8px;
 		background: #ACACAC;
+	}
+
+.comment {
+	color: white;
+	text-align: left;
+	padding: 8px;
+	background: #A7A7A7;
+	opacity: 0.6;
 	}
 
 .answer_date {

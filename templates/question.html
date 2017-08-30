@@ -39,10 +39,19 @@
                                         <a href="/question/{{  line['id']  }}/edit"><img src="/static/images/edit.png" width="25px"></a>
                                         <a href="/question/{{  line['id']  }}/vote-up"><img src="/static/images/upvote.png" width="25px"></a>
                                         <a href="/question/{{  line['id']  }}/vote-down"><img src="/static/images/downvote.png" width="25px"></a>
-                                </rd>
+                                </td>
                                 {%endfor%}
                                                       </tr>
-                </table>        
+                </table>
+        </table>
+        <table align="center">
+                <tr>
+                        <td class="comment">
+                                {%for line in questioncomments%}
+                                {{line["message"]}}
+                                {%endfor%}
+                        </td>
+                </tr>
         </table>
         <table align="center">
         <tr><h3 class="title">Answers</h3></tr>
