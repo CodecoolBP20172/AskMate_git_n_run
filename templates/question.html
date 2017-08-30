@@ -55,10 +55,14 @@
                 </tr>
         {%endif%}
         {%endfor%}
+        <tr>
+                <td>
           <form action="/give_comment/question_id/{{  question[0]['id']  }}" method="post">
         <input name ="comment"</input>
         <button type="submit" id="submitid">comment</button>
           </form>
+                </td>
+        </tr>
         </table>
         <table align="center">
         <tr><h3 class="title">Answers</h3></tr>
