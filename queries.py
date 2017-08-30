@@ -67,7 +67,7 @@ def add_question(cursor, list):
 
 
 @database_common.connection_handler
-def add_question(cursor, ID):
+def delete_answer_by_id(cursor, ID):
     cursor.execute("DELETE FROM answer WHERE id = {}".format(ID))
 
 '''
