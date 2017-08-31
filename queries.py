@@ -174,6 +174,7 @@ def add_comment(cursor, table, id_, comment):
 
 @database_common.connection_handler
 def delete_answer_by_id(cursor, ID):
+    cursor.execute("DELETE FROM comment where answer_id = {}".format(ID))
     cursor.execute("SELECT question_id FROM answer WHERE id = {}".format(ID))
     question_id = cursor.fetchall()
     cursor.execute("DELETE FROM answer WHERE id = {}".format(ID))
