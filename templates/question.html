@@ -42,8 +42,11 @@
       {%for line in questioncomments%}
       {%if line["question_id"] == question[0]["id"]%}
       <tr>
-        <td class="comment">
+        <td class="comment" width="190%">
           {{line["message"]}}
+        </td>
+        <td class="comment_buttons" width="10%">
+          a
         </td>
       </tr>
       {%endif%}
@@ -51,7 +54,7 @@
       <tr>
         <td>
           <form action="/give_comment/question_id/{{  question[0]['id']  }}" method="post">
-            <input name ="comment"></input>
+            <input name ="comment" maxlength="90"></input>
             <button type="submit" id="submitid">comment</button>
           </form>
         </td>
@@ -120,9 +123,9 @@
       {%for commentline in answercomments%}
       {%if commentline["answer_id"] == line["id"]%}
       <tr>
-        <td class="comment">
-          {{commentline["message"]}}
-        </td>
+        <td class="comment"><span style="float: left">{{commentline["message"]}}</span><span style="float: right">
+        <a href="/{{  question[0]['id']  }}/delete_comment/{{  line['id']  }}"><img src="/static/images/delete.png" width="25px"></a>  
+        </span></td>
       </tr>
       {%endif%}
       {%endfor%}

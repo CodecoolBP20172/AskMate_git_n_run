@@ -115,6 +115,25 @@ tr, th {
 	opacity: 0.6;
 	}
 
+.comment_buttons {
+	color: white;
+	text-align: right;
+	padding: 8px;
+	background: #A7A7A7;
+	opacity: 0.6;
+}
+
+#submitid {
+	background-color: #7B302C;
+    border: none;
+    color: white;
+    padding: 5px 5px;
+    text-align: center;
+	font-size: 90%;
+	border-radius: 3px;
+}
+
+
 .answer_date {
 	text-align: left;
 	border-bottom: 2px solid grey;
