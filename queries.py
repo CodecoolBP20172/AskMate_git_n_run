@@ -3,6 +3,8 @@ from datetime import datetime
 
 dt = datetime.now()
 
+# Get values------------------------------------------------------------------------------------------
+
 
 @database_common.connection_handler
 def get_questions_for_index(cursor):
@@ -13,24 +15,11 @@ def get_questions_for_index(cursor):
 
 @database_common.connection_handler
 def get_questions_for_index_ordered(cursor, aspect, desc):
-    cursor.execute("SELECT id, submission_time, view_number, vote_number, title FROM question ORDER BY {} {}".format(aspect, desc))
+    cursor.execute('''SELECT id, submission_time, view_number, vote_number, title
+                      FROM question
+                      ORDER BY {} {}'''.format(aspect, desc))
     questions = cursor.fetchall()
     return questions
-
-
-@database_common.connection_handler
-def modify_value_of_data(cursor, table, attribute, PK, ID, amount):
-    ''' 
-    table: database table name
-    attribute: attribute name (key in the dict) to modify
-    PK: name of the Primary key field
-    ID: primary key of the given entity to find
-    amount: amount to change
-    '''
-    cursor.execute("SELECT " + attribute + " FROM " + table + " WHERE " + PK + " = " + ID + ";")
-    result = cursor.fetchall()
-    new_value = result[0][attribute] + amount
-    cursor.execute("UPDATE " + table + " SET " + attribute + " = " + str(new_value) + " WHERE " + PK + " = " + ID + ";")
 
 
 @database_common.connection_handler
@@ -55,66 +44,18 @@ def get_question_comments_by_question_id(cursor, id_, q_or_a):
 
 
 @database_common.connection_handler
-def get_question_id_from_answer_id(cursor, answer_id):
-    cursor.execute("SELECT question_id FROM answer WHERE id = {}".format(answer_id))
-    actual_question_id = cursor.fetchall()
-    return actual_question_id[0]["question_id"]
-
-
-@database_common.connection_handler
 def get_all_answer_comments(cursor):
     cursor.execute("SELECT * FROM comment WHERE question_id IS NULL")
     result = cursor.fetchall()
-    return result 
-
-
-@database_common.connection_handler
-def update_question_by_id(cursor, title, msg, id_):
-    cursor.execute("UPDATE question SET title=%s, message=%s WHERE id = {}".format(id_),(title, msg))
+    return result
 
 
 @database_common.connection_handler
 def get_value_of_an_attribute(cursor, table, attribute, PK, ID):
-    cursor.execute("SELECT " + attribute + " FROM " + table + " WHERE " + PK + " = " + ID + ";")    
+    cursor.execute("SELECT " + attribute + " FROM " + table + " WHERE " + "PK" + " = " + ID + ";")
     result = cursor.fetchall()
     value = result[0][attribute]
     return value
-
-
-@database_common.connection_handler
-def add_question(cursor, list):
-    cursor.execute("INSERT INTO question (submission_time, view_number, vote_number, title, message) VALUES ('{}', {}, {}, '{}', '{}')".format(str(dt)[:-7], list[0], list[1], list[2], list[3]))
-
-
-@database_common.connection_handler
-def add_answer(cursor, list):
-    cursor.execute("INSERT INTO answer (submission_time, vote_number, question_id, message) VALUES ('{}', {}, {}, '{}')".format(str(dt)[:-7], list[0], list[1], list[2]))
-
-
-@database_common.connection_handler
-def add_comment(cursor, table, id_, comment):
-    cursor.execute("INSERT INTO comment ({}, message) VALUES ({} ,'{}')".format(table,id_,comment))
-
-
-@database_common.connection_handler
-def delete_answer_by_id(cursor, ID):
-    cursor.execute("SELECT question_id FROM answer WHERE id = {}".format(ID))
-    question_id = cursor.fetchall()
-    cursor.execute("DELETE FROM answer WHERE id = {}".format(ID))
-    return question_id[0]["question_id"]
-
-
-@database_common.connection_handler
-def delete_question_and_answer_by_id(cursor, ID):
-    cursor.execute("DELETE FROM question WHERE id = {}".format(ID))
-    cursor.execute("DELETE FROM answer WHERE question_id = {}".format(ID))
-    
-
-@database_common.connection_handler
-def get_search_results_in_questions(cursor, searchkey):
-    cursor.execute("SELECT id FROM question WHERE LOWER(title) LIKE '%{}%' or LOWER(message) LIKE '%{}%'".format(searchkey.lower(),searchkey.lower()))
-    ids_found_searchkey_in_question = cursor.fetchall()
-    return ids_found_searchkey_in_question
 
 
 @database_common.connection_handler
@@ -141,10 +82,103 @@ def get_search_results(cursor, searchkey):
 
 @database_common.connection_handler
 def get_latest_five_questions(cursor):
-    cursor.execute("SELECT id, submission_time, view_number, vote_number, title FROM question ORDER BY submission_time LIMIT 5")
+    cursor.execute('''SELECT id, submission_time, view_number, vote_number, title
+                      FROM question
+                      ORDER BY submission_time
+                      LIMIT 5''')
     result = cursor.fetchall()
     return result
 
+
+@database_common.connection_handler
+def get_search_results_in_questions(cursor, searchkey):
+    cursor.execute('''SELECT id FROM question
+                      WHERE LOWER(title) LIKE '%{}%'
+                      or LOWER(message) LIKE '%{}%' '''.format(
+                          searchkey.lower(),
+                          searchkey.lower()))
+    ids_found_searchkey_in_question = cursor.fetchall()
+    return ids_found_searchkey_in_question
+# END of get values-----------------------------------------------------------------------------------
+# Update values---------------------------------------------------------------------------------------
+
+
+@database_common.connection_handler
+def edit_comment(id_, message):
+    cursor.execute("UPDATE comment SET message = {} WHERE id = {}".format(message, id_))
+
+
+@database_common.connection_handler
+def modify_value_of_data(cursor, table, attribute, PK, ID, amount):
+    '''
+    table: database table name
+    attribute: attribute name (key in the dict) to modify
+    PK: name of the Primary key field
+    ID: primary key of the given entity to find
+    amount: amount to change
+    '''
+    cursor.execute("SELECT " + attribute + " FROM " + table + " WHERE " + PK + " = " + ID + ";")
+    result = cursor.fetchall()
+    new_value = result[0][attribute] + amount
+    cursor.execute("UPDATE " + table + " SET " + attribute + " = " + str(new_value) + " WHERE " + PK + " = " + ID + ";")
+
+
+@database_common.connection_handler
+def update_question_by_id(cursor, title, msg, id_):
+    cursor.execute("UPDATE question SET title=%s, message=%s WHERE id = {}".format(id_), (title, msg))
+
+
 @database_common.connection_handler
 def update_column(cursor, table, attribute, PK, ID, new_value):
-    cursor.execute("UPDATE {} SET {} = '{}' WHERE {} = {} ;".format(table,attribute,str(new_value),PK,ID))
+    cursor.execute("UPDATE {} SET {} = '{}' WHERE {} = {} ;".format(table, attribute, str(new_value), PK, ID))
+# END of update Values--------------------------------------------------------------------------------
+# Add new values--------------------------------------------------------------------------------------
+
+
+@database_common.connection_handler
+def add_question(cursor, list):
+    cursor.execute('''INSERT INTO question (submission_time, view_number, vote_number, title, message)
+                      VALUES ('{}', {}, {}, '{}', '{}')'''.format(
+                                                                    str(dt)[:-7],
+                                                                    list[0],
+                                                                    list[1],
+                                                                    list[2],
+                                                                    list[3]
+                                                                    ))
+
+
+@database_common.connection_handler
+def add_answer(cursor, list):
+    cursor.execute('''INSERT INTO answer (submission_time, vote_number, question_id, message)
+                      VALUES ('{}', {}, {}, '{}')'''.format(
+                                                            str(dt)[:-7],
+                                                            list[0],
+                                                            list[1],
+                                                            list[2]
+                                                            ))
+
+
+@database_common.connection_handler
+def add_comment(cursor, table, id_, comment):
+    cursor.execute("INSERT INTO comment ({}, message) VALUES ({} ,'{}')".format(table, id_, comment))
+# END of add values-----------------------------------------------------------------------------------
+# Delete values --------------------------------------------------------------------------------------
+
+
+@database_common.connection_handler
+def delete_answer_by_id(cursor, ID):
+    cursor.execute("SELECT question_id FROM answer WHERE id = {}".format(ID))
+    question_id = cursor.fetchall()
+    cursor.execute("DELETE FROM answer WHERE id = {}".format(ID))
+    return question_id[0]["question_id"]
+
+
+@database_common.connection_handler
+def delete_question_and_answer_by_id(cursor, ID):
+    cursor.execute("DELETE FROM question WHERE id = {}".format(ID))
+    cursor.execute("DELETE FROM answer WHERE question_id = {}".format(ID))
+
+
+@database_common.connection_handler
+def delete_comment(cursor, id_):
+    cursor.execute("DELETE FROM comment WHERE id = {}".format(id_))
