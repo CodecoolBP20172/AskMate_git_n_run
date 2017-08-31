@@ -119,11 +119,26 @@ def route_add_answer(ID):
 
 
 @app.route("/give_comment/<table>/<int:id_>", methods=['POST'])
-def route_give_comment(table,id_):
+def route_give_comment(table, id_):
     comment_to_write = request.form["comment"]
     queries.add_comment(table, id_, comment_to_write)
-    return redirect("/")
+    if table == "question_id":
+        return redirect("/question/" + str(id_))
+    elif table == "answer_id":
+        q_id = queries.get_question_id_from_answer_id(id_)
+        return redirect("/question/" + str(q_id))
 
+
+@app.route("/<int:question_id>/delete_comment/<int:id_>")
+def route_delete_comment(question_id, id_):
+    queries.delete_comment(id_)
+    return redirect("/question/"+str(question_id))
+
+
+@app.route("/<int:question_id>/edit_comment/<int:id_>")
+def route_edit_comment(question_id, id_):
+    queries.edit_comment(comment, message, id_, request.form["edited_comment"])
+    return redirect("/question/"+str(question_id))
 # Comment END------------------------------------------------------------
 
 
