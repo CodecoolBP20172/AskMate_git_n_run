@@ -14,6 +14,13 @@ def get_questions_for_index(cursor):
 
 
 @database_common.connection_handler
+def get_question_id_from_answer_id(cursor, answer_id):
+    cursor.execute("SELECT question_id FROM answer WHERE id = {}".format(answer_id))
+    actual_question_id = cursor.fetchall()
+    return actual_question_id[0]["question_id"]
+
+
+@database_common.connection_handler
 def get_questions_for_index_ordered(cursor, aspect, desc):
     cursor.execute('''SELECT id, submission_time, view_number, vote_number, title
                       FROM question
@@ -175,6 +182,11 @@ def delete_answer_by_id(cursor, ID):
 
 @database_common.connection_handler
 def delete_question_and_answer_by_id(cursor, ID):
+    cursor.execute("SELECT id FROM answer WHERE question_id = {}".format(ID))
+    answerlist = cursor.fetchall()
+    for line in answerlist:
+        cursor.execute("DELETE FROM comment WHERE answer_id = {}".format(line["id"]))
+    cursor.execute("DELETE FROM comment WHERE question_id = {}".format(ID))
     cursor.execute("DELETE FROM answer WHERE question_id = {}".format(ID))
     cursor.execute("DELETE FROM question WHERE id = {}".format(ID))
 
