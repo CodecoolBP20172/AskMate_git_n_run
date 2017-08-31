@@ -51,7 +51,14 @@ def get_answers_by_question_id(cursor, id_):
 def get_question_comments_by_question_id(cursor, id_, q_or_a):
     cursor.execute("SELECT * FROM comment WHERE {} = {}".format(q_or_a, id_))
     result = cursor.fetchall()
-    return result 
+    return result
+
+
+@database_common.connection_handler
+def get_question_id_from_answer_id(cursor, answer_id):
+    cursor.execute("SELECT question_id FROM answer WHERE id = {}".format(answer_id))
+    actual_question_id = cursor.fetchall()
+    return actual_question_id[0]["question_id"]
 
 
 @database_common.connection_handler
