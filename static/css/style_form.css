@@ -7,6 +7,21 @@ body {
 	color: #4e4e4e;
 }
 
+#header {
+	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande';
+	text-transform: uppercase;
+	font-weight: bold;
+	text-align: center;
+	font-size: 150%; 
+	border-bottom-left-radius: 20%;
+    border-bottom-right-radius: 20%;
+	background: #6F6F6F;
+	color: white;
+	height: 50px;
+	margin: 0% 0% 2% 0%;
+	padding-top: 20px;
+}
+
 a {
 	color: #ee2e24;
 	text-decoration: none;
