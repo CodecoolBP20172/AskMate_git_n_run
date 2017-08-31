@@ -46,7 +46,7 @@
           {{line["message"]}}
         </td>
         <td class="comment_buttons" width="10%">
-          a
+            <a href="/{{  question[0]['id']  }}/delete_comment/{{  line['id']  }}"><img src="/static/images/delete.png" width="25px"></a>              
         </td>
       </tr>
       {%endif%}
@@ -124,7 +124,7 @@
       {%if commentline["answer_id"] == line["id"]%}
       <tr>
         <td class="comment"><span style="float: left">{{commentline["message"]}}</span><span style="float: right">
-        <a href="/{{  question[0]['id']  }}/delete_comment/{{  line['id']  }}"><img src="/static/images/delete.png" width="25px"></a>  
+        <a href="/{{  question[0]['id']  }}/delete_comment_from_answer/{{  commentline['id']  }}"><img src="/static/images/delete.png" width="25px"></a>  
         </span></td>
       </tr>
       {%endif%}

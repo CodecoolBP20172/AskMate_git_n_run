@@ -58,7 +58,7 @@ def route_question_save(id_):
 
 @app.route("/question/<int:ID>/delete", methods=["GET"])
 def route_question_delete(ID):
-    queries.delete_question_and_answer_by_id(ID)
+    queries.delete_comment_from_question(ID)
     return redirect("/")
 
 
@@ -104,7 +104,7 @@ def route_answer_edit(ID):
 
 @app.route("/answer/<int:ID>/delete", methods=["GET"])
 def route_answer_delete(ID):
-    QID = queries.delete_answer_by_id(str(ID))
+    QID = queries.delete_answer_by_id(ID)
     return redirect("/question/"+str(QID))
 
     
@@ -129,8 +129,14 @@ def route_give_comment(table, id_):
         return redirect("/question/" + str(q_id))
 
 
-@app.route("/<int:question_id>/delete_comment/<int:id_>")
+@app.route("/<int:question_id>/delete_comment_from_answer/<int:id_>")
 def route_delete_comment(question_id, id_):
+    queries.delete_comment_from_answer(id_)
+    return redirect("/question/"+str(question_id))
+
+
+@app.route("/<int:question_id>/delete_comment/<int:id_>")
+def route_deleteasd_comment(question_id, id_):
     queries.delete_comment(id_)
     return redirect("/question/"+str(question_id))
 

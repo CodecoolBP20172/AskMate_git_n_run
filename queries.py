@@ -191,7 +191,25 @@ def delete_question_and_answer_by_id(cursor, ID):
     cursor.execute("DELETE FROM question WHERE id = {}".format(ID))
 
 
+@database_common.connection_handler
+def delete_comment_from_answer(cursor, id_):
+    print(id_)
+    cursor.execute("DELETE FROM comment WHERE id = {}".format(id_))
+
+
+@database_common.connection_handler
+def delete_comment_from_question(cursor, id_):
+    cursor.execute("SELECT id FROM answer WHERE question_id = {}".format(id_))
+    answer_id_list = cursor.fetchall()
+    print(answer_id_list)
+    for line in answer_id_list:
+        print(line)
+        cursor.execute("DELETE FROM comment WHERE answer_id = {}".format(line["id"]))
+    delete_question_and_answer_by_id(id_)
+
 
 @database_common.connection_handler
 def delete_comment(cursor, id_):
     cursor.execute("DELETE FROM comment WHERE id = {}".format(id_))
+
+
