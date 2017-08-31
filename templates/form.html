@@ -1,25 +1,30 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <link rel="stylesheet" type="text/css" href="/static/css/style_form.css" media="screen, print">
-        <title>Askmate</title>
-    </head>
-    <body align="center">
-      <div class="image"><img src="/static/images/header_empty.png" alt="A fancy header here"></div>
-          <iframe class="clock" src="http://free.timeanddate.com/clock/i5ur6nea/n50/fn6/fs16/fceee/tct/pct/ftbi/pa8/tt0/tw0/td2/th1/tb4" frameborder="0" width="166" height="52" allowTransparency="true"></iframe>
-        <br>
-        <h2>{{ page_title }}</h2>
-        <form action="{{ action_link }}" method="post">    
-          <fieldset>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="/static/css/style_form.css" media="screen, print">
+    <title>Askmate</title>
+  </head>
+  <body align="center">
+    <div class="image"><img src="/static/images/header_empty.png" alt="A fancy header here"></div>
+    <iframe class="clock" src="http://free.timeanddate.com/clock/i5ur6nea/n50/fn6/fs16/fceee/tct/pct/ftbi/pa8/tt0/tw0/td2/th1/tb4" frameborder="0" width="166" height="52" allowTransparency="true"></iframe>
+    <br>
+    <h2>{{ page_title }}</h2>
+    <form action="{{ action_link }}" method="post">
+      <fieldset>
         <p>Title</p>
         <p><textarea name="title" id="title id" rows="2" cols="70" minlength="10" maxlength="60" required="required" style="font-size:15px;">{{ title_of_question }}</textarea></p>
         <p>Question</p>
-        <p><textarea name="question" id="question id" rows="20" cols="70" minlength="10" required="required" style="font-size:12px;">{{ question }}</textarea></p><br>
-        <button type="submit" id="submit_id">Submit</button>
-            </fieldset>
-        </form>
+        <p><textarea name="question" id="question id" rows="20" cols="70" minlength="10" required="required" style="font-size:12px;">{{ question }}</textarea></p>
         <br>
-        <a href ="/"><h3>Back to main menu<h3></a>
-    </body>
+        <button type="submit" id="submit_id">Submit</button>
+      </fieldset>
+    </form>
+    <br>
+    <a href ="/">
+      <h3>
+      Back to main menu
+      <h3>
+    </a>
+  </body>
 </html>

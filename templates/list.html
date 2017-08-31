@@ -1,44 +1,44 @@
 <!doctype html>
 <html>
-   <head>
-        <link rel="stylesheet" type="text/css" href="/static/css/style_list.css" media="screen, print">
-        <meta charset="utf-8">
-        <title>List of Questions</title>
-    </head>
-    <body align="center">
-      <div class="image">
-        <img src="/static/images/header_empty.png">
-          <iframe class="clock" src="http://free.timeanddate.com/clock/i5ur6nea/n50/fn6/fs16/fceee/tct/pct/ftbi/pa8/tt0/tw0/td2/th1/tb4" frameborder="0" width="166" height="52" allowTransparency="true"></iframe>
-       <br><br><br>
-        <form action="/getsearch" method="post">    
-        <p><input name="searchbox" id="seachbox_id" rows="2" cols="10" minlength="1" maxlength="10" required="required" style="font-size:15px;"></input>
+  <head>
+    <link rel="stylesheet" type="text/css" href="/static/css/style_list.css" media="screen, print">
+    <meta charset="utf-8">
+    <title>List of Questions</title>
+  </head>
+  <body align="center">
+    <div class="image">
+    <img src="/static/images/header_empty.png">
+    <iframe class="clock" src="http://free.timeanddate.com/clock/i5ur6nea/n50/fn6/fs16/fceee/tct/pct/ftbi/pa8/tt0/tw0/td2/th1/tb4" frameborder="0" width="166" height="52" allowTransparency="true"></iframe>
+    <br><br><br>
+    <form action="/getsearch" method="post">
+      <p><input name="searchbox" id="seachbox_id" rows="2" cols="10" minlength="1" maxlength="10" required="required" style="font-size:15px;"></input>
         <button type="submit" id="submit_id">Search</button>
-        </form>       
-       <table align="center">
-            <tr>
-               <th>Question title <a href="/title=asc"><img src="/static/images/up.png" width="15px"></a>
-                <a href="/title=desc"><img src="/static/images/down.png" width="15px"></a></th>
-               <th>Time <a href="/submission_time=asc"><img src="/static/images/up.png" width="15px"></a> <a href="/submission_time=desc"><img src="/static/images/down.png" width="15px"></a></th>
-               <th>View <a href="/view_number=asc"><img src="/static/images/up.png" width="15px"></a> <a href="/view_number=desc"><img src="/static/images/down.png" width="15px"></a></th>
-               <th>Votes <a href="/vote_number=asc"><img src="/static/images/up.png" width="15px"></a> <a href="/vote_number=desc"><img src="/static/images/down.png" width="15px"></a></th>
-            </tr>
-        {% for line in questions %}
-
-            <tr>
-                <td class="questions"><a href="/question+1view/{{  line['id']  }}">{{line["title"]}}</a></td>
-                <td>{{line["submission_time"]}}</td>
-                <td>{{line["view_number"]}}</td>
-                <td>{{line["vote_number"]}}</td>
-            </tr>
-        {% endfor %}
-      </table>
-      <br><br>
-      <div class="showall">
-      <p><a href="/all">Show all questions</a></p>
-      <div/>
-      <br>
-      <div class="askquestion">
-      <p><a href="/ask-question">Ask a question</a></p>
-      <div/>
-   </body>
+    </form>
+    <table align="center">
+      <tr>
+        <th>Question title <a href="/title=asc"><img src="/static/images/up.png" width="15px"></a>
+          <a href="/title=desc"><img src="/static/images/down.png" width="15px"></a>
+        </th>
+        <th>Time <a href="/submission_time=asc"><img src="/static/images/up.png" width="15px"></a> <a href="/submission_time=desc"><img src="/static/images/down.png" width="15px"></a></th>
+        <th>View <a href="/view_number=asc"><img src="/static/images/up.png" width="15px"></a> <a href="/view_number=desc"><img src="/static/images/down.png" width="15px"></a></th>
+        <th>Votes <a href="/vote_number=asc"><img src="/static/images/up.png" width="15px"></a> <a href="/vote_number=desc"><img src="/static/images/down.png" width="15px"></a></th>
+      </tr>
+      {% for line in questions %}
+      <tr>
+        <td class="questions"><a href="/question+1view/{{  line['id']  }}">{{line["title"]}}</a></td>
+        <td>{{line["submission_time"]}}</td>
+        <td>{{line["view_number"]}}</td>
+        <td>{{line["vote_number"]}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    <br><br>
+    <div class="showall">
+    <p><a href="/all">Show all questions</a></p>
+    <div/>
+    <br>
+    <div class="askquestion">
+    <p><a href="/ask-question">Ask a question</a></p>
+    <div/>
+  </body>
 </html>

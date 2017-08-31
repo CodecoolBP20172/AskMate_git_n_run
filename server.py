@@ -36,7 +36,6 @@ def route_question(id_):
     answers = queries.get_answers_by_question_id(id_)
     question_comments = queries.get_question_comments_by_question_id(id_,"question_id")
     answer_comments = queries.get_all_answer_comments()
-    print(question)
     return render_template("question.html", question=question, answers=answers, questioncomments = question_comments, answercomments = answer_comments, id_=str(id_))
 
 

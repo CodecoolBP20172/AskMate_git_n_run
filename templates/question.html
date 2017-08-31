@@ -1,132 +1,133 @@
 <!doctype html>
 <html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="/static/css/style_question.css" media="screen, print">
-        <meta charset="utf-8">
-        <title>Question</title>
-    </head>
-    <body align="center">
-      <div class="image"><img src="/static/images/header_empty.png" alt="A fancy header here"></div>
-          <iframe class="clock" src="http://free.timeanddate.com/clock/i5ur6nea/n50/fn6/fs16/fceee/tct/pct/ftbi/pa8/tt0/tw0/td2/th1/tb4" frameborder="0" width="166" height="52" allowTransparency="true"></iframe>
-      <br>
-        <a href="/">Back To Main Menu</a>
-        <br>
-        <br>
-        <table align="center">
-                <tr>
-                        <td class="question_title">
-                                {%for line in question%}
-                                        {{line["title"]}}
-                                {%endfor%}
-                        </td>
-                </tr>
-                <tr>
-                        <td class="question">
-                                {%for line in question%}
-                                        {{line["message"]}}
-                                {%endfor%}
-                        </td>
-                </tr>
-                <table align="center">
-                        <tr>
-                                <td class="question_date">
-                                        {%for line in question%}
-                                                {{line["submission_time"]}} Vote: {{line["vote_number"]}}
-                                        
-                                </td>
-                                <td class="question_buttons">
-                                        <a href="/question/{{  line['id']  }}/delete"><img src="/static/images/delete.png" width="25px"></a>
-                                        <a href="/question/{{  line['id']  }}/edit"><img src="/static/images/edit.png" width="25px"></a>
-                                        <a href="/question/{{  line['id']  }}/vote-up"><img src="/static/images/upvote.png" width="25px"></a>
-                                        <a href="/question/{{  line['id']  }}/vote-down"><img src="/static/images/downvote.png" width="25px"></a>
-                                </td>
-                                {%endfor%}
-                                                      </tr>
-                </table>
-        </table>
-        <table align="center">
-        {%for line in questioncomments%}
-        {%if line["question_id"] == question[0]["id"]%}
-                <tr>
-                        <td class="comment">
-                                {{line["message"]}}
-                                
-                        </td>
-                </tr>
-        {%endif%}
-        {%endfor%}
+  <head>
+    <link rel="stylesheet" type="text/css" href="/static/css/style_question.css" media="screen, print">
+    <meta charset="utf-8">
+    <title>Question</title>
+  </head>
+  <body align="center">
+    <div class="image"><img src="/static/images/header_empty.png" alt="A fancy header here"></div>
+    <iframe class="clock" src="http://free.timeanddate.com/clock/i5ur6nea/n50/fn6/fs16/fceee/tct/pct/ftbi/pa8/tt0/tw0/td2/th1/tb4" frameborder="0" width="166" height="52" allowTransparency="true"></iframe>
+    <br>
+    <a href="/">Back To Main Menu</a>
+    <br>
+    <br>
+    <table align="center">
+      <tr>
+        <td class="question_title">
+          {%for line in question%}
+          {{line["title"]}}
+          {%endfor%}
+        </td>
+      </tr>
+      <tr>
+        <td class="question">
+          {%for line in question%}
+          {{line["message"]}}
+          {%endfor%}
+        </td>
+      </tr>
+      <table align="center">
         <tr>
-                <td>
-          <form action="/give_comment/question_id/{{  question[0]['id']  }}" method="post">
-        <input name ="comment"</input>
-        <button type="submit" id="submitid">comment</button>
-          </form>
-                </td>
+          <td class="question_date">
+            {%for line in question%}
+            {{line["submission_time"]}} Vote: {{line["vote_number"]}}
+          </td>
+          <td class="question_buttons">
+            <a href="/question/{{  line['id']  }}/delete"><img src="/static/images/delete.png" width="25px"></a>
+            <a href="/question/{{  line['id']  }}/edit"><img src="/static/images/edit.png" width="25px"></a>
+            <a href="/question/{{  line['id']  }}/vote-up"><img src="/static/images/upvote.png" width="25px"></a>
+            <a href="/question/{{  line['id']  }}/vote-down"><img src="/static/images/downvote.png" width="25px"></a>
+          </td>
+          {%endfor%}
         </tr>
-        </table>
-        <table align="center">
-        <tr><h3 class="title">Answers</h3></tr>
-        {%for line in answers%}                  
-                <tr>
-                        <td style="padding: 0px">
-                        <table style="width: 100%">
-                        <tr> 
-                        <td class="answer_date">
-                                {{line["submission_time"]}} Votes: {{line["vote_number"]}}</td>
-                        <td class="answer_buttons">
-                                <a href="/answer/{{ line['id'] }}/delete"><img src="/static/images/delete.png" width="25px"></a>
-                                <a href="/answer/{{ line['id'] }}/vote-up"><img src="/static/images/upvote.png" width="25px"></a>
-                                <a href="/answer/{{ line['id'] }}/vote-down"><img src="/static/images/downvote.png" width="25px"></a>
-                        </td>
-                        </tr>
-                        </table>
-                        </td>
-                </tr>
-                <td class="answer">
-                        {{line["message"]}}
-                        <br>
-                </td>
-        {%for commentline in answercomments%}
-        {%if commentline["answer_id"] == line["id"]%}
-                <tr>
-                        <td class="comment">
-                                {{commentline["message"]}}
-                        </td>
-                </tr>
-        {%endif%}
-        {%endfor%}
-        <tr>
-                <td>
-          <form action="/give_comment/answer_id/{{  line['id']  }}" method="post">
-        <input name ="comment"</input>
-        <button type="submit" id="submitid">comment</button>
+      </table>
+    </table>
+    <table align="center">
+      {%for line in questioncomments%}
+      {%if line["question_id"] == question[0]["id"]%}
+      <tr>
+        <td class="comment">
+          {{line["message"]}}
+        </td>
+      </tr>
+      {%endif%}
+      {%endfor%}
+      <tr>
+        <td>
+          <form action="/give_comment/question_id/{{  question[0]['id']  }}" method="post">
+            <input name ="comment"</input>
+            <button type="submit" id="submitid">comment</button>
           </form>
-                </td>
-        </tr>   
-                <tr>
-                        <td>
-                        </td>
-                </tr>
-                <tr>
-                        <td>
-                                <br>
-                        </td>
-                </tr>
-        {%endfor%}
-        </table>
+        </td>
+      </tr>
+    </table>
+    <table align="center">
+      <tr>
+        <h3 class="title">Answers</h3>
+      </tr>
+      {%for line in answers%}                  
+      <tr>
+        <td style="padding: 0px">
+          <table style="width: 100%">
+            <tr>
+              <td class="answer_date">
+                {{line["submission_time"]}} Votes: {{line["vote_number"]}}
+              </td>
+              <td class="answer_buttons">
+                <a href="/answer/{{ line['id'] }}/delete"><img src="/static/images/delete.png" width="25px"></a>
+                <a href="/answer/{{ line['id'] }}/vote-up"><img src="/static/images/upvote.png" width="25px"></a>
+                <a href="/answer/{{ line['id'] }}/vote-down"><img src="/static/images/downvote.png" width="25px"></a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <td class="answer">
+        {{line["message"]}}
         <br>
-        <br>
-        Answer Here:
-        <br>
-        <br>
-        <form action="/give-answer/{{ id_  }}" method="post">  
-                <textarea name="answer_text" rows="8" cols="80">{{ answer_text }}</textarea>
-                <br>
-                <button type="submit" id="submit_answer" method="POST">Submit</button>
-                <br>
-                <br>
-                <a href="/">Back To Main Menu</a>
-                <br>
-        </form>
-    </body>
+      </td>
+      {%for commentline in answercomments%}
+      {%if commentline["answer_id"] == line["id"]%}
+      <tr>
+        <td class="comment">
+          {{commentline["message"]}}
+        </td>
+      </tr>
+      {%endif%}
+      {%endfor%}
+      <tr>
+        <td>
+          <form action="/give_comment/answer_id/{{  line['id']  }}" method="post">
+            <input name ="comment"</input>
+            <button type="submit" id="submitid">comment</button>
+          </form>
+        </td>
+      </tr>
+      <tr>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <br>
+        </td>
+      </tr>
+      {%endfor%}
+    </table>
+    <br>
+    <br>
+    Answer Here:
+    <br>
+    <br>
+    <form action="/give-answer/{{ id_  }}" method="post">  
+      <textarea name="answer_text" rows="8" cols="80">{{ answer_text }}</textarea>
+      <br>
+      <button type="submit" id="submit_answer" method="POST">Submit</button>
+      <br>
+      <br>
+      <a href="/">Back To Main Menu</a>
+      <br>
+    </form>
+  </body>
 </html>
