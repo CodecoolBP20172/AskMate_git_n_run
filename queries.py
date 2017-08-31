@@ -175,8 +175,9 @@ def delete_answer_by_id(cursor, ID):
 
 @database_common.connection_handler
 def delete_question_and_answer_by_id(cursor, ID):
-    cursor.execute("DELETE FROM question WHERE id = {}".format(ID))
     cursor.execute("DELETE FROM answer WHERE question_id = {}".format(ID))
+    cursor.execute("DELETE FROM question WHERE id = {}".format(ID))
+
 
 
 @database_common.connection_handler
