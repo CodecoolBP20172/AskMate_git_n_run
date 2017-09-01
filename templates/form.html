@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="/static/css/style_form.css" media="screen, print">
-    <title>Askmate</title>
-  </head>
-  <body align="center">
-    <a href="/"><div id="header">Ask a question</div></a>
-    <h2>{{ page_title }}</h2>
-    <form action="{{ action_link }}" method="post">
-      <fieldset>
-        <p>Title</p>
-        <p><textarea name="title" id="title id" rows="2" cols="70" minlength="10" maxlength="60" required="required" style="font-size:15px;">{{ title_of_question }}</textarea></p>
-        <p>Question</p>
-        <p><textarea name="question" id="question id" rows="20" cols="70" minlength="10" required="required" style="font-size:12px;">{{ question }}</textarea></p>
-        <br>
-        <button type="submit" id="submit_id">Submit</button>
-      </fieldset>
-    </form>
-    <br>
-  </body>
+   <head>
+      <meta charset="utf-8">
+      <link rel="stylesheet" type="text/css" href="/static/css/style_form.css" media="screen, print">
+      <title>Askmate</title>
+   </head>
+   <body align="center">
+      <a href="/">
+         <div id="header">Ask a question</div>
+      </a>
+      <h2>{{ page_title }}</h2>
+      <form action="{{ action_link }}" method="post">
+         <fieldset>
+            <p>Title</p>
+            <p><textarea name="title" id="title id" rows="2" cols="70" minlength="10" maxlength="60" required="required" style="font-size:15px;">{{ title_of_question }}</textarea></p>
+            <p>Question</p>
+            <p><textarea name="question" id="question id" rows="20" cols="70" minlength="10" required="required" style="font-size:12px;">{{ question }}</textarea></p>
+            <br>
+            <button type="submit" id="submit_id">Submit</button>
+         </fieldset>
+      </form>
+      <br>
+   </body>
 </html>
