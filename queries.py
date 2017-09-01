@@ -59,7 +59,7 @@ def get_all_answer_comments(cursor):
 
 @database_common.connection_handler
 def get_value_of_an_attribute(cursor, table, attribute, PK, ID):
-    cursor.execute("SELECT " + attribute + " FROM " + table + " WHERE " + "PK" + " = " + ID + ";")
+    cursor.execute("SELECT " + attribute + " FROM " + table + " WHERE " + PK + " = " + ID + ";")
     result = cursor.fetchall()
     value = result[0][attribute]
     return value
