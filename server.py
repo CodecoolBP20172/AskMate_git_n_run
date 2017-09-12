@@ -5,6 +5,28 @@ from operator import itemgetter
 import queries
 app = Flask(__name__)
 
+# session----------------------------------------------------------
+#
+#
+#@app.route('/login', methods=['POST'])
+#def do_admin_login():
+#    # usernames_and_passwords = queries.get_usernames_and_passwords
+#    try:
+#        if usernames_and_passwords[request.form['username']] == request.form['password']:
+#            session['logged_in'] = True
+#            session.username = request.form['username']
+#            error = False
+#    except KeyError:
+#        pass
+#    return route_list()
+#
+#
+#@app.route('/logout')
+#def do_log_out():
+#    session['logged_in'] = False
+#    return route_list()
+# END session------------------------------------------------------
+
 # Index------------------------------------------------------------
 
 
