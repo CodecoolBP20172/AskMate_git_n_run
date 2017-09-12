@@ -218,6 +218,26 @@ def route_ask():
     return render_template("form.html", page_title="Ask a question", action_link="/add-question")
 
 
+#USER REGISTER
+
+@app.route("/register")
+def register():
+    return render_template("user_register.html", page_title="Registration", action_link="/add_registration")
+
+
+@app.route("/add_registration", methods=["POST"])
+def add_registration():
+    print("kutya 1")
+    print(request.form["username"])
+    print(request.form["password"])
+    print(request.form["email_address"])
+    list_to_write = [request.form["username"], request.form["password"], request.form["email_address"]]
+    print("kutya 2")
+    queries.add_registration(list_to_write)
+    print("kutya 3")
+    return redirect("/")
+
+
 if __name__ == "__main__":
     app.secret_key = "app_magic"  # Change the content of this string
     app.run(

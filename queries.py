@@ -225,3 +225,7 @@ def delete_comment(cursor, id_):
     cursor.execute("DELETE FROM comment WHERE id = {}".format(id_))
 
 
+@database_common.connection_handler
+def add_registration(cursor, list_to_write):
+    cursor.execute('''INSERT INTO users (creation_time, username, password, email_address)
+                      VALUES (%s, %s, %s, %s)''', (str(dt)[:-7], list_to_write[0], list_to_write[1], list_to_write[2]))
