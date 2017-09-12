@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <link rel="stylesheet" type="text/css" href="/static/css/style_form.css" media="screen, print">
+      <title>Askmate Resistration</title>
+   </head>
+   <body>
+      <a href="/">
+         <div id="header">Registration</div>
+      </a>
+      <form action="{{ action_link }}" method="post">
+         <fieldset>
+            <p>Username</p>
+            <p><textarea name="username" id="username id"  minlength="4" maxlength="20" required="required">{{ username }}</textarea></p>
+            <p>Password</p>
+            <p><textarea name="password" id="password id"  minlength="4" maxlength="20" required="required">{{ password }}</textarea></p>
+            <p>Email Address</p>
+            <p><textarea name="email_adress" id="email_adress id" minlength="10" required="required">{{ email }}</textarea></p>
+            <br>
+            <button type="submit" id="submit_id">Register</button>
+         </fieldset>
+      </form>
+      <br>
+   </body>
+</html>
