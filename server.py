@@ -15,10 +15,12 @@ def log_in():
         if usernames_and_passwords[request.form['username']] == request.form['password']:
             session['logged_in'] = True
             session.username = request.form['username']
-            error = False
+        else:
+            flash("Wrong password")
     except KeyError:
-        pass
+        flash("Wrong username")
     return route_list()
+
 
 
 @app.route('/logout')
