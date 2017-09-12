@@ -4,13 +4,12 @@ from datetime import timezone
 from operator import itemgetter
 import queries
 app = Flask(__name__)
-
 # session----------------------------------------------------------
 
 
 @app.route('/login-page')
 def route_login_page():
-    session['current_page'] = request.url
+    session['current_page'] = request.path
     return render_template('header.html')
 
 
@@ -19,8 +18,8 @@ def log_in():
     account = queries.get_user_by_username(request.form['username'])
     if account:
         session['logged_in'] = True
-        session.username = account[0]['username']
-        session.id = account[0]['id']
+        session['username'] = account[0]['username']
+        session['id'] = account[0]['id']
     else:
         flash("Wrong username or password")
     return redirect(session['current_page'])
@@ -28,8 +27,9 @@ def log_in():
 
 @app.route('/logout')
 def log_out():
-    session['logged_in'] = False
-    return redirect(session['current_page'])
+    url_to_return = session['current_page']
+    session.clear()
+    return redirect(url_to_return)
 
 
 # END session------------------------------------------------------

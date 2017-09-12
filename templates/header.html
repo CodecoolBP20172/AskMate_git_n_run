@@ -17,7 +17,8 @@
             </ul>
             </li>
             {%if session['logged_in']%}
-            <li id="logout_button"><a href="/logout">Log out</a></li>
+            <li id="logout_button">Hy {{ session['username']  }}
+            <a href="/logout">Log out</a></li>
             {%else%}
             <li id ="login_boxes">
             <form action="/login" method="POST">
@@ -36,6 +37,8 @@
     </ul>
     </div>
     </div>
+    <h1> asd {{session['username']}} </h1>
+    <h2> {{session['id']}} </h2>
     <div class="content container">
         {% block content %}
         {% endblock %}
