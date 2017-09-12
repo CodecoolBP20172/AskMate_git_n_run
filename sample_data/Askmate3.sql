@@ -26,7 +26,8 @@ CREATE TABLE users (
     id serial NOT NULL,
     creation_time timestamp without time zone,
     username text,
-    password text
+    password text,
+    email_address text
 );
 
 DROP TABLE IF EXISTS public.question;

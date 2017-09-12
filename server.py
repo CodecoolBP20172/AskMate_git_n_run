@@ -5,6 +5,32 @@ from operator import itemgetter
 import queries
 app = Flask(__name__)
 
+# session----------------------------------------------------------
+
+
+@app.route('/login', methods=['POST'])
+def log_in():
+    usernames_and_passwords = queries.get_usernames_and_passwords()
+    try:
+        if usernames_and_passwords[request.form['username']] == request.form['password']:
+            session['logged_in'] = True
+            session.username = request.form['username']
+        else:
+            flash("Wrong password")
+    except KeyError:
+        flash("Wrong username")
+    return route_list()
+
+
+
+@app.route('/logout')
+def log_out():
+    session['logged_in'] = False
+    return route_list()
+
+
+# END session------------------------------------------------------
+
 # Index------------------------------------------------------------
 
 
@@ -190,6 +216,26 @@ def route_question_view(ID):
 @app.route("/ask-question")
 def route_ask():
     return render_template("form.html", page_title="Ask a question", action_link="/add-question")
+
+
+#USER REGISTER
+
+@app.route("/register")
+def register():
+    return render_template("user_register.html", page_title="Registration", action_link="/add_registration")
+
+
+@app.route("/add_registration", methods=["POST"])
+def add_registration():
+    print("kutya 1")
+    print(request.form["username"])
+    print(request.form["password"])
+    print(request.form["email_address"])
+    list_to_write = [request.form["username"], request.form["password"], request.form["email_address"]]
+    print("kutya 2")
+    queries.add_registration(list_to_write)
+    print("kutya 3")
+    return redirect("/")
 
 
 if __name__ == "__main__":
