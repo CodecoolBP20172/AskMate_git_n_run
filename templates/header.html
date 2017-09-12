@@ -1,6 +1,7 @@
 <head>
     
 </head>
+{{ session.username  }}
       <link rel="stylesheet" type="text/css" href="/static/css/header.css" media="screen, print">
 <body>
 <div id="menulist">
@@ -18,13 +19,14 @@
             </ul>
             </li>
             {%if session['logged_in']%}
-            <li><a href="/logout">Log out</a></li>
+            <li id="logout_button"><a href="/logout">Log out</a></li>
             {%else%}
-            <li><form action="/login" method="POST">
-                <input type="username" name="username" placeholder="Username"></li>
-            <li><input type="password" name="password" placeholder="Password"></li>
-            <li><input type="submit" value="Log in"></li>
-            </form>
+            <li id ="login_boxes">
+            <form action="/login" method="POST">
+            <input id = "input_box"type="username" size ="12" name="username" placeholder="Username">
+            <input id = "input_box"type="password" size ="12" name="password" placeholder="Password">
+            <input type="submit" value="Log in">
+            </form></li>      
                 {% with messages = get_flashed_messages() %}
                     {% if messages %}
                         {%for message in messages %}
