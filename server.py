@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, session
+from flask import Flask, render_template, redirect, request, session, flash
 import datetime
 from datetime import timezone
 from operator import itemgetter
@@ -8,9 +8,15 @@ app = Flask(__name__)
 # session----------------------------------------------------------
 
 
+@app.route('/login-page')
+def route_login_page():
+    return render_template('header.html')
+
+
 @app.route('/login', methods=['POST'])
 def log_in():
     usernames_and_passwords = queries.get_usernames_and_passwords()
+    print(usernames_and_passwords)
     try:
         if usernames_and_passwords[request.form['username']] == request.form['password']:
             session['logged_in'] = True
@@ -19,8 +25,7 @@ def log_in():
             flash("Wrong password")
     except KeyError:
         flash("Wrong username")
-    return route_list()
-
+    return login_page()
 
 
 @app.route('/logout')

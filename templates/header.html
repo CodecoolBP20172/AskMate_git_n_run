@@ -1,0 +1,37 @@
+<head>
+    
+</head>
+      <link rel="stylesheet" type="text/css" href="/static/css/header.css" media="screen, print">
+<body>
+<div id="menulist">
+    <div id="drop_menu">
+        <div "drop_menu_wrapper">
+    <ul>
+        <li><a href="#">valami</a></li><li>
+            <a href="#">index</a></li><li>
+            <a href="#">mutlimedia</a></li><li>
+            <a href="#">About us</a>
+            <ul>
+                <li><a href="#">Youtube</a></li>
+                <li><a href="#">Youtube</a></li>
+                <li><a href="#">Youtube</a></li>
+            </ul>
+            </li>
+            {%if session['logged_in']%}
+            <li><a href="/logout">Log out</a></li>
+            {%else%}
+            <li><form action="/login" method="POST">
+                <input type="username" name="username" placeholder="Username"></li>
+            <li><input type="password" name="password" placeholder="Password"></li>
+            <li><input type="submit" value="Log in"></li>
+            </form>
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {%for message in messages %}
+                          {{message}}
+                        {%endfor%}
+                    {%endif%}
+                {%endwith%}
+            {%endif%}
+    </ul>
+</body>
