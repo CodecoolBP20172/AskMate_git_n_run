@@ -106,6 +106,17 @@ def get_search_results_in_questions(cursor, searchkey):
                           searchkey.lower()))
     ids_found_searchkey_in_question = cursor.fetchall()
     return ids_found_searchkey_in_question
+
+
+@database_common.connection_handler
+def get_usernames_and_passwords(cursor):
+    usernames_and_passwords_dict = {}
+    cursor.execute("SELECT username, password FROM users")
+    list_of_dicts = cursor.fetchall()
+    for dictionary in list_of_dicts:
+        usernames_and_passwords_dict[dictionary['username']] = dictionary['password']
+    return usernames_and_passwords_dict
+
 # END of get values-----------------------------------------------------------------------------------
 # Update values---------------------------------------------------------------------------------------
 
