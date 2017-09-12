@@ -227,14 +227,8 @@ def register():
 
 @app.route("/add_registration", methods=["POST"])
 def add_registration():
-    print("kutya 1")
-    print(request.form["username"])
-    print(request.form["password"])
-    print(request.form["email_address"])
     list_to_write = [request.form["username"], request.form["password"], request.form["email_address"]]
-    print("kutya 2")
     queries.add_registration(list_to_write)
-    print("kutya 3")
     return redirect("/")
 
 
