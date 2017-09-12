@@ -106,6 +106,14 @@ def get_search_results_in_questions(cursor, searchkey):
                           searchkey.lower()))
     ids_found_searchkey_in_question = cursor.fetchall()
     return ids_found_searchkey_in_question
+
+@database_common.connection_handler
+def get_users_for_list_user(cursor):
+    cursor.execute("SELECT creation_time, username, email_adress FROM users")
+    result = cursor.fetchall()
+    return result
+
+
 # END of get values-----------------------------------------------------------------------------------
 # Update values---------------------------------------------------------------------------------------
 

@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/static/css/list_user.css" media="screen, print">
+        <meta charset="utf-8">
+        <title>List Users</title>
+    </head>
+    <body>
+        <table>
+        {% for line in users %}
+            <th>User name</th>
+            <th>Creation time</th>
+            <th>Email adress</th>
+        <tr>
+            <td>{{line["username"]}}</a></td>
+            <td>{{line["creation_time"]}}</td>
+            <td>{{line["email_adress"]}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+   </body>
+</html>
