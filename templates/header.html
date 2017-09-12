@@ -1,10 +1,8 @@
 <head>
-    
+      {% block extra_css %}{% endblock %}
+      <link rel="stylesheet" type="text/css" href="/static/css/header.css"/>
 </head>
-{{ session.username  }}
-      <link rel="stylesheet" type="text/css" href="/static/css/header.css" media="screen, print">
 <body>
-<div id="menulist">
     <div id="drop_menu">
         <div "drop_menu_wrapper">
     <ul>
@@ -36,4 +34,10 @@
                 {%endwith%}
             {%endif%}
     </ul>
+    </div>
+    </div>
+    <div class="content container">
+        {% block content %}
+        {% endblock %}
+    </div>
 </body>
