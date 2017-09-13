@@ -24,7 +24,7 @@ def log_in():
                      request.form['password'].strip() != '' and \
                      common.check_password(request.form['password'], hashed_password_from_db)
 
-    if user and valid_[password]:
+    if user and valid_password:
         session['logged_in'] = True
         session['username'] = user['username']
         session['id'] = user['id']
@@ -165,8 +165,8 @@ def route_add_answer(ID):
 @app.route("/give_comment/<table>/<int:id_>", methods=['POST'])
 def route_give_comment(table, id_):
     comment_to_write = request.form["comment"]
-    user_id = session['id']
-    queries.add_comment(table, id_, comment_to_write)
+    users_id = session['id']
+    queries.add_comment(table, id_, comment_to_write, users_id)
     if table == "question_id":
         return redirect("/question/" + str(id_))
     elif table == "answer_id":
@@ -195,13 +195,8 @@ def route_edit_comment(question_id, id_):
 
 @app.route("/add-question", methods=["POST"])
 def route_add():
-<<<<<<< HEAD
     user_id = session['id']
     list_to_write = [0, 0, request.form["title"], request.form["question"], user_id]
-=======
-    session['current_page'] = request.path
-    list_to_write = [0, 0, request.form["title"], request.form["question"]]
->>>>>>> origin/headertohtmls
     queries.add_question(list_to_write)
     return redirect("/")
 
