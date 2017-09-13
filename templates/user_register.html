@@ -1,0 +1,27 @@
+{% extends "header.html" %}
+{% block head %}
+      <meta charset="utf-8">
+      <link rel="stylesheet" type="text/css" href="/static/css/style_form.css" media="screen, print">
+      <title>Askmate Registration</title>
+{% endblock %}
+{% block content %}
+    <br><br>
+      <form method="post">
+         {% if error %}
+            Error: {{ error }}
+         {% endif %}
+         <fieldset>
+            <p>Username</p>
+            <p><input name="username" id="username id"  minlength="4" maxlength="20" required="required" value="{{ user_name }}"/></p>
+            <p>Password</p>
+            <p><input type="password" name="password" id="password id"  minlength="4" maxlength="20" required="required"/></p>
+            <p>Repeat the password</p>
+            <p><input type="password" name="password2" id="password id"  minlength="4" maxlength="20" required="required"/></p>
+            <p>Email Address</p>
+            <p><input name="email_address" id="email_address id" minlength="10" required="required" value="{{ email_address }}"/></p>
+            <br>
+            <button type="register" id="register id">Register</button>
+         </fieldset>
+      </form>
+      <br>
+{% endblock %}

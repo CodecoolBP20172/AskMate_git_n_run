@@ -1,0 +1,38 @@
+body {
+	background: #ffffff url(../images/bg.png) top center no-repeat fixed;
+	font-family: tahoma, arial, sans-serif;
+	text-decoration: none;
+	font-size: 100%;
+	color: #4e4e4e;
+}
+
+a {
+	color: #ee2e24;
+	text-decoration: none;
+}
+
+a:hover {
+	color: black; 
+}
+
+.question {
+	margin-top: 2%;
+	margin-bottom: 2%;
+}
+
+.answer {
+	margin-bottom: 2%;
+}
+
+.comment {
+	margin-bottom: 2%;
+}
+
+
+tr, td, th {
+	border-bottom: 1px solid grey;
+	vertical-align: center;
+	padding: 8px;
+	text-align: center;	
+}
+
