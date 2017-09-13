@@ -6,13 +6,14 @@
         <title>List Users</title>
     </head>
     <body>
-        <table>
-        {% for line in users %}
+        <table align="center">
+        
             <th>User name</th>
             <th>Creation time</th>
             <th>Email adress</th>
         <tr>
-            <td>{{line["username"]}}</a></td>
+            {% for line in users %}
+            <td><a href="/user/{{ line["id"]}}">{{line["username"]}}</a></td>
             <td>{{line["creation_time"]}}</td>
             <td>{{line["email_adress"]}}</td>
         </tr>

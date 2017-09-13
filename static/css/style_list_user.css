@@ -4,3 +4,16 @@ body {
 	background: #ffffff url(../images/bg.png) top center no-repeat fixed;
 	font-family: tahoma, arial, sans-serif;
 	color: #4e4e4e;
+
+}
+table {
+	margin-top: 5%;
+	border-collapse: collapse;
+	width: 70%;
+    }
+
+tr, td, th {
+	border-bottom: 1px solid grey;
+	padding: 8px;
+	text-align: center;
+}

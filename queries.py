@@ -109,7 +109,7 @@ def get_search_results_in_questions(cursor, searchkey):
 
 @database_common.connection_handler
 def get_users_for_list_user(cursor):
-    cursor.execute("SELECT creation_time, username, email_adress FROM users")
+    cursor.execute("SELECT creation_time, username, email_adress, id FROM users")
     result = cursor.fetchall()
     return result
 
