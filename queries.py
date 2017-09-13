@@ -109,12 +109,17 @@ def get_search_results_in_questions(cursor, searchkey):
 
 
 @database_common.connection_handler
+def get_users_for_list_user(cursor):
+    cursor.execute("SELECT creation_time, username, email_address, id FROM users")
+    result = cursor.fetchall()
+    return result
+
+@database_common.connection_handler
 def get_users_id_and_username(cursor, user_id,):
     cursor.execute('''SELECT users.id, users.username
                       FROM users
                       WHERE users.id = %s''', (user_id,))
     result = cursor.fetchall()
-    print(result)
     return result
 
 
@@ -148,6 +153,7 @@ def get_users_comment_by_user_id(cursor, user_id,):
     return result
 
 
+@database_common.connection_handler
 def get_user_by_username(cursor, username):
     cursor.execute("SELECT id, username, password FROM users WHERE username = %s", (username,))
     return cursor.fetchone()

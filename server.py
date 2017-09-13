@@ -281,6 +281,15 @@ def register():
                            error=error)
 
 
+# List User ------------------------------------------------------------
+
+
+@app.route("/list-users")
+def route_list_user():
+    users = queries.get_users_for_list_user()
+    return render_template("list_user.html", users=users)
+
+
 if __name__ == "__main__":
     app.secret_key = "app_magic"  # Change the content of this string
     app.run(
