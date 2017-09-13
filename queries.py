@@ -226,6 +226,14 @@ def delete_comment(cursor, id_):
 
 
 @database_common.connection_handler
-def add_registration(cursor, list_to_write):
-    cursor.execute('''INSERT INTO users (creation_time, username, password, email_address)
-                      VALUES (%s, %s, %s, %s)''', (str(dt)[:-7], list_to_write[0], list_to_write[1], list_to_write[2]))
+def get_user_by_name(cursor, user_name):
+    cursor.execute("SELECT id FROM users WHERE username = %(user_name)s",
+                   {'user_name': user_name})
+    return cursor.fetchone()
+
+
+@database_common.connection_handler
+def add_user(cursor, username, password, email_address):
+    cursor.execute('''INSERT INTO users (username, password, email_address)
+                      VALUES (%(username)s, %(password)s, %(email_address)s)''',
+                   {'username': username, 'password': password, 'email_address': email_address})

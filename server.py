@@ -220,22 +220,35 @@ def route_ask():
 
 #USER REGISTER
 
-@app.route("/register")
+@app.route("/register", methods=['GET', 'POST'])
 def register():
-    return render_template("user_register.html", page_title="Registration", action_link="/add_registration")
+    user_name = ''
+    email_address = ''
+    error = ''
 
+    if request.method == 'POST':
+        user_name = request.form["username"]
+        email_address = request.form["email_address"]
+        password = request.form["password"]
+        password2 = request.form["password2"]
+        user_name_given = "username" in request.form and user_name.strip() != ''
+        user_name_exists = queries.get_user_by_name(user_name) is not None
+        if user_name_exists:
+            error = 'Username exists already'  
+        elif not user_name_given:
+            error = 'Invalid username'
+        elif password != password2:
+            error = "Passwords don't match"
+        else:
+            hashed_password = common.get_hashed_password(password)
+            queries.add_user(user_name, hashed_password, email_address)
+            return redirect("/")
 
-@app.route("/add_registration", methods=["POST"])
-def add_registration():
-    print("kutya 1")
-    print(request.form["username"])
-    print(request.form["password"])
-    print(request.form["email_address"])
-    list_to_write = [request.form["username"], request.form["password"], request.form["email_address"]]
-    print("kutya 2")
-    queries.add_registration(list_to_write)
-    print("kutya 3")
-    return redirect("/")
+    return render_template("user_register.html",
+                           page_title="Registration",
+                           user_name=user_name,
+                           email_address=email_address,
+                           error=error)
 
 
 if __name__ == "__main__":

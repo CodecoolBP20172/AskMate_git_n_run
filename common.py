@@ -1,6 +1,7 @@
 import csv
 import datetime
 import base64
+import bcrypt
 
 
 def nextID(file):
@@ -44,3 +45,13 @@ def write_to_file(csvfile, data):
         file = csv.writer(datafile, delimiter=",")
         for line in data:
             file.writerow(line)
+
+
+def get_hashed_password(plain_text_password):
+    # Hash a password for the first time
+    #   (Using bcrypt, the salt is saved into the hash itself)
+    return bcrypt.hashpw(plain_text_password, bcrypt.gensalt())
+
+def check_password(plain_text_password, hashed_password):
+    # Check hased password. Useing bcrypt, the salt is saved into the hash itself
+    return bcrypt.checkpw(plain_text_password, hashed_password)
