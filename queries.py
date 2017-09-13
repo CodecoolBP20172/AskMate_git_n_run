@@ -111,8 +111,7 @@ def get_search_results_in_questions(cursor, searchkey):
 @database_common.connection_handler
 def get_user_by_username(cursor, username):
     cursor.execute("SELECT id, username, password FROM users WHERE username = %s", (username,))
-    result = cursor.fetchall()
-    return result
+    return cursor.fetchone()
 
 # END of get values-----------------------------------------------------------------------------------
 # Update values---------------------------------------------------------------------------------------
@@ -223,6 +222,7 @@ def delete_comment(cursor, id_):
 
 
 @database_common.connection_handler
-def add_registration(cursor, list_to_write):
-    cursor.execute('''INSERT INTO users (creation_time, username, password, email_address)
-                      VALUES (%s, %s, %s, %s)''', (str(dt)[:-7], list_to_write[0], list_to_write[1], list_to_write[2]))
+def add_user(cursor, username, password, email_address):
+    cursor.execute('''INSERT INTO users (username, password, email_address)
+                      VALUES (%(username)s, %(password)s, %(email_address)s)''',
+                   {'username': username, 'password': password, 'email_address': email_address})

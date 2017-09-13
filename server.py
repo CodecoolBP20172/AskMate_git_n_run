@@ -3,6 +3,7 @@ import datetime
 from datetime import timezone
 from operator import itemgetter
 import queries
+import common
 app = Flask(__name__)
 # session----------------------------------------------------------
 
@@ -15,11 +16,19 @@ def route_login_page():
 
 @app.route('/login', methods=['POST'])
 def log_in():
-    account = queries.get_user_by_username(request.form['username'])
-    if account:
+    user = queries.get_user_by_username(request.form['username'])
+    hashed_password_from_db = user['password'] if user is not None else ''
+
+    valid_password = user is not None and \
+                     'password' in request.form and \
+                     request.form['password'].strip() != '' and \
+                     common.check_password(request.form['password'], hashed_password_from_db)
+
+    if user and valid_password:
         session['logged_in'] = True
-        session['username'] = account[0]['username']
-        session['id'] = account[0]['id']
+        session['username'] = user['username']
+        session['id'] = user['id']
+        flash(user['username'] + " has logged in")
     else:
         flash("Wrong username or password")
     return redirect(session['current_page'])
@@ -219,6 +228,39 @@ def route_question_view(ID):
 @app.route("/ask-question")
 def route_ask():
     return render_template("form.html", page_title="Ask a question", action_link="/add-question")
+
+
+#USER REGISTER
+
+@app.route("/register", methods=['GET', 'POST'])
+def register():
+    user_name = ''
+    email_address = ''
+    error = ''
+
+    if request.method == 'POST':
+        user_name = request.form["username"]
+        email_address = request.form["email_address"]
+        password = request.form["password"]
+        password2 = request.form["password2"]
+        user_name_given = "username" in request.form and user_name.strip() != ''
+        user_name_exists = queries.get_user_by_username(user_name) is not None
+        if user_name_exists:
+            error = 'Username exists already'  
+        elif not user_name_given:
+            error = 'Invalid username'
+        elif password != password2:
+            error = "Passwords don't match"
+        else:
+            hashed_password = common.get_hashed_password(password)
+            queries.add_user(user_name, hashed_password, email_address)
+            return redirect("/")
+
+    return render_template("user_register.html",
+                           page_title="Registration",
+                           user_name=user_name,
+                           email_address=email_address,
+                           error=error)
 
 
 if __name__ == "__main__":

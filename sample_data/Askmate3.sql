@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS public.users;
 DROP SEQUENCE IF EXISTS public.users_id_seq;
 CREATE TABLE users (
     id serial NOT NULL,
-    creation_time timestamp without time zone,
+    creation_time date not null default CURRENT_DATE,
     username text,
     password text,
     email_address text

@@ -23,14 +23,14 @@
                 <li><a href="/user/{{  session['id']  }}"+>Profile</a></li>
             </ul>
             {%else%}
-            <li id ="login_boxes" onclick="toogle_login_menu()"><a href="#">Log in</a>
+            <li id ="login_boxes"><a onclick="toogle_login_menu()">Log in</a>
                 <ul id="drop_down_login">
                     <form action="/login" id ="login_form" method="POST">
                     <li>Username</li>
-                    <li><input id = "input_box"type="username" size ="12" name="username" placeholder="Username"></br></li>
+                    <li><input id = "input_box" type="username" size ="12" required  name="username" placeholder="Username"></br></li>
                     <li>password</li>
-                    <li><input id = "input_box"type="password" size ="12" name="password" placeholder="Password"></li>
-                    <li><a href="javascript:{}" onclick="document.getElementById('login_form').submit()">Log in</a></li>
+                    <li><input id="input_box" type="password" size ="12" required name="password" placeholder="Password"></li>
+                    <li><input type="submit" value="Log In"></li>
             </form>
                 </ul>
             {%endif%}
@@ -56,11 +56,15 @@
     var buttonLength = "{{  session['username']  }}".length
     var counted_margin = 67.5 - (buttonLength * 0.55)
     document.getElementById("logged_in_menu").setAttribute('style', 'margin-left :' + counted_margin +'%')
-    function toogle_login_menu(){
-        if (document.getElementById("drop_down_login").getAttribute("style") === 'display:none'){
-        document.getElementById("drop_down_login").setAttribute("style","display:block");
-        }else{
-        document.getElementById("drop_down_login").setAttribute("style", 'display:none');
+    function toogle_login_menu() {
+        var loginDropDown = document.getElementById("drop_down_login");
+        if (isHidden(loginDropDown)) {
+            loginDropDown.setAttribute("style","display:block");
+        } else{
+            loginDropDown.setAttribute("style", 'display:none');
         }
+    }
+    function isHidden(el) {
+        return (el.offsetParent === null)
     }
 </script>
