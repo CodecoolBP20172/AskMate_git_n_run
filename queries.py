@@ -106,6 +106,38 @@ def get_search_results_in_questions(cursor, searchkey):
                           searchkey.lower()))
     ids_found_searchkey_in_question = cursor.fetchall()
     return ids_found_searchkey_in_question
+
+
+@database_common.connection_handler
+def get_users_question_by_user_id(cursor, user_id,):
+    cursor.execute('''SELECT users.id, question.title, users.username, question.id
+                      FROM users
+                      JOIN question ON (users.id = question.users_id)
+                      WHERE users.id = %s''', (user_id,))
+    result = cursor.fetchall()
+    print(result)
+    return result
+
+
+@database_common.connection_handler
+def get_users_answer_by_user_id(cursor, user_id,):
+    cursor.execute('''SELECT users.id, answer.message, users.username
+                      FROM users
+                      JOIN answer ON (users.id = answer.users_id)
+                      WHERE users.id = %s''', (user_id,))
+    result = cursor.fetchall()
+    return result
+
+
+@database_common.connection_handler
+def get_users_comment_by_user_id(cursor, user_id,):
+    cursor.execute('''SELECT users.id, comment.message, users.username
+                      FROM users
+                      JOIN comment ON (users.id = comment.users_id)
+                      WHERE users.id = %s''', (user_id,))
+    result = cursor.fetchall()
+    return result
+
 # END of get values-----------------------------------------------------------------------------------
 # Update values---------------------------------------------------------------------------------------
 

@@ -191,6 +191,16 @@ def route_question_view(ID):
 def route_ask():
     return render_template("form.html", page_title="Ask a question", action_link="/add-question")
 
+# User page------------------------------------------------------------
+
+
+@app.route("/user/<user_id>")
+def route_user(user_id):
+    user_question = queries.get_users_question_by_user_id(user_id)
+    user_answer = queries.get_users_answer_by_user_id(user_id)
+    user_comment = queries.get_users_comment_by_user_id(user_id)
+    return render_template("user.html", question=user_question, answer=user_answer, comment=user_comment)
+
 
 if __name__ == "__main__":
     app.secret_key = "app_magic"  # Change the content of this string

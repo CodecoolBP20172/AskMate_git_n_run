@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/static/css/style_list_user.css" media="screen, print">
+        <meta charset="utf-8">
+        <title>User details</title>
+    </head>
+    <body>
+        <table>
+        
+            <th>User name</th>
+        <tr>
+                <td>{{question[0]["username"]}}</td>
+        </tr>
+        
+    </table>
+    
+    <table>
+            <th>Questions</th>
+        {% for line in question %}
+        
+        <tr><td><a href="/question+1view/{{  line['id']  }}">{{line["title"]}}</a></td>
+        </tr>
+        {% endfor %}    
+    </table>
+    <table>
+            <th>Answers</th>
+        {% for line in answer %}
+        
+        <tr><td>{{line["message"]}}</td>
+        </tr>
+        {% endfor %}    
+    </table>
+    <table>
+            <th>Comments</th>
+        {% for line in comment %}
+        
+        <tr><td>{{line["message"]}}</td>
+        </tr>
+        {% endfor %}    
+    </table>
+   </body>
+</html> 
