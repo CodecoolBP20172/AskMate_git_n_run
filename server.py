@@ -24,7 +24,7 @@ def log_in():
                      request.form['password'].strip() != '' and \
                      common.check_password(request.form['password'], hashed_password_from_db)
 
-    if user and valid_password:
+    if user and valid_[password]:
         session['logged_in'] = True
         session['username'] = user['username']
         session['id'] = user['id']
@@ -148,7 +148,8 @@ def route_answer_delete(ID):
     
 @app.route("/give-answer/<int:ID>", methods=["POST"])
 def route_add_answer(ID):
-    list_to_write = [0, ID, request.form["answer_text"]]
+    user_id = session['id']
+    list_to_write = [0, ID, request.form["answer_text"], user_id]
     queries.add_answer(list_to_write)
     return redirect("/question/"+str(ID))
 
@@ -159,6 +160,7 @@ def route_add_answer(ID):
 @app.route("/give_comment/<table>/<int:id_>", methods=['POST'])
 def route_give_comment(table, id_):
     comment_to_write = request.form["comment"]
+    user_id = session['id']
     queries.add_comment(table, id_, comment_to_write)
     if table == "question_id":
         return redirect("/question/" + str(id_))
@@ -188,7 +190,8 @@ def route_edit_comment(question_id, id_):
 
 @app.route("/add-question", methods=["POST"])
 def route_add():
-    list_to_write = [0, 0, request.form["title"], request.form["question"]]
+    user_id = session['id']
+    list_to_write = [0, 0, request.form["title"], request.form["question"], user_id]
     queries.add_question(list_to_write)
     return redirect("/")
 
@@ -229,8 +232,8 @@ def route_question_view(ID):
 def route_ask():
     return render_template("form.html", page_title="Ask a question", action_link="/add-question")
 
+# USER REGISTER
 
-#USER REGISTER
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():

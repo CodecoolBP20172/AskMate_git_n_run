@@ -152,29 +152,18 @@ def update_column(cursor, table, attribute, PK, ID, new_value):
 @database_common.connection_handler
 def add_question(cursor, list):
     cursor.execute('''INSERT INTO question (submission_time, view_number, vote_number, title, message)
-                      VALUES ('{}', {}, {}, '{}', '{}')'''.format(
-                                                                    str(dt)[:-7],
-                                                                    list[0],
-                                                                    list[1],
-                                                                    list[2],
-                                                                    list[3]
-                                                                    ))
+                      VALUES (%s, %s, %s, %s, %s, %s)''', (str(dt)[:-7], list[0], list[1], list[2], list[3], list[4]))
 
 
 @database_common.connection_handler
 def add_answer(cursor, list):
     cursor.execute('''INSERT INTO answer (submission_time, vote_number, question_id, message)
-                      VALUES ('{}', {}, {}, '{}')'''.format(
-                                                            str(dt)[:-7],
-                                                            list[0],
-                                                            list[1],
-                                                            list[2]
-                                                            ))
+                      VALUES (%s, %s, %s, %s, %s)''', (str(dt)[:-7], list[0], list[1], list[2], list[3]))
 
 
 @database_common.connection_handler
 def add_comment(cursor, table, id_, comment):
-    cursor.execute("INSERT INTO comment ({}, message) VALUES ({} ,'{}')".format(table, id_, comment))
+    cursor.execute("INSERT INTO comment (%s, message) VALUES (%s, %s, %s)", (table, id_, comment, user_id))
 # END of add values-----------------------------------------------------------------------------------
 # Delete values --------------------------------------------------------------------------------------
 
@@ -226,3 +215,6 @@ def add_user(cursor, username, password, email_address):
     cursor.execute('''INSERT INTO users (username, password, email_address)
                       VALUES (%(username)s, %(password)s, %(email_address)s)''',
                    {'username': username, 'password': password, 'email_address': email_address})
+
+
+# add qu, ans, come legyen benne a user id
