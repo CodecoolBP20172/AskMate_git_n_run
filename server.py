@@ -28,7 +28,6 @@ def log_in():
         session['logged_in'] = True
         session['username'] = user['username']
         session['id'] = user['id']
-        flash(user['username'] + " has logged in")
     else:
         flash("Wrong username or password")
     return redirect(session['current_page'])
@@ -233,6 +232,7 @@ def route_question_view(ID):
 
 @app.route("/ask-question")
 def route_ask():
+    session['current_page'] = request.path
     return render_template("form.html", page_title="Ask a question", action_link="/add-question")
 
 # User page------------------------------------------------------------
@@ -240,6 +240,7 @@ def route_ask():
 
 @app.route("/user/<user_id>")
 def route_user(user_id):
+    session['current_page'] = request.path
     user_id_and_question = queries.get_users_id_and_username(user_id)
     user_question = queries.get_users_question_by_user_id(user_id)
     user_answer = queries.get_users_answer_by_user_id(user_id)
@@ -286,6 +287,7 @@ def register():
 
 @app.route("/list-users")
 def route_list_user():
+    session['current_page'] = request.path
     users = queries.get_users_for_list_user()
     return render_template("list_user.html", users=users)
 

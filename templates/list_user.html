@@ -1,11 +1,10 @@
-<!doctype html>
-<html>
-    <head>
+{% extends "header.html" %}
+{% block head %}
         <link rel="stylesheet" type="text/css" href="/static/css/style_list_user.css" media="screen, print">
         <meta charset="utf-8">
         <title>List Users</title>
-    </head>
-    <body>
+{% endblock %}
+{% block content %}
         <table align="center">
         
             <th>User name</th>
@@ -19,5 +18,4 @@
         </tr>
         {% endfor %}
     </table>
-   </body>
-</html>
+{% endblock %}
