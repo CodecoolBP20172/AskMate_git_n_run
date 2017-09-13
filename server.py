@@ -48,24 +48,28 @@ def log_out():
 
 @app.route("/all")
 def route_list_all():
+    session['current_page'] = request.path
     questions = queries.get_questions_for_index()
     return render_template("list.html", questions=questions)
 
 
 @app.route("/")
 def route_list():
+    session['current_page'] = request.path
     questions = queries.get_latest_five_questions()
     return render_template("list.html", questions=questions)
 
 
 @app.route("/getsearch", methods=['POST'])
 def route_get_search():
+    session['current_page'] = request.path
     questions = queries.get_search_results(request.form["searchbox"])
     return render_template("list.html", questions=questions)
 
 
 @app.route("/<aspect>=<desc>")
 def route_list_aspect(aspect, desc):
+    session['current_page'] = request.path
     questions = queries.get_questions_for_index_ordered(aspect, desc)
     return render_template("list.html", questions=questions)
 
@@ -75,6 +79,7 @@ def route_list_aspect(aspect, desc):
 
 @app.route("/question/<int:id_>", methods=['GET'])
 def route_question(id_):
+    session['current_page'] = request.path
     question = queries.get_question_by_id(id_)
     answers = queries.get_answers_by_question_id(id_)
     question_comments = queries.get_question_comments_by_question_id(id_,"question_id")
@@ -190,8 +195,13 @@ def route_edit_comment(question_id, id_):
 
 @app.route("/add-question", methods=["POST"])
 def route_add():
+<<<<<<< HEAD
     user_id = session['id']
     list_to_write = [0, 0, request.form["title"], request.form["question"], user_id]
+=======
+    session['current_page'] = request.path
+    list_to_write = [0, 0, request.form["title"], request.form["question"]]
+>>>>>>> origin/headertohtmls
     queries.add_question(list_to_write)
     return redirect("/")
 
@@ -237,6 +247,7 @@ def route_ask():
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
+    session['current_page'] = request.path
     user_name = ''
     email_address = ''
     error = ''
