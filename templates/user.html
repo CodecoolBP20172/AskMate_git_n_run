@@ -10,7 +10,9 @@
         
             <th>User name</th>
         <tr>
-                <td>{{question[0]["username"]}}</td>
+            
+            {%if question%}
+            <td>{{question[0]["username"]}}</td>
         </tr>
         
     </table>
@@ -18,7 +20,6 @@
     <table>
             <th>Questions</th>
         {% for line in question %}
-        
         <tr><td><a href="/question+1view/{{  line['id']  }}">{{line["title"]}}</a></td>
         </tr>
         {% endfor %}    
@@ -37,7 +38,9 @@
         
         <tr><td>{{line["message"]}}</td>
         </tr>
-        {% endfor %}    
+        {% endfor %}   
+        {%else%}
+        {%endif%} 
     </table>
    </body>
 </html> 
