@@ -57,10 +57,10 @@
     var counted_margin = 64.5 - (buttonLength * 0.55)
     document.getElementById("logged_in_menu").setAttribute('style', 'margin-left :' + counted_margin +'%')
     function toogle_login_menu() {
+        console.log("anyuuu")
         var loginDropDown = document.getElementById("drop_down_login");
         if (isHidden(loginDropDown)) {
             loginDropDown.setAttribute("style","display:block");
-            loginDropDown.setAttribute("style","background-color:#333")
         } else{
             loginDropDown.setAttribute("style", 'display:none');
         }

@@ -5,6 +5,11 @@
       <title>Askmate Registration</title>
 {% endblock %}
 {% block content %}
+{% if session['logged_in']%}
+<div id="session_error">
+<p>you are already logged in </p>
+</div>
+{% else %}
     <br><br>
       <form method="post">
          {% if error %}
@@ -24,4 +29,5 @@
          </fieldset>
       </form>
       <br>
+{% endif %}
 {% endblock %}
