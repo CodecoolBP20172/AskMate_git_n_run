@@ -109,13 +109,9 @@ def get_search_results_in_questions(cursor, searchkey):
 
 
 @database_common.connection_handler
-def get_usernames_and_passwords(cursor):
-    usernames_and_passwords_dict = {}
-    cursor.execute("SELECT username, password FROM users")
-    list_of_dicts = cursor.fetchall()
-    for dictionary in list_of_dicts:
-        usernames_and_passwords_dict[dictionary['username']] = dictionary['password']
-    return usernames_and_passwords_dict
+def get_user_by_username(cursor, username):
+    cursor.execute("SELECT id, username, password FROM users WHERE username = %s", (username,))
+    return cursor.fetchone()
 
 # END of get values-----------------------------------------------------------------------------------
 # Update values---------------------------------------------------------------------------------------
@@ -223,13 +219,6 @@ def delete_comment_from_question(cursor, id_):
 @database_common.connection_handler
 def delete_comment(cursor, id_):
     cursor.execute("DELETE FROM comment WHERE id = {}".format(id_))
-
-
-@database_common.connection_handler
-def get_user_by_name(cursor, user_name):
-    cursor.execute("SELECT id FROM users WHERE username = %(user_name)s",
-                   {'user_name': user_name})
-    return cursor.fetchone()
 
 
 @database_common.connection_handler

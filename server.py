@@ -1,32 +1,44 @@
-from flask import Flask, render_template, redirect, request, session
+from flask import Flask, render_template, redirect, request, session, flash
 import datetime
 from datetime import timezone
 from operator import itemgetter
 import queries
+import common
 app = Flask(__name__)
-
 # session----------------------------------------------------------
+
+
+@app.route('/login-page')
+def route_login_page():
+    session['current_page'] = request.path
+    return render_template('header.html')
 
 
 @app.route('/login', methods=['POST'])
 def log_in():
-    usernames_and_passwords = queries.get_usernames_and_passwords()
-    try:
-        if usernames_and_passwords[request.form['username']] == request.form['password']:
-            session['logged_in'] = True
-            session.username = request.form['username']
-        else:
-            flash("Wrong password")
-    except KeyError:
-        flash("Wrong username")
-    return route_list()
+    user = queries.get_user_by_username(request.form['username'])
+    hashed_password_from_db = user['password'] if user is not None else ''
 
+    valid_password = user is not None and \
+                     'password' in request.form and \
+                     request.form['password'].strip() != '' and \
+                     common.check_password(request.form['password'], hashed_password_from_db)
+
+    if user and valid_password:
+        session['logged_in'] = True
+        session['username'] = user['username']
+        session['id'] = user['id']
+        flash(user['username'] + " has logged in")
+    else:
+        flash("Wrong username or password")
+    return redirect(session['current_page'])
 
 
 @app.route('/logout')
 def log_out():
-    session['logged_in'] = False
-    return route_list()
+    url_to_return = session['current_page']
+    session.clear()
+    return redirect(url_to_return)
 
 
 # END session------------------------------------------------------
@@ -232,7 +244,7 @@ def register():
         password = request.form["password"]
         password2 = request.form["password2"]
         user_name_given = "username" in request.form and user_name.strip() != ''
-        user_name_exists = queries.get_user_by_name(user_name) is not None
+        user_name_exists = queries.get_user_by_username(user_name) is not None
         if user_name_exists:
             error = 'Username exists already'  
         elif not user_name_given:

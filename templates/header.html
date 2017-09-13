@@ -1,0 +1,70 @@
+<head>
+      {% block head %}{% endblock %}
+      <link rel="stylesheet" type="text/css" href="/static/css/header.css"/>
+</head>
+<body>
+    <div id="drop_menu">
+        <div "drop_menu_wrapper">
+    <ul>
+        <li><a href="/all">Questions</a>
+            <ul>
+                <li><a href="/">Fresh</a></li>
+                <li><a href="/all">All</a></li>
+            </ul>
+            </li>
+            <li>
+            <a href="/register">Register</a></li><li>
+            <a href="/ask-question">Ask a question</a></li><li>
+            <a href="list-users">List users</a></li><li>
+            {%if session['logged_in']%}
+            <li id="logged_in_menu"><a href="#">{{  session['username']  }}</a>
+            <ul>
+                <li><a href="/logout">Log out</a></li>
+                <li><a href="/user/{{  session['id']  }}"+>Profile</a></li>
+            </ul>
+            {%else%}
+            <li id ="login_boxes"><a onclick="toogle_login_menu()">Log in</a>
+                <ul id="drop_down_login">
+                    <form action="/login" id ="login_form" method="POST">
+                    <li>Username</li>
+                    <li><input id = "input_box" type="username" size ="12" required  name="username" placeholder="Username"></br></li>
+                    <li>password</li>
+                    <li><input id="input_box" type="password" size ="12" required name="password" placeholder="Password"></li>
+                    <li><input type="submit" value="Log In"></li>
+            </form>
+                </ul>
+            {%endif%}
+            </li>
+    </ul>
+    </div>
+    </div>
+    <div>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {%for message in messages %}
+                    <p id="error_message">{{message}}</p>
+                {%endfor%}
+            {%endif%}
+        {%endwith%}
+    </div>
+    <div class="content container">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+<script>
+    var buttonLength = "{{  session['username']  }}".length
+    var counted_margin = 67.5 - (buttonLength * 0.55)
+    document.getElementById("logged_in_menu").setAttribute('style', 'margin-left :' + counted_margin +'%')
+    function toogle_login_menu() {
+        var loginDropDown = document.getElementById("drop_down_login");
+        if (isHidden(loginDropDown)) {
+            loginDropDown.setAttribute("style","display:block");
+        } else{
+            loginDropDown.setAttribute("style", 'display:none');
+        }
+    }
+    function isHidden(el) {
+        return (el.offsetParent === null)
+    }
+</script>
