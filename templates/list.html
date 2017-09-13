@@ -1,12 +1,10 @@
-<!doctype html>
-<html>
-   <head>
+{% extends "header.html" %}
+{% block head %}
       <link rel="stylesheet" type="text/css" href="/static/css/style_list.css" media="screen, print">
       <meta charset="utf-8">
       <title>List of Questions</title>
-   </head>
-   <body>
-      <a href="/"><div id="header">List of question</div></a>
+{% endblock %}
+{% block content %}
       <div class="searchbox"><form action="/getsearch" method="post">
          <p><input name="searchbox" id="seachbox_id" rows="2" cols="10" minlength="1" maxlength="10" required="required" style="font-size:15px;"></input>
             <input type="image" name="submit" src="/static/images/search.png" width="20px" border = "0" alt="Submit"/>
@@ -32,5 +30,4 @@
       </table>
       <div class="showall"><a href="/all">Show all questions</a><div/>
       <div class="askquestion"><a href="/ask-question">Ask a question</a><div/>
-   </body>
-</html>
+{% endblock %}

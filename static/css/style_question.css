@@ -6,7 +6,7 @@ body {
 	font-size: 100%;
 	color: #4e4e4e;
 }
-
+}
 #header {
 	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande';
 	text-transform: uppercase;
@@ -167,6 +167,9 @@ tr, td, th {
 	font-size: 20px;
 	text-align: center;
 	padding: 0	px;
+	background-color:#7b302c;
+	color: white;
+	text-align: left;
 	}
 
 .mycolumn_answer_buttons {
