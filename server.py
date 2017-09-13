@@ -196,10 +196,11 @@ def route_ask():
 
 @app.route("/user/<user_id>")
 def route_user(user_id):
+    user_id_and_question = queries.get_users_id_and_username(user_id)
     user_question = queries.get_users_question_by_user_id(user_id)
     user_answer = queries.get_users_answer_by_user_id(user_id)
     user_comment = queries.get_users_comment_by_user_id(user_id)
-    return render_template("user.html", question=user_question, answer=user_answer, comment=user_comment)
+    return render_template("user.html", question=user_question, answer=user_answer, comment=user_comment,user_details=user_id_and_question)
 
 
 if __name__ == "__main__":
