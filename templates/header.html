@@ -1,5 +1,5 @@
 <head>
-      {% block extra_css %}{% endblock %}
+      {% block head %}{% endblock %}
       <link rel="stylesheet" type="text/css" href="/static/css/header.css"/>
 </head>
 <body>
@@ -15,6 +15,7 @@
             <li>
             <a href="/register">Register</a></li><li>
             <a href="/ask-question">Ask a question</a></li><li>
+            <a href="list-users">List users</a></li><li>
             {%if session['logged_in']%}
             <li id="logged_in_menu"><a href="#">{{  session['username']  }}</a>
             <ul>
@@ -53,6 +54,6 @@
 </body>
 <script>
     var buttonLength = "{{  session['username']  }}".length
-    var counted_margin = 73.5 - (buttonLength * 0.55)
+    var counted_margin = 67.5 - (buttonLength * 0.55)
     document.getElementById("logged_in_menu").setAttribute('style', 'margin-left :' + counted_margin +'%')
 </script>

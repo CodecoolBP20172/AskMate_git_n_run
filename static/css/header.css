@@ -50,7 +50,6 @@ body{
     position : absolute;
     background-color: #333;
     border-top : 0;
-    margin-left: -5px;
     min-width: 170px;
 }
 #drop_menu ul ul li{
