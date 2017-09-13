@@ -147,6 +147,12 @@ def get_users_comment_by_user_id(cursor, user_id,):
     result = cursor.fetchall()
     return result
 
+
+def get_user_by_username(cursor, username):
+    cursor.execute("SELECT id, username, password FROM users WHERE username = %s", (username,))
+    return cursor.fetchone()
+
+
 # END of get values-----------------------------------------------------------------------------------
 # Update values---------------------------------------------------------------------------------------
 
@@ -255,3 +261,8 @@ def delete_comment(cursor, id_):
     cursor.execute("DELETE FROM comment WHERE id = {}".format(id_))
 
 
+@database_common.connection_handler
+def add_user(cursor, username, password, email_address):
+    cursor.execute('''INSERT INTO users (username, password, email_address)
+                      VALUES (%(username)s, %(password)s, %(email_address)s)''',
+                   {'username': username, 'password': password, 'email_address': email_address})

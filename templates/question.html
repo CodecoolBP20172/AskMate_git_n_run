@@ -1,156 +1,155 @@
-<!doctype html>
-<html>
-   <head>
+{% extends "header.html" %}
+{% block head %}
       <link rel="stylesheet" type="text/css" href="/static/css/style_question.css" media="screen, print">
       <meta charset="utf-8">
       <title>Question</title>
-   </head>
-   <body align="center">
-      <a href="/">
-         <div id="header">Ask a Mate</div>
-      </a>
-      <table align="center">
-         <tr>
-            <td class="question_title">
+{% endblock %}
+{% block content %}
+   <body>
+    <br>
+      <div class="mytable">
+         <div class="myrow">
+            <div class="mycolumn_question_title">
                {%for line in question%}
                {{line["title"]}}
-               {%endfor%}
-            </td>
-         </tr>
-         <tr>
-            <td class="question">
+               {% endfor %}
+            </div>
+         </div >
+         <div class="myrow">
+            <div class="mycolumn_question">
                {%for line in question%}
                {{line["message"]}}
                {%endfor%}
-            </td>
-         </tr>
-         <table align="center">
-            <tr>
-               <td class="question_date">
+            </div>
+         </div >
+         <div class="mytable_inner">
+            <div class="myrow">
+               <div class="mycolumn_question_date">
                   {%for line in question%}
                   {{line["submission_time"]}} Vote: {{line["vote_number"]}}
-               </td>
-               <td class="question_buttons">
+               </div>
+               <div class="mycolumn_question_buttons">
                   <a href="/question/{{  line['id']  }}/delete"><img src="/static/images/delete.png" width="25px"></a>
                   <a href="/question/{{  line['id']  }}/edit"><img src="/static/images/edit.png" width="25px"></a>
                   <a href="/question/{{  line['id']  }}/vote-up"><img src="/static/images/upvote.png" width="25px"></a>
                   <a href="/question/{{  line['id']  }}/vote-down"><img src="/static/images/downvote.png" width="25px"></a>
-               </td>
+               </div>
                {%endfor%}
-            </tr>
-         </table>
-      </table>
-      <table align="center">
+            </div >
+         </div>
+      </div>
+      <div class="mytable">
          {%for line in questioncomments%}
          {%if line["question_id"] == question[0]["id"]%}
-         <tr>
-            <td class="comment" width="190%">
+         <div class="myrow">
+            <div class="mycolumn_comment">
                {{line["message"]}}
-            </td>
-            <td class="comment_buttons" width="10%">
+            </div>
+            <div class="mycolumn_comment_buttons">
                <a href="/{{  question[0]['id']  }}/delete_comment/{{  line['id']  }}"><img src="/static/images/delete.png" width="25px"></a>              
-            </td>
-         </tr>
+            </div>
+         </div >
          {%endif%}
          {%endfor%}
-         <tr>
-            <td>
+         <div class="myrow">
+            <div class="mycolumn">
                <form action="/give_comment/question_id/{{  question[0]['id']  }}" method="post">
                   <input name ="comment" maxlength="90"></input>
                   <button type="submit" id="submitid">comment</button>
                </form>
-            </td>
-         </tr>
-      </table>
+            </div>
+         </div >
+      </div class="mytable">
       <!-- ANSWER ................................................................................................................... HERE -->
-      <table align="center">
-         <tr>
+      <div class="mytable">
+         <div class="myrow">
             <h3 class="title">Answers</h3>
-         </tr>
+         </div >
          {%for line in answers%}
          {%if line["id"] == id_to_edit %}
          <form action="/answer/{{ id_to_edit  }}/edit/save" method="post">
-            <tr>
-               <td style="padding: 0px">
-                  <table style="width: 100%">
-                     <tr>
-                        <td class="answer_date">
+            <div class="myrow">
+               <div class="mycolumn">
+                  <div class="mytable_inner">
+                     <div class="myrow">
+                        <div class="mycolumn_answer_date">
                            {{line["submission_time"]}} Votes: {{line["vote_number"]}}
                            Edit answer
-                        </td>
-                     </tr>
-                  </table>
-               </td>
-            </tr>
-            <td class="answer">
+                        </div>
+                     </div >
+                  </div>
+               </div>
+            </div >
+            <div class="mycolumn_answer">
                <textarea name="answer_edit_text">{{ line["message"] }}</textarea>
                <br><br>
                <button type="submit" id="submit_edit_answer" method="POST">Submit</button>
-            </td>
-            <tr>
-               <td>
-               </td>
-            </tr>
-            <tr>
-               <td>
+            </div>
+            <div class="myrow">
+               <div class="mycolumn">
+               </div>
+            </div >
+            <div class="myrow">
+               <div class="mycolumn">
                   <br>
-               </td>
-            </tr>
+               </div>
+            </div >
          </form>
          {% else %}                  
-         <tr>
-            <td style="padding: 0px">
-               <table style="width: 100%">
-                  <tr>
-                     <td class="answer_date">
+         <div class="myrow">
+            <div class="mycolumn">
+               <div class="mytable_inner">
+                  <div class="myrow">
+                     <div class="mycolumn_answer_date">
                         {{line["submission_time"]}} Votes: {{line["vote_number"]}}
-                     </td>
-                     <td class="answer_buttons">
+                     </div>
+                     <div class="mycolumn_answer_buttons">
                         <a href="/answer/{{ line['id'] }}/delete"><img src="/static/images/delete.png" width="25px"></a>
                         <a href="/answer/{{ line['id'] }}/edit"><img src="/static/images/edit.png" width="25px"></a>                
                         <a href="/answer/{{ line['id'] }}/vote-up"><img src="/static/images/upvote.png" width="25px"></a>
                         <a href="/answer/{{ line['id'] }}/vote-down"><img src="/static/images/downvote.png" width="25px"></a>
-                     </td>
-                  </tr>
-               </table>
-            </td>
-         </tr>
-         <td class="answer">
+                     </div>
+                  </div >
+               </div>
+            </div>
+         </div >
+         <div class="mycolumn_answer">
             {{line["message"]}}
             <br>
-         </td>
+         </div>
          {%for commentline in answercomments%}
          {%if commentline["answer_id"] == line["id"]%}
-         <tr>
-            <td class="comment"><span style="float: left">{{commentline["message"]}}</span><span style="float: right">
+         <div class="myrow">
+            <div class="mycolumn_comment"><span style="float: left">{{commentline["message"]}}</span><span style="float: right">
                <a href="/{{  question[0]['id']  }}/delete_comment_from_answer/{{  commentline['id']  }}"><img src="/static/images/delete.png" width="25px"></a>  
                </span>
-            </td>
-         </tr>
+            </div>
+         </div >
          {%endif%}
          {%endfor%}
-         <tr>
-            <td>
+         <div class="myrow">
+            <div class="mycolumn">
                <form action="/give_comment/answer_id/{{  line['id']  }}" method="post">
                   <input name ="comment"></input>
                   <button type="submit" id="submitid">comment</button>
                </form>
-            </td>
-         </tr>
-         <tr>
-            <td>
-            </td>
-         </tr>
-         <tr>
-            <td>
+            </div>
+         </div >
+         <div class="myrow">
+            <div class="mycolumn">
+            </div>
+         </div >
+         <div class="myrow">
+            <div class="mycolumn">
                <br>
-            </td>
-         </tr>
+            </div>
+         </div >
          {%endif%}
          {%endfor%}
-      </table>
+      </div>
       <br>
       <br>
+      <div align="center">
       Answer Here:
       <br>
       <br>
@@ -161,6 +160,6 @@
          <br>
          <br>
          <br>
+      </div>
       </form>
-   </body>
-</html>
+{% endblock %}
