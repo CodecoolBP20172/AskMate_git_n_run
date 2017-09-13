@@ -53,6 +53,7 @@ CREATE TABLE answer (
     message text,
     image text,
     users_id integer
+    acceptance boolean NOT NULL
 );
 
 DROP TABLE IF EXISTS public.comment;

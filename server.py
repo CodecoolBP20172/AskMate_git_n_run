@@ -217,7 +217,14 @@ def route_answer_vote_down(ID):
     queries.modify_value_of_data("answer", "vote_number", "id", str(ID), -1)
     question_id = queries.get_value_of_an_attribute("answer", "question_id", "id", str(ID))
     return redirect("/question/"+str(question_id))
-    
+
+# Accepted answer----------------------------------------------------------------   
+@app.route("/answer/<int:ID>/acceptance", methods=['GET'])
+def route_answer_vote_down(ID):
+    queries.modify_value_of_data("answer", "acceptance", "id", str(ID), 1)
+    question_id = queries.get_value_of_an_attribute("answer", "question_id", "id", str(ID))
+    return redirect("/question/"+str(question_id))
+
 
 @app.route("/question+1view/<int:ID>", methods=["GET"])
 def route_question_view(ID):
