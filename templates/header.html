@@ -23,8 +23,8 @@
                 <li><a href="/user/{{  session['id']  }}"+>Profile</a></li>
             </ul>
             {%else%}
-            <li id ="login_boxes"><a href="#">Log in</a>
-                <ul>
+            <li id ="login_boxes" onclick="toogle_login_menu()"><a href="#">Log in</a>
+                <ul id="drop_down_login">
                     <form action="/login" id ="login_form" method="POST">
                     <li>Username</li>
                     <li><input id = "input_box"type="username" size ="12" name="username" placeholder="Username"></br></li>
@@ -56,4 +56,11 @@
     var buttonLength = "{{  session['username']  }}".length
     var counted_margin = 67.5 - (buttonLength * 0.55)
     document.getElementById("logged_in_menu").setAttribute('style', 'margin-left :' + counted_margin +'%')
+    function toogle_login_menu(){
+        if (document.getElementById("drop_down_login").getAttribute("style") === 'display:none'){
+        document.getElementById("drop_down_login").setAttribute("style","display:block");
+        }else{
+        document.getElementById("drop_down_login").setAttribute("style", 'display:none');
+        }
+    }
 </script>

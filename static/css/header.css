@@ -11,7 +11,7 @@ body{
 }
 #drop_menu_wrapper{
     list-style: none;
-    width: 960px;
+    width :100%;
     margin: 0 auto;
     text-align: left;
 }
@@ -62,15 +62,15 @@ body{
     color: #099;
 }
 #login_boxes{
-    margin-left :71%
+    margin-left :63%
 }
 #drop_menu ul #login_boxes:hover{
     background-color: #222;
 }
 #drop_menu ul #login_boxes ul{
     background-color: #333;
-    min-width: 150px;
-    margin-right: -15%;    
+    min-width: 130px;
+    margin-left: -4%;    
 }
 #drop_menu ul #login_boxes ul li{
     color:white;
@@ -78,3 +78,5 @@ body{
 #drop_menu ul #login_boxes ul li a{
     padding:0px;
 }
+#drop_menu ul #login_boxes ul{
+    display: none;
