@@ -6,7 +6,7 @@
         <title>User details</title>
     </head>
     <body align="center">
-        <h2>Hello {{user_details[0]["username"]}}!</h2>
+        <h2>{{user_details[0]["username"]}}</h2>
     <table align="center" class="question">
             <th>Questions</th>
         {%if question%}
@@ -15,7 +15,7 @@
         </tr>
         {% endfor %}  
         {%else%}
-        You didn't add any questions.
+        This user didn't add any questions.
         {%endif%}   
     </table>
     <table align="center" class="answer">
@@ -28,7 +28,7 @@
         {% endfor %}
         {%else%}
         <tr> 
-        <td>You didn't add any answer.</td>
+        <td>This user didn't add any answer.</td>
         </tr>
         {%endif%}     
     </table>
@@ -42,7 +42,7 @@
         {% endfor %}   
         {%else%}
         <tr> 
-                <td>You didn't add any comments.</td>
+                <td>This user didn't add any comments.</td>
                 </tr>
         
         {%endif%} 
