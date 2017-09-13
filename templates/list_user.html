@@ -10,12 +10,12 @@
         
             <th>User name</th>
             <th>Creation time</th>
-            <th>Email adress</th>
+            <th>Email address</th>
         <tr>
             {% for line in users %}
             <td><a href="/user/{{ line["id"]}}">{{line["username"]}}</a></td>
             <td>{{line["creation_time"]}}</td>
-            <td>{{line["email_adress"]}}</td>
+            <td>{{line["email_address"]}}</td>
         </tr>
         {% endfor %}
     </table>
