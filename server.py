@@ -1,32 +1,35 @@
-from flask import Flask, render_template, redirect, request, session
+from flask import Flask, render_template, redirect, request, session, flash
 import datetime
 from datetime import timezone
 from operator import itemgetter
 import queries
 app = Flask(__name__)
-
 # session----------------------------------------------------------
+
+
+@app.route('/login-page')
+def route_login_page():
+    session['current_page'] = request.path
+    return render_template('header.html')
 
 
 @app.route('/login', methods=['POST'])
 def log_in():
-    usernames_and_passwords = queries.get_usernames_and_passwords()
-    try:
-        if usernames_and_passwords[request.form['username']] == request.form['password']:
-            session['logged_in'] = True
-            session.username = request.form['username']
-        else:
-            flash("Wrong password")
-    except KeyError:
-        flash("Wrong username")
-    return route_list()
-
+    account = queries.get_user_by_username(request.form['username'])
+    if account:
+        session['logged_in'] = True
+        session['username'] = account[0]['username']
+        session['id'] = account[0]['id']
+    else:
+        flash("Wrong username or password")
+    return redirect(session['current_page'])
 
 
 @app.route('/logout')
 def log_out():
-    session['logged_in'] = False
-    return route_list()
+    url_to_return = session['current_page']
+    session.clear()
+    return redirect(url_to_return)
 
 
 # END session------------------------------------------------------
@@ -216,20 +219,6 @@ def route_question_view(ID):
 @app.route("/ask-question")
 def route_ask():
     return render_template("form.html", page_title="Ask a question", action_link="/add-question")
-
-
-#USER REGISTER
-
-@app.route("/register")
-def register():
-    return render_template("user_register.html", page_title="Registration", action_link="/add_registration")
-
-
-@app.route("/add_registration", methods=["POST"])
-def add_registration():
-    list_to_write = [request.form["username"], request.form["password"], request.form["email_address"]]
-    queries.add_registration(list_to_write)
-    return redirect("/")
 
 
 if __name__ == "__main__":
