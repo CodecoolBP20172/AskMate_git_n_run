@@ -1,10 +1,10 @@
-<!doctype html>
-<html>
-    <head>
+{% extends "header.html" %}
+{% block head %}
         <link rel="stylesheet" type="text/css" href="/static/css/style_user.css" media="screen, print">
         <meta charset="utf-8">
         <title>User details</title>
-    </head>
+{% endblock %}
+{% block content %}
     <body align="center">
         <h2>{{user_details[0]["username"]}}</h2>
     <table align="center" class="question">
@@ -49,5 +49,4 @@
         
         {%endif%} 
     </table>
-   </body>
-</html> 
+{% endblock %}
