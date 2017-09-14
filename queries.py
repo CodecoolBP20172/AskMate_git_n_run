@@ -8,7 +8,9 @@ dt = datetime.now()
 
 @database_common.connection_handler
 def get_questions_for_index(cursor):
-    cursor.execute("SELECT id, submission_time, view_number, vote_number, title FROM question")
+    cursor.execute("""SELECT question.id, question.submission_time, question.view_number,
+                      question.vote_number, question.title, users.username FROM question
+                      JOIN users ON question.users_id = users.id""")
     questions = cursor.fetchall()
     return questions
 
@@ -89,10 +91,10 @@ def get_search_results(cursor, searchkey):
 
 @database_common.connection_handler
 def get_latest_five_questions(cursor):
-    cursor.execute('''SELECT id, submission_time, view_number, vote_number, title
-                      FROM question
-                      ORDER BY submission_time
-                      LIMIT 5''')
+    cursor.execute('''SELECT question.id, question.submission_time, question.view_number,
+                      question.vote_number, question.title, users.username FROM question
+                      JOIN users ON question.users_id = users.id
+                      ORDER BY question.submission_time LIMIT 5''')
     result = cursor.fetchall()
     return result
 
@@ -102,8 +104,8 @@ def get_search_results_in_questions(cursor, searchkey):
     cursor.execute('''SELECT id FROM question
                       WHERE LOWER(title) LIKE '%{}%'
                       or LOWER(message) LIKE '%{}%' '''.format(
-                          searchkey.lower(),
-                          searchkey.lower()))
+        searchkey.lower(),
+        searchkey.lower()))
     ids_found_searchkey_in_question = cursor.fetchall()
     return ids_found_searchkey_in_question
 
@@ -113,6 +115,7 @@ def get_users_for_list_user(cursor):
     cursor.execute("SELECT creation_time, username, email_address, id FROM users")
     result = cursor.fetchall()
     return result
+
 
 @database_common.connection_handler
 def get_users_id_and_username(cursor, user_id,):
@@ -209,7 +212,10 @@ def add_answer(cursor, list):
 
 @database_common.connection_handler
 def add_comment(cursor, table, id_, comment, users_id):
-    cursor.execute("INSERT INTO comment ({}, message, users_id) VALUES (%s, %s, %s)".format(table), (id_, comment, users_id))
+    cursor.execute("INSERT INTO comment ({}, message, users_id) VALUES (%s, %s, %s)".format(
+        table), (id_, comment, users_id))
+
+
 # END of add values-----------------------------------------------------------------------------------
 # Delete values --------------------------------------------------------------------------------------
 
@@ -258,6 +264,16 @@ def add_user(cursor, username, password, email_address):
     cursor.execute('''INSERT INTO users (username, password, email_address)
                       VALUES (%(username)s, %(password)s, %(email_address)s)''',
                    {'username': username, 'password': password, 'email_address': email_address})
+
+
+@database_common.connection_handler
+def get_users_by_questions_user_id(cursor, user_id,):
+    cursor.execute('''SELECT users.id, question.title, users.username, question.id
+                      FROM users
+                      JOIN question ON (users.id = question.users_id)
+                      WHERE users.id = %s''', (user_id,))
+    result = cursor.fetchall()
+    return result
 
 
 # add qu, ans, come legyen benne a user id
