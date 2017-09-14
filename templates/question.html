@@ -46,6 +46,7 @@
                {{line["message"]}}
             </div>
             <div class="mycolumn_comment_buttons">
+            Comment from: {{line["username"]}}
                <a href="/{{  question[0]['id']  }}/delete_comment/{{  line['id']  }}"><img src="/static/images/delete.png" width="25px"></a>              
             </div>
          </div >
@@ -73,7 +74,7 @@
                   <div class="mytable_inner">
                      <div class="myrow">
                         <div class="mycolumn_answer_date">
-                           {{line["submission_time"]}} Votes: {{line["vote_number"]}}
+                           {{line["submission_time"]}} Votes: {{line["vote_number"]}} Answer from: {{line["username"]}}
                            Edit answer
                         </div>
                      </div >
@@ -101,7 +102,7 @@
                <div class="mytable_inner">
                   <div class="myrow">
                      <div class="mycolumn_answer_date">
-                        {{line["submission_time"]}} Votes: {{line["vote_number"]}}
+                        {{line["submission_time"]}} Votes: {{line["vote_number"]}}  Answer from: {{line["username"]}}
                      </div>
                      <div class="mycolumn_answer_buttons">
                         <a href="/answer/{{ line['id'] }}/delete"><img src="/static/images/delete.png" width="25px"></a>
@@ -121,6 +122,7 @@
          {%if commentline["answer_id"] == line["id"]%}
          <div class="myrow">
             <div class="mycolumn_comment"><span style="float: left">{{commentline["message"]}}</span><span style="float: right">
+                        Comment from: {{commentline["username"]}}
                <a href="/{{  question[0]['id']  }}/delete_comment_from_answer/{{  commentline['id']  }}"><img src="/static/images/delete.png" width="25px"></a>  
                </span>
             </div>

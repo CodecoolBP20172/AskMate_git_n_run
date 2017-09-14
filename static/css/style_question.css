@@ -141,7 +141,7 @@ tr, td, th {
 	padding: 8px;
 	background: #A7A7A7;
 	opacity: 0.6;
-	width: 190%;
+	width: 150%;
 	}
 
 .mycolumn_comment_buttons {
@@ -151,7 +151,7 @@ tr, td, th {
 	padding: 8px;
 	background: #A7A7A7;
 	opacity: 0.6;
-	width:10%;
+	width:50%;
 }
 
 .mycolumn_answer_date {

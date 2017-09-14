@@ -68,19 +68,6 @@ CREATE TABLE comment (
 );
 
 
-DROP TABLE IF EXISTS public.question_tag;
-CREATE TABLE question_tag (
-    question_id integer NOT NULL,
-    tag_id integer NOT NULL
-);
-
-DROP TABLE IF EXISTS public.tag;
-DROP SEQUENCE IF EXISTS public.tag_id_seq;
-CREATE TABLE tag (
-    id serial NOT NULL,
-    name text
-);
-
 
 ALTER TABLE ONLY users
     ADD CONSTRAINT pk_users_id PRIMARY KEY (id);
@@ -94,36 +81,6 @@ ALTER TABLE ONLY comment
 ALTER TABLE ONLY question
     ADD CONSTRAINT pk_question_id PRIMARY KEY (id);
 
-ALTER TABLE ONLY question_tag
-    ADD CONSTRAINT pk_question_tag_id PRIMARY KEY (question_id, tag_id);
-
-ALTER TABLE ONLY tag
-    ADD CONSTRAINT pk_tag_id PRIMARY KEY (id);
-
-ALTER TABLE ONLY comment
-    ADD CONSTRAINT fk_answer_id FOREIGN KEY (answer_id) REFERENCES answer(id);
-
-ALTER TABLE ONLY comment
-    ADD CONSTRAINT fk_users_id FOREIGN KEY (users_id) REFERENCES users(id);
-
-ALTER TABLE ONLY answer
-    ADD CONSTRAINT fk_question_id FOREIGN KEY (question_id) REFERENCES question(id);
-
-ALTER TABLE ONLY answer
-    ADD CONSTRAINT fk_users_id FOREIGN KEY (users_id) REFERENCES users(id);
-
-ALTER TABLE ONLY question
-    ADD CONSTRAINT fk_users_id FOREIGN KEY (users_id) REFERENCES users(id);    
-
-ALTER TABLE ONLY question_tag
-    ADD CONSTRAINT fk_question_id FOREIGN KEY (question_id) REFERENCES question(id);
-
-ALTER TABLE ONLY comment
-    ADD CONSTRAINT fk_question_id FOREIGN KEY (question_id) REFERENCES question(id);
-
-ALTER TABLE ONLY question_tag
-    ADD CONSTRAINT fk_tag_id FOREIGN KEY (tag_id) REFERENCES tag(id);
-
 
 INSERT INTO users VALUES (0, '2017-04-28 08:29:00', 'asd','dsa');
 
@@ -135,23 +92,10 @@ BUT in my theme i also using jquery via webpack so the loading order is now foll
 jquery
 booklet
 app.js (bundled file with webpack, including jquery)', 'images/image1.png',0);
-INSERT INTO question VALUES (2, '2017-05-01 10:41:00', 1364, 57,'Drawing canvas with an image picked with Cordova Camera Plugin', 'I''m getting an image from device and drawing a canvas with filters using Pixi JS. It works all well using computer to get an image. But when I''m on IOS, it throws errors such as cross origin issue, or that I''m trying to use an unknown format.
-', NULL);
-SELECT pg_catalog.setval('question_id_seq', 2, true);
+SELECT pg_catalog.setval('question_id_seq', 1, true);
 
 INSERT INTO answer VALUES (1, '2017-04-28 16:49:00', 4, 1,'You need to use brackets: my_list = []', NULL, 0);
 INSERT INTO answer VALUES (2, '2017-04-25 14:42:00', 35, 1, 'Look it up in the Python docs', 'images/image2.jpg', 0);
 SELECT pg_catalog.setval('answer_id_seq', 2, true);
 
-INSERT INTO comment VALUES (1, 0, NULL,'Please clarify the question as it is too vague!', '2017-05-01 05:49:00', 0);
-INSERT INTO comment VALUES (2, NULL, 1,'I think you could use my_list = list() as well.', '2017-05-02 16:55:00', 0);
-SELECT pg_catalog.setval('comment_id_seq', 2, true);
-
-INSERT INTO tag VALUES (1, 'python');
-INSERT INTO tag VALUES (2, 'sql');
-INSERT INTO tag VALUES (3, 'css');
-SELECT pg_catalog.setval('tag_id_seq', 3, true);
-
-INSERT INTO question_tag VALUES (0, 1);
-INSERT INTO question_tag VALUES (1, 3);
-INSERT INTO question_tag VALUES (2, 3);
+SELECT pg_catalog.setval('comment_id_seq', 0, true);

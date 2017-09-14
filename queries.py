@@ -33,14 +33,14 @@ def get_questions_for_index_ordered(cursor, aspect, desc):
 
 @database_common.connection_handler
 def get_question_by_id(cursor, id_):
-    cursor.execute("SELECT * FROM question JOIN users ON question.users_id=users.id WHERE question.id = {}".format(id_))
+    cursor.execute("SELECT question.*, users.username FROM question JOIN users ON question.users_id=users.id WHERE question.id = {}".format(id_))
     question = cursor.fetchall()
     return question
 
 
 @database_common.connection_handler
 def get_answers_by_question_id(cursor, id_):
-    cursor.execute("""SELECT * FROM answer JOIN users ON answer.users_id = users.id WHERE answer.question_id = {}
+    cursor.execute("""SELECT answer.*, users.username FROM answer JOIN users ON answer.users_id = users.id WHERE answer.question_id = {}
                       ORDER BY answer.vote_number DESC""".format(id_))
     answers = cursor.fetchall()
     return answers
@@ -48,14 +48,14 @@ def get_answers_by_question_id(cursor, id_):
 
 @database_common.connection_handler
 def get_question_comments_by_question_id(cursor, id_, q_or_a):
-    cursor.execute("SELECT * FROM comment WHERE {} = {}".format(q_or_a, id_))
+    cursor.execute("SELECT comment.*, users.username FROM comment JOIN users ON comment.users_id=users.id WHERE {} = {}".format(q_or_a, id_))
     result = cursor.fetchall()
     return result
 
 
 @database_common.connection_handler
 def get_all_answer_comments(cursor):
-    cursor.execute("SELECT * FROM comment WHERE question_id IS NULL")
+    cursor.execute("SELECT comment.*, users.username FROM comment JOIN users ON comment.users_id=users.id WHERE comment.question_id IS NULL")
     result = cursor.fetchall()
     return result
 
