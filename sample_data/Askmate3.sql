@@ -52,7 +52,8 @@ CREATE TABLE answer (
     question_id integer,
     message text,
     image text,
-    users_id integer
+    users_id integer,
+    acceptance boolean NOT NULL DEFAULT FALSE
 );
 
 DROP TABLE IF EXISTS public.comment;
@@ -94,8 +95,9 @@ booklet
 app.js (bundled file with webpack, including jquery)', 'images/image1.png',0);
 SELECT pg_catalog.setval('question_id_seq', 1, true);
 
-INSERT INTO answer VALUES (1, '2017-04-28 16:49:00', 4, 1,'You need to use brackets: my_list = []', NULL, 0);
-INSERT INTO answer VALUES (2, '2017-04-25 14:42:00', 35, 1, 'Look it up in the Python docs', 'images/image2.jpg', 0);
+INSERT INTO answer VALUES (1, '2017-04-28 16:49:00', 4, 1,'You need to use brackets: my_list = []', NULL, 0, FALSE);
+INSERT INTO answer VALUES (2, '2017-04-25 14:42:00', 35, 1, 'Look it up in the Python docs', 'images/image2.jpg', 0, TRUE);
 SELECT pg_catalog.setval('answer_id_seq', 2, true);
 
-SELECT pg_catalog.setval('comment_id_seq', 0, true);
+INSERT INTO comment VALUES (1, 0, NULL, 'comment', '2017-04-25 14:42:00', NULL, 0);
+SELECT pg_catalog.setval('comment_id_seq', 1, true);

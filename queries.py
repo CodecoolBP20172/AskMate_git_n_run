@@ -196,6 +196,9 @@ def update_question_by_id(cursor, title, msg, id_):
 @database_common.connection_handler
 def update_column(cursor, table, attribute, PK, ID, new_value):
     cursor.execute("UPDATE {} SET {} = '{}' WHERE {} = {} ;".format(table, attribute, str(new_value), PK, ID))
+
+
+
 # END of update Values--------------------------------------------------------------------------------
 # Add new values--------------------------------------------------------------------------------------
 
@@ -216,6 +219,21 @@ def add_answer(cursor, list):
 def add_comment(cursor, table, id_, comment, users_id):
     cursor.execute("INSERT INTO comment ({}, message, users_id) VALUES (%s, %s, %s)".format(
         table), (id_, comment, users_id))
+
+
+# Accepted answer
+@database_common.connection_handler
+def add_acceptance_to_answer(cursor, id_):
+    cursor.execute('''UPDATE answer
+                      SET acceptance = TRUE
+                      WHERE id = %s''', (id_,))
+
+
+@database_common.connection_handler
+def add_unacceptance_to_answer(cursor, id_):
+    cursor.execute('''UPDATE answer
+                      SET acceptance = FALSE
+                      WHERE id = %s''', (id_,))
 
 
 # END of add values-----------------------------------------------------------------------------------

@@ -157,6 +157,21 @@ def route_add_answer(ID):
     queries.add_answer(list_to_write)
     return redirect("/question/"+str(ID))
 
+
+@app.route("/answer/<int:ID>/acceptance", methods=['GET'])
+def route_answer_accept(ID):
+    queries.add_acceptance_to_answer(ID)
+    question_id = queries.get_value_of_an_attribute("answer", "question_id", "id", str(ID))
+    return redirect("/question/"+str(question_id))
+
+
+@app.route("/answer/<int:ID>/unacceptance", methods=['GET'])
+def route_answer_unaccepted(ID):
+    queries.add_unacceptance_to_answer(ID)
+    question_id = queries.get_value_of_an_attribute("answer", "question_id", "id", str(ID))
+    return redirect("/question/"+str(question_id))
+
+
 # Answer END------------------------------------------------------------------------
 # Comment----------------------------------------------------------------
 
@@ -224,7 +239,7 @@ def route_answer_vote_down(ID):
     queries.modify_value_of_data("answer", "vote_number", "id", str(ID), -1)
     question_id = queries.get_value_of_an_attribute("answer", "question_id", "id", str(ID))
     return redirect("/question/"+str(question_id))
-    
+
 
 @app.route("/question+1view/<int:ID>", methods=["GET"])
 def route_question_view(ID):
