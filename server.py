@@ -160,6 +160,13 @@ def route_answer_accept(ID):
     return redirect("/question/"+str(question_id))
 
 
+@app.route("/answer/<int:ID>/unacceptance", methods=['GET'])
+def route_answer_unaccepted(ID):
+    queries.add_unacceptance_to_answer(ID)
+    question_id = queries.get_value_of_an_attribute("answer", "question_id", "id", str(ID))
+    return redirect("/question/"+str(question_id))
+
+
 # Answer END------------------------------------------------------------------------
 # Comment----------------------------------------------------------------
 

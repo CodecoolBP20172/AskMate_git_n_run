@@ -184,8 +184,13 @@ def add_comment(cursor, table, id_, comment):
 def add_acceptance_to_answer(cursor, id_):
     cursor.execute('''UPDATE answer
                       SET acceptance = TRUE
-                      WHERE id = %s AND acceptance <> TRUE''', (id_,))
+                      WHERE id = %s''', (id_,))
 
+@database_common.connection_handler
+def add_unacceptance_to_answer(cursor, id_):
+    cursor.execute('''UPDATE answer
+                      SET acceptance = FALSE
+                      WHERE id = %s''', (id_,))
 
 
 # END of add values-----------------------------------------------------------------------------------

@@ -107,7 +107,7 @@
                      </div>
                      <div class="mycolumn_answer_buttons">
                             {% if line["acceptance"] == True %}
-                        <img src="/static/images/tick.png" width="25px">
+                        <a href="/answer/{{ line['id'] }}/unacceptance"><img src="/static/images/tick.png" width="25px"></a>
                             {% else %}
                         <a href="/answer/{{ line['id'] }}/acceptance"><img src="/static/images/tick-black.png" width="25px"></a>
                             {%endif%}
