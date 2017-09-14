@@ -1,33 +1,36 @@
-{% extends "header.html" %}
-{% block head %}
-      <link rel="stylesheet" type="text/css" href="/static/css/style_list.css" media="screen, print">
-      <meta charset="utf-8">
-      <title>List of Questions</title>
-{% endblock %}
-{% block content %}
-      <div class="searchbox"><form action="/getsearch" method="post">
-         <p><input name="searchbox" id="seachbox_id" rows="2" cols="10" minlength="1" maxlength="10" required="required" style="font-size:15px;"></input>
-            <input type="image" name="submit" src="/static/images/search.png" width="20px" border = "0" alt="Submit"/>
+{% extends "header.html" %} {% block head %}
+<link rel="stylesheet" type="text/css" href="/static/css/style_list.css" media="screen, print">
+<meta charset="utf-8">
+<title>List of Questions</title>
+{% endblock %} {% block content %}
+<div class="searchbox">
+      <form action="/getsearch" method="post">
+            <p><input name="searchbox" id="seachbox_id" rows="2" cols="10" minlength="1" maxlength="10" required="required"
+                        style="font-size:15px;"></input>
+                  <input type="image" name="submit" src="/static/images/search.png" width="20px" border="0" alt="Submit" />
       </form>
-      </div>
-      <table class="list_table">
-         <tr>
+</div>
+<table class="list_table">
+      <tr>
             <th>Question title<a href="/title=asc"><img src="/static/images/up.png" width="15px"></a>
-               <a href="/title=desc"><img src="/static/images/down.png" width="15px"></a>
+                  <a href="/title=desc"><img src="/static/images/down.png" width="15px"></a>
             </th>
             <th>Time <a href="/submission_time=asc"><img src="/static/images/up.png" width="15px"></a> <a href="/submission_time=desc"><img src="/static/images/down.png" width="15px"></a></th>
             <th>View <a href="/view_number=asc"><img src="/static/images/up.png" width="15px"></a> <a href="/view_number=desc"><img src="/static/images/down.png" width="15px"></a></th>
             <th>Votes <a href="/vote_number=asc"><img src="/static/images/up.png" width="15px"></a> <a href="/vote_number=desc"><img src="/static/images/down.png" width="15px"></a></th>
-         </tr>
-         {% for line in questions %}
-         <tr>
+            <th>User</th>
+      </tr>
+      {% for line in questions %}
+      <tr>
             <td class="questions"><a href="/question+1view/{{  line['id']  }}">{{line["title"]}}</a></td>
             <td>{{line["submission_time"]}}</td>
             <td>{{line["view_number"]}}</td>
             <td>{{line["vote_number"]}}</td>
-         </tr>
-         {% endfor %}
-      </table>
-      <div class="showall"><a href="/all">Show all questions</a><div/>
-      <div class="askquestion"><a href="/ask-question">Ask a question</a><div/>
-{% endblock %}
+            <td>{{line["username"]}}</td>
+      </tr>
+      {% endfor %}
+</table>
+<div class="showall"><a href="/all">Show all questions</a>
+      <div/>
+      <div class="askquestion"><a href="/ask-question">Ask a question</a>
+            <div/> {% endblock %}
