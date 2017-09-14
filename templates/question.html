@@ -114,6 +114,11 @@
                      {% if session['logged_in']%}
                      <div class="mycolumn_answer_buttons">
                         {% if session['id'] == line['users_id'] %}            
+                            {% if line["acceptance"] == True %}
+                        <a href="/answer/{{ line['id'] }}/unacceptance"><img src="/static/images/tick.png" width="25px"></a>
+                            {% else %}
+                        <a href="/answer/{{ line['id'] }}/acceptance"><img src="/static/images/tick-black.png" width="25px"></a>
+                            {%endif%}
                         <a href="/answer/{{ line['id'] }}/delete"><img src="/static/images/delete.png" width="25px"></a>
                         <a href="/answer/{{ line['id'] }}/edit"><img src="/static/images/edit.png" width="25px"></a>
                         {% endif %}
