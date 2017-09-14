@@ -26,7 +26,7 @@
             <div class="myrow">
                <div class="mycolumn_question_date">
                   {%for line in question%}
-                  {{line["submission_time"]}} Vote: {{line["vote_number"]}}
+                  {{line["submission_time"]}} Vote: {{line["vote_number"]}} Question from: {{line["username"]}}
                </div>
                <div class="mycolumn_question_buttons">
                   <a href="/question/{{  line['id']  }}/delete"><img src="/static/images/delete.png" width="25px"></a>

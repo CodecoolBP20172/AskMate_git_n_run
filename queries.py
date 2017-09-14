@@ -33,14 +33,15 @@ def get_questions_for_index_ordered(cursor, aspect, desc):
 
 @database_common.connection_handler
 def get_question_by_id(cursor, id_):
-    cursor.execute("SELECT * FROM question WHERE id = {}".format(id_))
+    cursor.execute("SELECT * FROM question JOIN users ON question.users_id=users.id WHERE question.id = {}".format(id_))
     question = cursor.fetchall()
     return question
 
 
 @database_common.connection_handler
 def get_answers_by_question_id(cursor, id_):
-    cursor.execute("SELECT * FROM answer WHERE question_id = {} ORDER BY vote_number DESC".format(id_))
+    cursor.execute("""SELECT * FROM answer JOIN users ON answer.users_id = users.id WHERE answer.question_id = {}
+                      ORDER BY answer.vote_number DESC""".format(id_))
     answers = cursor.fetchall()
     return answers
 
@@ -63,6 +64,7 @@ def get_all_answer_comments(cursor):
 def get_value_of_an_attribute(cursor, table, attribute, PK, ID):
     cursor.execute("SELECT " + attribute + " FROM " + table + " WHERE " + PK + " = " + ID + ";")
     result = cursor.fetchall()
+    print(result)
     value = result[0][attribute]
     return value
 
