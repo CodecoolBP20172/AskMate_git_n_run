@@ -52,8 +52,8 @@ CREATE TABLE answer (
     question_id integer,
     message text,
     image text,
-    users_id integer
-    acceptance boolean NOT NULL
+    users_id integer,
+    acceptance boolean NOT NULL DEFAULT FALSE
 );
 
 DROP TABLE IF EXISTS public.comment;
@@ -140,8 +140,8 @@ INSERT INTO question VALUES (2, '2017-05-01 10:41:00', 1364, 57,'Drawing canvas 
 ', NULL);
 SELECT pg_catalog.setval('question_id_seq', 2, true);
 
-INSERT INTO answer VALUES (1, '2017-04-28 16:49:00', 4, 1,'You need to use brackets: my_list = []', NULL, 0);
-INSERT INTO answer VALUES (2, '2017-04-25 14:42:00', 35, 1, 'Look it up in the Python docs', 'images/image2.jpg', 0);
+INSERT INTO answer VALUES (1, '2017-04-28 16:49:00', 4, 1,'You need to use brackets: my_list = []', NULL, 0, FALSE);
+INSERT INTO answer VALUES (2, '2017-04-25 14:42:00', 35, 1, 'Look it up in the Python docs', 'images/image2.jpg', 0, TRUE);
 SELECT pg_catalog.setval('answer_id_seq', 2, true);
 
 INSERT INTO comment VALUES (1, 0, NULL,'Please clarify the question as it is too vague!', '2017-05-01 05:49:00', 0);

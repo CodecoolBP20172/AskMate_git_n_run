@@ -152,6 +152,15 @@ def route_add_answer(ID):
     queries.add_answer(list_to_write)
     return redirect("/question/"+str(ID))
 
+# Accepted answer----------------------------------------------------------------  
+# # set default FALSE in sql file!!!!! 
+@app.route("/answer/<int:ID>/acceptance", methods=['GET'])
+def route_answer_accept(ID):
+    queries.add_acceptance_to_answer(ID)
+    question_id = queries.get_value_of_an_attribute("answer", "question_id", "id", str(ID))
+    return redirect("/question/"+str(question_id))
+
+
 # Answer END------------------------------------------------------------------------
 # Comment----------------------------------------------------------------
 
@@ -215,13 +224,6 @@ def route_answer_vote_up(ID):
 @app.route("/answer/<int:ID>/vote-down", methods=['GET'])
 def route_answer_vote_down(ID):
     queries.modify_value_of_data("answer", "vote_number", "id", str(ID), -1)
-    question_id = queries.get_value_of_an_attribute("answer", "question_id", "id", str(ID))
-    return redirect("/question/"+str(question_id))
-
-# Accepted answer----------------------------------------------------------------   
-@app.route("/answer/<int:ID>/acceptance", methods=['GET'])
-def route_answer_vote_down(ID):
-    queries.modify_value_of_data("answer", "acceptance", "id", str(ID), 1)
     question_id = queries.get_value_of_an_attribute("answer", "question_id", "id", str(ID))
     return redirect("/question/"+str(question_id))
 

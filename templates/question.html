@@ -136,6 +136,25 @@
                   <button type="submit" id="submitid">comment</button>
                </form>
             </div>
+<!-- BUtton for acceptance for an answer -->
+            {% if line["acceptance"] == TRUE %}
+            <div class="mycolumn">
+            <img src="/static/images/tick.png" width="25px">
+            </div>
+            <br>
+
+            {% else %}
+            <div class="mycolumn">
+            <form action="/answer/{{ line['id'] }}/acceptance" method="post">
+                  <button type="submit" id="submit_acceptance">accept</button>
+            </form>   
+            </div>
+            {%endif%}
+
+<!-- END form for acceptance for an answer -->
+
+
+            
          </div >
          <div class="myrow">
             <div class="mycolumn">
