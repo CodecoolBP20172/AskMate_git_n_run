@@ -152,8 +152,7 @@ def route_add_answer(ID):
     queries.add_answer(list_to_write)
     return redirect("/question/"+str(ID))
 
-# Accepted answer----------------------------------------------------------------  
-# # set default FALSE in sql file!!!!! 
+
 @app.route("/answer/<int:ID>/acceptance", methods=['GET'])
 def route_answer_accept(ID):
     queries.add_acceptance_to_answer(ID)

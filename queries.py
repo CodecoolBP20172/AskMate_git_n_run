@@ -184,7 +184,7 @@ def add_comment(cursor, table, id_, comment):
 def add_acceptance_to_answer(cursor, id_):
     cursor.execute('''UPDATE answer
                       SET acceptance = TRUE
-                      WHERE id = id_ AND acceptance <> TRUE''')
+                      WHERE id = %s AND acceptance <> TRUE''', (id_,))
 
 
 
