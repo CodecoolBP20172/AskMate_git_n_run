@@ -6,6 +6,12 @@ body {
 	font-size: 100%;
 	color: #4e4e4e;
 }
+#answer_edit_text{
+	width :100%;
+	padding: 5px
+}
+#submit_edit_answer{
+	float: right;
 }
 #header {
 	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande';
@@ -141,7 +147,7 @@ tr, td, th {
 	padding: 8px;
 	background: #A7A7A7;
 	opacity: 0.6;
-	width: 150%;
+	width: 140%;
 	}
 
 .mycolumn_comment_buttons {
@@ -151,7 +157,7 @@ tr, td, th {
 	padding: 8px;
 	background: #A7A7A7;
 	opacity: 0.6;
-	width:50%;
+	width:60%;
 }
 
 .mycolumn_answer_date {
@@ -166,8 +172,8 @@ tr, td, th {
 	display: table-cell;
 	font-size: 20px;
 	text-align: center;
-	padding: 0	px;
-	background-color:#7b302c;
+	padding: 10px;
+	background-color:#992600;
 	color: white;
 	text-align: left;
 	}
@@ -179,3 +185,8 @@ tr, td, th {
 	border-top: 2px solid grey;
 	background: #ACACAC;
 	}
+
+#comment_question_form{
+	margin-left:280px;
+	display:inline-block;
+}
