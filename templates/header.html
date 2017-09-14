@@ -15,7 +15,7 @@
             <li>
             <a href="/register">Register</a></li><li>
             <a href="/ask-question">Ask a question</a></li><li>
-            <a href="list-users">List users</a></li><li>
+            <a href="/list-users">List users</a></li><li>
             {%if session['logged_in']%}
             <li id="logged_in_menu"><a href="#">{{  session['username']  }}</a>
             <ul>
@@ -23,7 +23,7 @@
                 <li><a href="/user/{{  session['id']  }}"+>Profile</a></li>
             </ul>
             {%else%}
-            <li id ="login_boxes"><a onclick="toogle_login_menu()">Log in</a>
+            <li id ="login_boxes"><a onclick="toogle_login_menu()" href="#">Log in</a>
                 <ul id="drop_down_login">
                     <form action="/login" id ="login_form" method="POST">
                     <li>Username</li>
@@ -60,6 +60,7 @@
         var loginDropDown = document.getElementById("drop_down_login");
         if (isHidden(loginDropDown)) {
             loginDropDown.setAttribute("style","display:block");
+            loginDropDown.setAttribute("style","background-color:#333")
         } else{
             loginDropDown.setAttribute("style", 'display:none');
         }

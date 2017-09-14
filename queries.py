@@ -109,9 +109,55 @@ def get_search_results_in_questions(cursor, searchkey):
 
 
 @database_common.connection_handler
+def get_users_for_list_user(cursor):
+    cursor.execute("SELECT creation_time, username, email_address, id FROM users")
+    result = cursor.fetchall()
+    return result
+
+@database_common.connection_handler
+def get_users_id_and_username(cursor, user_id,):
+    cursor.execute('''SELECT users.id, users.username
+                      FROM users
+                      WHERE users.id = %s''', (user_id,))
+    result = cursor.fetchall()
+    return result
+
+
+@database_common.connection_handler
+def get_users_question_by_user_id(cursor, user_id,):
+    cursor.execute('''SELECT users.id, question.title, users.username, question.id
+                      FROM users
+                      JOIN question ON (users.id = question.users_id)
+                      WHERE users.id = %s''', (user_id,))
+    result = cursor.fetchall()
+    return result
+
+
+@database_common.connection_handler
+def get_users_answer_by_user_id(cursor, user_id,):
+    cursor.execute('''SELECT users.id, answer.message, users.username
+                      FROM users
+                      JOIN answer ON (users.id = answer.users_id)
+                      WHERE users.id = %s''', (user_id,))
+    result = cursor.fetchall()
+    return result
+
+
+@database_common.connection_handler
+def get_users_comment_by_user_id(cursor, user_id,):
+    cursor.execute('''SELECT users.id, comment.message, users.username
+                      FROM users
+                      JOIN comment ON (users.id = comment.users_id)
+                      WHERE users.id = %s''', (user_id,))
+    result = cursor.fetchall()
+    return result
+
+
+@database_common.connection_handler
 def get_user_by_username(cursor, username):
     cursor.execute("SELECT id, username, password FROM users WHERE username = %s", (username,))
     return cursor.fetchone()
+
 
 # END of get values-----------------------------------------------------------------------------------
 # Update values---------------------------------------------------------------------------------------
