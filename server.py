@@ -152,7 +152,8 @@ def route_answer_delete(ID):
     
 @app.route("/give-answer/<int:ID>", methods=["POST"])
 def route_add_answer(ID):
-    list_to_write = [0, ID, request.form["answer_text"]]
+    user_id = session['id']
+    list_to_write = [0, ID, request.form["answer_text"], user_id]
     queries.add_answer(list_to_write)
     return redirect("/question/"+str(ID))
 
@@ -178,7 +179,8 @@ def route_answer_unaccepted(ID):
 @app.route("/give_comment/<table>/<int:id_>", methods=['POST'])
 def route_give_comment(table, id_):
     comment_to_write = request.form["comment"]
-    queries.add_comment(table, id_, comment_to_write)
+    users_id = session['id']
+    queries.add_comment(table, id_, comment_to_write, users_id)
     if table == "question_id":
         return redirect("/question/" + str(id_))
     elif table == "answer_id":
@@ -207,8 +209,8 @@ def route_edit_comment(question_id, id_):
 
 @app.route("/add-question", methods=["POST"])
 def route_add():
-    session['current_page'] = request.path
-    list_to_write = [0, 0, request.form["title"], request.form["question"]]
+    user_id = session['id']
+    list_to_write = [0, 0, request.form["title"], request.form["question"], user_id]
     queries.add_question(list_to_write)
     return redirect("/")
 
@@ -250,6 +252,7 @@ def route_ask():
     session['current_page'] = request.path
     return render_template("form.html", page_title="Ask a question", action_link="/add-question")
 
+
 # User page------------------------------------------------------------
 
 
@@ -262,8 +265,8 @@ def route_user(user_id):
     user_comment = queries.get_users_comment_by_user_id(user_id)
     return render_template("user.html", question=user_question, answer=user_answer, comment=user_comment,user_details=user_id_and_question)
 
+# USER REGISTER
 
-#USER REGISTER
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -280,7 +283,7 @@ def register():
         user_name_given = "username" in request.form and user_name.strip() != ''
         user_name_exists = queries.get_user_by_username(user_name) is not None
         if user_name_exists:
-            error = 'Username exists already'  
+            error = 'Username exists already'
         elif not user_name_given:
             error = 'Invalid username'
         elif password != password2:
