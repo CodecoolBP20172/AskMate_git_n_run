@@ -9,6 +9,11 @@ body{
     text-align: right;
     color:red;
 }
+#session_error p{
+    font-style: italic;
+    font-size: 90%;
+    text-align: center;
+}
 #drop_menu_wrapper{
     list-style: none;
     width :100%;

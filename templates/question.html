@@ -28,12 +28,16 @@
                   {%for line in question%}
                   {{line["submission_time"]}} Vote: {{line["vote_number"]}} Question from: {{line["username"]}}
                </div>
+               {% if session['logged_in']%}
                <div class="mycolumn_question_buttons">
+                     {% if session['id'] == line['users_id'] %}
                   <a href="/question/{{  line['id']  }}/delete"><img src="/static/images/delete.png" width="25px"></a>
                   <a href="/question/{{  line['id']  }}/edit"><img src="/static/images/edit.png" width="25px"></a>
+                     {% endif %}
                   <a href="/question/{{  line['id']  }}/vote-up"><img src="/static/images/upvote.png" width="25px"></a>
                   <a href="/question/{{  line['id']  }}/vote-down"><img src="/static/images/downvote.png" width="25px"></a>
                </div>
+               {%endif%}
                {%endfor%}
             </div >
          </div>
@@ -45,13 +49,16 @@
             <div class="mycolumn_comment">
                {{line["message"]}}
             </div>
+            {% if session['login'] %}
             <div class="mycolumn_comment_buttons">
             Comment from: {{line["username"]}}
                <a href="/{{  question[0]['id']  }}/delete_comment/{{  line['id']  }}"><img src="/static/images/delete.png" width="25px"></a>              
             </div>
+            {% endif %}
          </div >
          {%endif%}
          {%endfor%}
+         {% if session['logged_in'] %}
          <div class="myrow">
             <div class="mycolumn">
                <form action="/give_comment/question_id/{{  question[0]['id']  }}" method="post">
@@ -60,6 +67,7 @@
                </form>
             </div>
          </div >
+         {% endif %}
       </div class="mytable">
       <!-- ANSWER ................................................................................................................... HERE -->
       <div class="mytable">
@@ -104,17 +112,23 @@
                      <div class="mycolumn_answer_date">
                         {{line["submission_time"]}} Votes: {{line["vote_number"]}}  Answer from: {{line["username"]}}
                      </div>
+                     {% if session['logged_in']%}
                      <div class="mycolumn_answer_buttons">
-                            {% if line["acceptance"] == True %}
+                              {% if question[0]['users_id'] == session['id'] %}            
+                              {% if line["acceptance"] == True%}
                         <a href="/answer/{{ line['id'] }}/unacceptance"><img src="/static/images/tick.png" width="25px"></a>
                             {% else %}
                         <a href="/answer/{{ line['id'] }}/acceptance"><img src="/static/images/tick-black.png" width="25px"></a>
                             {%endif%}
+                            {%endif%}
+                              {% if session['id'] == line['users_id'] %}
                         <a href="/answer/{{ line['id'] }}/delete"><img src="/static/images/delete.png" width="25px"></a>
-                        <a href="/answer/{{ line['id'] }}/edit"><img src="/static/images/edit.png" width="25px"></a>                
+                        <a href="/answer/{{ line['id'] }}/edit"><img src="/static/images/edit.png" width="25px"></a>
+                        {% endif %}
                         <a href="/answer/{{ line['id'] }}/vote-up"><img src="/static/images/upvote.png" width="25px"></a>
                         <a href="/answer/{{ line['id'] }}/vote-down"><img src="/static/images/downvote.png" width="25px"></a>
                      </div>
+                     {%endif%}
                   </div >
                </div>
             </div>
@@ -128,20 +142,24 @@
          <div class="myrow">
             <div class="mycolumn_comment"><span style="float: left">{{commentline["message"]}}</span><span style="float: right">
                         Comment from: {{commentline["username"]}}
+               {% if session['login'] %}
                <a href="/{{  question[0]['id']  }}/delete_comment_from_answer/{{  commentline['id']  }}"><img src="/static/images/delete.png" width="25px"></a>  
+               {% endif %}
                </span>
             </div>
          </div >
          {%endif%}
          {%endfor%}
+         {% if session['logged_in'] %}
          <div class="myrow">
             <div class="mycolumn">
                <form action="/give_comment/answer_id/{{  line['id']  }}" method="post">
                   <input name ="comment"></input>
                   <button type="submit" id="submitid">comment</button>
                </form>
-            </div>            
-         </div >
+            </div>
+         </div>
+         {% endif %}
          <div class="myrow">
             <div class="mycolumn">
             </div>
@@ -154,6 +172,7 @@
          {%endif%}
          {%endfor%}
       </div>
+      {% if session['logged_in'] %}
       <br>
       <br>
       <div align="center">
@@ -169,4 +188,9 @@
          <br>
       </div>
       </form>
+      {% else%}
+      <div align="center">
+            <p>You have to be logged in to give an answer</p>
+      </div>
+      {% endif %}
 {% endblock %}

@@ -35,6 +35,7 @@ def get_questions_for_index_ordered(cursor, aspect, desc):
 def get_question_by_id(cursor, id_):
     cursor.execute("SELECT question.*, users.username FROM question JOIN users ON question.users_id=users.id WHERE question.id = {}".format(id_))
     question = cursor.fetchall()
+    print(question)
     return question
 
 
