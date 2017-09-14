@@ -28,7 +28,6 @@ def log_in():
         session['logged_in'] = True
         session['username'] = user['username']
         session['id'] = user['id']
-        flash(user['username'] + " has logged in")
     else:
         flash("Wrong username or password")
     return redirect(session['current_page'])
@@ -48,24 +47,28 @@ def log_out():
 
 @app.route("/all")
 def route_list_all():
+    session['current_page'] = request.path
     questions = queries.get_questions_for_index()
     return render_template("list.html", questions=questions)
 
 
 @app.route("/")
 def route_list():
+    session['current_page'] = request.path
     questions = queries.get_latest_five_questions()
     return render_template("list.html", questions=questions)
 
 
 @app.route("/getsearch", methods=['POST'])
 def route_get_search():
+    session['current_page'] = request.path
     questions = queries.get_search_results(request.form["searchbox"])
     return render_template("list.html", questions=questions)
 
 
 @app.route("/<aspect>=<desc>")
 def route_list_aspect(aspect, desc):
+    session['current_page'] = request.path
     questions = queries.get_questions_for_index_ordered(aspect, desc)
     return render_template("list.html", questions=questions)
 
@@ -75,6 +78,7 @@ def route_list_aspect(aspect, desc):
 
 @app.route("/question/<int:id_>", methods=['GET'])
 def route_question(id_):
+    session['current_page'] = request.path
     question = queries.get_question_by_id(id_)
     answers = queries.get_answers_by_question_id(id_)
     question_comments = queries.get_question_comments_by_question_id(id_,"question_id")
@@ -203,6 +207,7 @@ def route_edit_comment(question_id, id_):
 
 @app.route("/add-question", methods=["POST"])
 def route_add():
+    session['current_page'] = request.path
     list_to_write = [0, 0, request.form["title"], request.form["question"]]
     queries.add_question(list_to_write)
     return redirect("/")
@@ -242,13 +247,27 @@ def route_question_view(ID):
 
 @app.route("/ask-question")
 def route_ask():
+    session['current_page'] = request.path
     return render_template("form.html", page_title="Ask a question", action_link="/add-question")
+
+# User page------------------------------------------------------------
+
+
+@app.route("/user/<user_id>")
+def route_user(user_id):
+    session['current_page'] = request.path
+    user_id_and_question = queries.get_users_id_and_username(user_id)
+    user_question = queries.get_users_question_by_user_id(user_id)
+    user_answer = queries.get_users_answer_by_user_id(user_id)
+    user_comment = queries.get_users_comment_by_user_id(user_id)
+    return render_template("user.html", question=user_question, answer=user_answer, comment=user_comment,user_details=user_id_and_question)
 
 
 #USER REGISTER
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
+    session['current_page'] = request.path
     user_name = ''
     email_address = ''
     error = ''
@@ -276,6 +295,16 @@ def register():
                            user_name=user_name,
                            email_address=email_address,
                            error=error)
+
+
+# List User ------------------------------------------------------------
+
+
+@app.route("/list-users")
+def route_list_user():
+    session['current_page'] = request.path
+    users = queries.get_users_for_list_user()
+    return render_template("list_user.html", users=users)
 
 
 if __name__ == "__main__":

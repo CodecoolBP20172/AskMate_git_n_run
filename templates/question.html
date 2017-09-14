@@ -1,20 +1,18 @@
-<!doctype html>
-<html>
-   <head>
+{% extends "header.html" %}
+{% block head %}
       <link rel="stylesheet" type="text/css" href="/static/css/style_question.css" media="screen, print">
       <meta charset="utf-8">
       <title>Question</title>
-   </head>
-   <body align="center">
-      <a href="/">
-         <div id="header">Ask a Mate</div>
-      </a>
+{% endblock %}
+{% block content %}
+   <body>
+    <br>
       <div class="mytable">
          <div class="myrow">
             <div class="mycolumn_question_title">
                {%for line in question%}
                {{line["title"]}}
-               {%endfor%}
+               {% endfor %}
             </div>
          </div >
          <div class="myrow">
@@ -156,6 +154,7 @@
       </div>
       <br>
       <br>
+      <div align="center">
       Answer Here:
       <br>
       <br>
@@ -166,6 +165,6 @@
          <br>
          <br>
          <br>
+      </div>
       </form>
-   </body>
-</html>
+{% endblock %}

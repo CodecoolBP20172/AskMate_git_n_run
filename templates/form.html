@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html>
-   <head>
+{% extends "header.html" %}
+{% block head %}
       <meta charset="utf-8">
       <link rel="stylesheet" type="text/css" href="/static/css/style_form.css" media="screen, print">
       <title>Askmate</title>
-   </head>
-   <body>
-      <a href="/"><div id="header">Ask a question</div></a>
+{% endblock %}
+{% block content %}
       <div id="page_title"><h2>{{ page_title }}</h2></div>
       <form action="{{ action_link }}" method="post">
          <fieldset>
@@ -17,5 +15,4 @@
             <button type="submit" id="submit_id"><h4>Submit</h4></button>
          </fieldset>
       </form>
-   </body>
-</html>
+{% endblock %}
