@@ -1,0 +1,100 @@
+body{
+    margin:0px;
+}
+#error_message{
+    margin:0px;
+    pdding:0px;
+    border: 0px;
+    font-size: 80%;
+    text-align: right;
+    color:red;
+}
+#session_error p{
+    font-style: italic;
+    font-size: 90%;
+    text-align: center;
+}
+#drop_menu_wrapper{
+    list-style: none;
+    width :100%;
+    margin: 0 auto;
+    text-align: left;
+}
+#drop_menu{
+    background-color :#222;   
+}
+#drop_menu a{
+    text-decoration: none;
+}
+#drop_menu ul{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+}
+#drop_menu ul li{
+    display: inline-block;
+}
+#drop_menu ul li:hover{
+    background-color: #333;
+}
+#drop_menu ul li a,visited{
+    color: #ccc;
+    display: block;
+    padding: 15px;
+}
+#drop_menu ul li a:hover{
+    color: #ccc;
+    text-decoration: none;
+}
+#drop_menu ul li:hover ul{
+    display: block;
+}
+#drop_menu ul ul{
+    display: none;
+    position : absolute;
+    background-color: #333;
+    border-top : 0;
+    min-width: 170px;
+}
+#drop_menu ul ul li{
+    display:block;
+}
+#login_button{
+    background-color:#333;
+    margin-top:10px;
+    margin-left:7px;
+    color:white;
+    border-radius: 5px;
+    cursor:pointer;
+    font-style:bolder;
+}
+#drop_menu ul ul li a,visited{
+    color: #ccc
+}
+#login_form{
+    padding-top:5px;
+    padding-left:5px;
+}
+#drop_menu ul ul li a:hover{
+    color: #099;
+}
+#login_boxes{
+    margin-left :62%
+}
+#drop_menu ul #login_boxes:hover{
+    background-color: #333;
+}
+#drop_menu ul #login_boxes ul{
+    background-color: #333;
+    min-width: 130px;
+    margin-left: -4%;    
+}
+#drop_menu ul #login_boxes ul li{
+    color:white;
+}
+#drop_menu ul #login_boxes ul li a{
+    padding:0px;
+}
+#drop_menu ul #login_boxes ul{
+    display: none;

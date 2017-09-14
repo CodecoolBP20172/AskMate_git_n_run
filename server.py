@@ -1,33 +1,76 @@
-from flask import Flask, render_template, redirect, request, session
 import datetime
 from datetime import timezone
 from operator import itemgetter
+
+import common
 import queries
+from flask import Flask, flash, redirect, render_template, request, session
+
 app = Flask(__name__)
+# session----------------------------------------------------------
+
+
+@app.route('/login-page')
+def route_login_page():
+    session['current_page'] = request.path
+    return render_template('header.html')
+
+
+@app.route('/login', methods=['POST'])
+def log_in():
+    user = queries.get_user_by_username(request.form['username'])
+    hashed_password_from_db = user['password'] if user is not None else ''
+
+    valid_password = user is not None and \
+                     'password' in request.form and \
+                     request.form['password'].strip() != '' and \
+                     common.check_password(request.form['password'], hashed_password_from_db)
+
+    if user and valid_password:
+        session['logged_in'] = True
+        session['username'] = user['username']
+        session['id'] = user['id']
+    else:
+        flash("Wrong username or password")
+    return redirect(session['current_page'])
+
+
+@app.route('/logout')
+def log_out():
+    url_to_return = session['current_page']
+    session.clear()
+    return redirect(url_to_return)
+
+
+# END session------------------------------------------------------
 
 # Index------------------------------------------------------------
 
 
 @app.route("/all")
 def route_list_all():
+    session['current_page'] = request.path
     questions = queries.get_questions_for_index()
     return render_template("list.html", questions=questions)
 
 
 @app.route("/")
 def route_list():
+    session['current_page'] = request.path
     questions = queries.get_latest_five_questions()
     return render_template("list.html", questions=questions)
 
 
 @app.route("/getsearch", methods=['POST'])
 def route_get_search():
+    session['current_page'] = request.path
     questions = queries.get_search_results(request.form["searchbox"])
     return render_template("list.html", questions=questions)
 
 
 @app.route("/<aspect>=<desc>")
 def route_list_aspect(aspect, desc):
+    session['current_page'] = request.path
     questions = queries.get_questions_for_index_ordered(aspect, desc)
     return render_template("list.html", questions=questions)
 
@@ -37,6 +80,7 @@ def route_list_aspect(aspect, desc):
 
 @app.route("/question/<int:id_>", methods=['GET'])
 def route_question(id_):
+    session['current_page'] = request.path
     question = queries.get_question_by_id(id_)
     answers = queries.get_answers_by_question_id(id_)
     question_comments = queries.get_question_comments_by_question_id(id_,"question_id")
@@ -110,9 +154,25 @@ def route_answer_delete(ID):
     
 @app.route("/give-answer/<int:ID>", methods=["POST"])
 def route_add_answer(ID):
-    list_to_write = [0, ID, request.form["answer_text"]]
+    user_id = session['id']
+    list_to_write = [0, ID, request.form["answer_text"], user_id]
     queries.add_answer(list_to_write)
     return redirect("/question/"+str(ID))
+
+
+@app.route("/answer/<int:ID>/acceptance", methods=['GET'])
+def route_answer_accept(ID):
+    queries.add_acceptance_to_answer(ID)
+    question_id = queries.get_value_of_an_attribute("answer", "question_id", "id", str(ID))
+    return redirect("/question/"+str(question_id))
+
+
+@app.route("/answer/<int:ID>/unacceptance", methods=['GET'])
+def route_answer_unaccepted(ID):
+    queries.add_unacceptance_to_answer(ID)
+    question_id = queries.get_value_of_an_attribute("answer", "question_id", "id", str(ID))
+    return redirect("/question/"+str(question_id))
+
 
 # Answer END------------------------------------------------------------------------
 # Comment----------------------------------------------------------------
@@ -121,7 +181,8 @@ def route_add_answer(ID):
 @app.route("/give_comment/<table>/<int:id_>", methods=['POST'])
 def route_give_comment(table, id_):
     comment_to_write = request.form["comment"]
-    queries.add_comment(table, id_, comment_to_write)
+    users_id = session['id']
+    queries.add_comment(table, id_, comment_to_write, users_id)
     if table == "question_id":
         return redirect("/question/" + str(id_))
     elif table == "answer_id":
@@ -150,7 +211,8 @@ def route_edit_comment(question_id, id_):
 
 @app.route("/add-question", methods=["POST"])
 def route_add():
-    list_to_write = [0, 0, request.form["title"], request.form["question"]]
+    user_id = session['id']
+    list_to_write = [0, 0, request.form["title"], request.form["question"], user_id]
     queries.add_question(list_to_write)
     return redirect("/")
 
@@ -179,7 +241,7 @@ def route_answer_vote_down(ID):
     queries.modify_value_of_data("answer", "vote_number", "id", str(ID), -1)
     question_id = queries.get_value_of_an_attribute("answer", "question_id", "id", str(ID))
     return redirect("/question/"+str(question_id))
-    
+
 
 @app.route("/question+1view/<int:ID>", methods=["GET"])
 def route_question_view(ID):
@@ -189,7 +251,64 @@ def route_question_view(ID):
 
 @app.route("/ask-question")
 def route_ask():
+    session['current_page'] = request.path
     return render_template("form.html", page_title="Ask a question", action_link="/add-question")
+
+
+# User page------------------------------------------------------------
+
+
+@app.route("/user/<user_id>")
+def route_user(user_id):
+    session['current_page'] = request.path
+    user_id_and_question = queries.get_users_id_and_username(user_id)
+    user_question = queries.get_users_question_by_user_id(user_id)
+    user_answer = queries.get_users_answer_by_user_id(user_id)
+    user_comment = queries.get_users_comment_by_user_id(user_id)
+    return render_template("user.html", question=user_question, answer=user_answer, comment=user_comment,user_details=user_id_and_question)
+
+# USER REGISTER
+
+
+@app.route("/register", methods=['GET', 'POST'])
+def register():
+    user_name = ''
+    email_address = ''
+    error = ''
+
+    if request.method == 'POST':
+        user_name = request.form["username"]
+        email_address = request.form["email_address"]
+        password = request.form["password"]
+        password2 = request.form["password2"]
+        user_name_given = "username" in request.form and user_name.strip() != ''
+        user_name_exists = queries.get_user_by_username(user_name) is not None
+        if user_name_exists:
+            error = 'Username exists already'
+        elif not user_name_given:
+            error = 'Invalid username'
+        elif password != password2:
+            error = "Passwords don't match"
+        else:
+            hashed_password = common.get_hashed_password(password)
+            queries.add_user(user_name, hashed_password, email_address)
+            return redirect("/")
+
+    return render_template("user_register.html",
+                           page_title="Registration",
+                           user_name=user_name,
+                           email_address=email_address,
+                           error=error)
+
+
+# List User ------------------------------------------------------------
+
+
+@app.route("/list-users")
+def route_list_user():
+    session['current_page'] = request.path
+    users = queries.get_users_for_list_user()
+    return render_template("list_user.html", users=users)
 
 
 if __name__ == "__main__":

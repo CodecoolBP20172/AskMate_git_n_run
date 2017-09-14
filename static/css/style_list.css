@@ -38,28 +38,17 @@ a:hover {
 	color: black; 
 }
 
-.clock { 
-   position: absolute; 
-   top: 40px; 
-   left: 300px; 
-   width: 100%; 
-}
-
-.showall p {
-	text-align: right;
-	display: inline;
-}
-
-.askquestion p {
-	text-align: left;
-	display: inline;
-}
 .showall {
 	text-align: center;
+	font-weight: bolder;
+	font-size: 1.3em;
+	margin: 20px;
 }
 
 .askquestion {
 	text-align: center;
+	margin-top: 10px;
+	font-weight: bolder;
 }
 
 
@@ -72,11 +61,19 @@ tr, td, th {
 	border-bottom: 1px solid grey;
 	vertical-align: center;
 	padding: 8px;
-	text-align: left	
+	text-align: left;	
+	font-style: border;
+
 }
 	
-tr, th {
-	height: 50px;
+th {
+	font-size: 1.3em;;
+
+}
+
+.searchbox {
+	margin-bottom: 20px;
+	text-align: center;
 }
 
 
@@ -85,3 +82,4 @@ td.questions {
 	font-family: times;
 	text-align: left;
 }
+
