@@ -49,24 +49,20 @@
             <div class="mycolumn_comment">
                {{line["message"]}}
             </div>
-            {% if session['login'] %}
             <div class="mycolumn_comment_buttons">
             Comment from: {{line["username"]}}
-               <a href="/{{  question[0]['id']  }}/delete_comment/{{  line['id']  }}"><img src="/static/images/delete.png" width="25px"></a>              
+            {% if session['id'] == line['users_id'] %}
+               <a href="/{{  question[0]['id']  }}/delete_comment/{{  line['id']  }}"><img src="/static/images/delete.png" width="25px"></a>  
+            {% endif %}           
             </div>
-            {% endif %}
          </div >
          {%endif%}
          {%endfor%}
          {% if session['logged_in'] %}
-         <div class="myrow">
-            <div class="mycolumn">
-               <form action="/give_comment/question_id/{{  question[0]['id']  }}" method="post">
-                  <input name ="comment" maxlength="90"></input>
+               <form id="comment_question_form" action="/give_comment/question_id/{{  question[0]['id']  }}" method="post">
+                  <input name ="comment" minlength = "5" maxlength="80" required></input>
                   <button type="submit" id="submitid">comment</button>
                </form>
-            </div>
-         </div >
          {% endif %}
       </div class="mytable">
       <!-- ANSWER ................................................................................................................... HERE -->
@@ -90,7 +86,7 @@
                </div>
             </div >
             <div class="mycolumn_answer">
-               <textarea name="answer_edit_text">{{ line["message"] }}</textarea>
+               <textarea id="answer_edit_text">{{ line["message"] }}</textarea>
                <br><br>
                <button type="submit" id="submit_edit_answer" method="POST">Submit</button>
             </div>
@@ -142,7 +138,7 @@
          <div class="myrow">
             <div class="mycolumn_comment"><span style="float: left">{{commentline["message"]}}</span><span style="float: right">
                         Comment from: {{commentline["username"]}}
-               {% if session['login'] %}
+               {% if commentline['users_id'] == session['id']%}
                <a href="/{{  question[0]['id']  }}/delete_comment_from_answer/{{  commentline['id']  }}"><img src="/static/images/delete.png" width="25px"></a>  
                {% endif %}
                </span>
@@ -154,7 +150,7 @@
          <div class="myrow">
             <div class="mycolumn">
                <form action="/give_comment/answer_id/{{  line['id']  }}" method="post">
-                  <input name ="comment"></input>
+                  <input name ="comment" minlength="5" maxlength="80" required></input>
                   <button type="submit" id="submitid">comment</button>
                </form>
             </div>
@@ -190,7 +186,7 @@
       </form>
       {% else%}
       <div align="center">
-            <p>You have to be logged in to give an answer</p>
+            <h4>You have to be logged in to give an answer.</h4>
       </div>
       {% endif %}
 {% endblock %}

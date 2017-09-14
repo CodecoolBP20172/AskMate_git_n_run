@@ -1,9 +1,11 @@
-from flask import Flask, render_template, redirect, request, session, flash
 import datetime
 from datetime import timezone
 from operator import itemgetter
-import queries
+
 import common
+import queries
+from flask import Flask, flash, redirect, render_template, request, session
+
 app = Flask(__name__)
 # session----------------------------------------------------------
 
@@ -270,7 +272,6 @@ def route_user(user_id):
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
-    session['current_page'] = request.path
     user_name = ''
     email_address = ''
     error = ''

@@ -30,7 +30,7 @@
                     <li><input id = "input_box" type="username" size ="12" required  name="username" placeholder="Username"></br></li>
                     <li>password</li>
                     <li><input id="input_box" type="password" size ="12" required name="password" placeholder="Password"></li>
-                    <li><input type="submit" value="Log In"></li>
+                    <li><input id="login_button" type="submit" value="login"></li>
             </form>
                 </ul>
             {%endif%}
@@ -54,7 +54,7 @@
 </body>
 <script>
     var buttonLength = "{{  session['username']  }}".length
-    var counted_margin = 64.5 - (buttonLength * 0.55)
+    var counted_margin = 63.5 - (buttonLength * 0.55)
     document.getElementById("logged_in_menu").setAttribute('style', 'margin-left :' + counted_margin +'%')
     function toogle_login_menu() {
         console.log("anyuuu")
