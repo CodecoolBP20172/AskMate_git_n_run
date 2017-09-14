@@ -35,7 +35,6 @@ def get_questions_for_index_ordered(cursor, aspect, desc):
 def get_question_by_id(cursor, id_):
     cursor.execute("SELECT question.*, users.username FROM question JOIN users ON question.users_id=users.id WHERE question.id = {}".format(id_))
     question = cursor.fetchall()
-    print(question)
     return question
 
 
@@ -65,7 +64,6 @@ def get_all_answer_comments(cursor):
 def get_value_of_an_attribute(cursor, table, attribute, PK, ID):
     cursor.execute("SELECT " + attribute + " FROM " + table + " WHERE " + PK + " = " + ID + ";")
     result = cursor.fetchall()
-    print(result)
     value = result[0][attribute]
     return value
 
@@ -97,7 +95,7 @@ def get_latest_five_questions(cursor):
     cursor.execute('''SELECT question.id, question.submission_time, question.view_number,
                       question.vote_number, question.title, users.username FROM question
                       JOIN users ON question.users_id = users.id
-                      ORDER BY question.submission_time LIMIT 5''')
+                      ORDER BY question.submission_time DESC LIMIT 5''')
     result = cursor.fetchall()
     return result
 
