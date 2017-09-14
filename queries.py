@@ -207,13 +207,13 @@ def update_column(cursor, table, attribute, PK, ID, new_value):
 @database_common.connection_handler
 def add_question(cursor, list):
     cursor.execute('''INSERT INTO question (submission_time, view_number, vote_number, title, message, users_id)
-                      VALUES (%s, %s, %s, %s, %s, %s)''', (str(dt)[:-7], list[0], list[1], list[2], list[3], list[4]))
+                      VALUES (%s, %s, %s, %s, %s, %s)''', (str(datetime.now())[:-7], list[0], list[1], list[2], list[3], list[4]))
 
 
 @database_common.connection_handler
 def add_answer(cursor, list):
     cursor.execute('''INSERT INTO answer (submission_time, vote_number, question_id, message, users_id)
-                      VALUES (%s, %s, %s, %s, %s)''', (str(dt)[:-7], list[0], list[1], list[2], list[3]))
+                      VALUES (%s, %s, %s, %s, %s)''', (str(datetime.now())[:-7], list[0], list[1], list[2], list[3]))
 
 
 @database_common.connection_handler
