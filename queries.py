@@ -163,7 +163,6 @@ def add_answer(cursor, list):
 
 @database_common.connection_handler
 def add_comment(cursor, table, id_, comment, users_id):
-    print("TABLE = " + table)
     cursor.execute("INSERT INTO comment ({}, message, users_id) VALUES (%s, %s, %s)".format(table), (id_, comment, users_id))
 # END of add values-----------------------------------------------------------------------------------
 # Delete values --------------------------------------------------------------------------------------
@@ -191,7 +190,6 @@ def delete_question_and_answer_by_id(cursor, ID):
 
 @database_common.connection_handler
 def delete_comment_from_answer(cursor, id_):
-    print(id_)
     cursor.execute("DELETE FROM comment WHERE id = {}".format(id_))
 
 
@@ -199,9 +197,7 @@ def delete_comment_from_answer(cursor, id_):
 def delete_comment_from_question(cursor, id_):
     cursor.execute("SELECT id FROM answer WHERE question_id = {}".format(id_))
     answer_id_list = cursor.fetchall()
-    print(answer_id_list)
     for line in answer_id_list:
-        print(line)
         cursor.execute("DELETE FROM comment WHERE answer_id = {}".format(line["id"]))
     delete_question_and_answer_by_id(id_)
 
