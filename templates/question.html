@@ -30,8 +30,10 @@
                </div>
                {% if session['logged_in']%}
                <div class="mycolumn_question_buttons">
+                     {% if session['id'] == line['users_id'] %}
                   <a href="/question/{{  line['id']  }}/delete"><img src="/static/images/delete.png" width="25px"></a>
                   <a href="/question/{{  line['id']  }}/edit"><img src="/static/images/edit.png" width="25px"></a>
+                     {% endif %}
                   <a href="/question/{{  line['id']  }}/vote-up"><img src="/static/images/upvote.png" width="25px"></a>
                   <a href="/question/{{  line['id']  }}/vote-down"><img src="/static/images/downvote.png" width="25px"></a>
                </div>
@@ -110,9 +112,11 @@
                         {{line["submission_time"]}} Votes: {{line["vote_number"]}}
                      </div>
                      {% if session['logged_in']%}
-                     <div class="mycolumn_answer_buttons">            
+                     <div class="mycolumn_answer_buttons">
+                        {% if session['id'] == line['users_id'] %}            
                         <a href="/answer/{{ line['id'] }}/delete"><img src="/static/images/delete.png" width="25px"></a>
                         <a href="/answer/{{ line['id'] }}/edit"><img src="/static/images/edit.png" width="25px"></a>
+                        {% endif %}
                         <a href="/answer/{{ line['id'] }}/vote-up"><img src="/static/images/upvote.png" width="25px"></a>
                         <a href="/answer/{{ line['id'] }}/vote-down"><img src="/static/images/downvote.png" width="25px"></a>
                      </div>
