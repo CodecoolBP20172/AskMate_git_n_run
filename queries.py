@@ -24,8 +24,8 @@ def get_question_id_from_answer_id(cursor, answer_id):
 
 @database_common.connection_handler
 def get_questions_for_index_ordered(cursor, aspect, desc):
-    cursor.execute('''SELECT id, submission_time, view_number, vote_number, title
-                      FROM question
+    cursor.execute('''SELECT question.id, question.submission_time, question.view_number, question.vote_number,
+                      question.title, users.username  FROM question JOIN users ON users_id=users.id
                       ORDER BY {} {}'''.format(aspect, desc))
     questions = cursor.fetchall()
     return questions
